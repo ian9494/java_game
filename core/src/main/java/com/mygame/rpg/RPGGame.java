@@ -31,4 +31,16 @@ public class RPGGame extends ApplicationAdapter {
         batch.dispose();
         image.dispose();
     }
+
+    public static void main(String[] args) {
+        // create character
+        Character player = new Character("Hero", 100, 50, 20, 10, 15, 8);
+        Character enemy = new Character("Goblin", 80, 30, 15, 5, 10, 6);
+
+        // run battle simulation
+        Battle battle = new Battle();
+        while (player.isAlive() && enemy.isAlive()) {
+            battle.battleTurn(player, enemy);
+        }
+    }
 }
