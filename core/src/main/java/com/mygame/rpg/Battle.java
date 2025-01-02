@@ -1,5 +1,29 @@
 package com.mygame.rpg;
+
 public class Battle {
+    //objects
+    private Character attacker;
+    private Character defender;
+    private boolean isBattleOver;
+
+    public Battle(Character attacker, Character defender) {
+        this.attacker = attacker;
+        this.defender = defender;
+        this.isBattleOver = false;
+    }
+
+    public Character getAttacker() {
+        return attacker;
+    }
+
+    public Character getDefender() {
+        return defender;
+    }
+
+    public boolean isBattleOver() {
+        return isBattleOver;
+    }
+
     // calculate damage
     public int calculateDamage(Character attacker, Character defender) {
         int damage = attacker.getAtk() - defender.getDef();
@@ -38,4 +62,12 @@ public class Battle {
             System.out.println(player.getName() + " 被擊倒了!");
         }
     }
+
+    public String getBattleState() {
+        StringBuilder state = new StringBuilder();
+        state.append("Player: ").append(attacker.getName()).append(" HP: ").append(attacker.getHp()).append("\n");
+        state.append("Enemy: ").append(defender.getName()).append(" HP: ").append(defender.getHp()).append("\n");
+        return state.toString();
+    }
+
 }

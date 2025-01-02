@@ -2,6 +2,7 @@ package com.mygame.rpg.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.mygame.rpg.BattleScreen;
 import com.mygame.rpg.RPGGame;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -10,6 +11,8 @@ public class desktopLauncher {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
         createApplication();
     }
+
+
 
     private static Lwjgl3Application createApplication() {
         return new Lwjgl3Application(new RPGGame(), getDefaultConfiguration());
