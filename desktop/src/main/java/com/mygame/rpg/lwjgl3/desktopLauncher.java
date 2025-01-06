@@ -12,8 +12,6 @@ public class desktopLauncher {
         createApplication();
     }
 
-
-
     private static Lwjgl3Application createApplication() {
         return new Lwjgl3Application(new RPGGame(), getDefaultConfiguration());
     }

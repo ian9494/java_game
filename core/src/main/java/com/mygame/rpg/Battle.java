@@ -1,10 +1,17 @@
 package com.mygame.rpg;
 
+import java.util.ArrayList;
+import java.util.List;
 public class Battle {
     //objects
     private Character attacker;
     private Character defender;
+
     private boolean isBattleOver;
+
+    // 戰鬥進行記錄
+    private final List<String> battleLogs = new ArrayList<>();
+    private int currentLogIndex = 0;
 
     public Battle(Character attacker, Character defender) {
         this.attacker = attacker;
@@ -35,11 +42,21 @@ public class Battle {
         int damage = calculateDamage(attacker, defender);
         defender.takeDamage(damage);
 
+        battleLogs.add(attacker.getName() + " 進行了一次攻擊\n對 " + defender.getName() + " 造成了 " + damage + " 點傷害\n");
         System.out.println(attacker.getName() + " 進行了一次攻擊\n對 " + defender.getName() + " 造成了 " + damage + " 點傷害\n");
+    }
+
+    // show battle logs
+    public String getNextLog(){
+        if (currentLogIndex < battleLogs.size()) {
+            return battleLogs.get(currentLogIndex++);
+        }
+        return null; //如果沒有log
     }
 
     // run one round of battle
     public void battleTurn(Character player, Character enemy) {
+        // detect if battle is over
         if (!player.isAlive() || !enemy.isAlive()) {
             System.out.println("Battle is over.");
             return;
