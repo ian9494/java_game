@@ -3,7 +3,7 @@ package com.mygame.rpg;
 import java.util.ArrayList;
 import java.util.List;
 public class Battle {
-    //objects
+    // objects
     private Character attacker;
     private Character defender;
 
@@ -13,10 +13,22 @@ public class Battle {
     private final List<String> battleLogs = new ArrayList<>();
     private int currentLogIndex = 0;
 
-    public Battle(Character attacker, Character defender) {
-        this.attacker = attacker;
-        this.defender = defender;
+    public Battle(Character player1, Character player2) {
+        this.attacker = player1;
+        this.defender = player2;
         this.isBattleOver = false;
+
+        // battleLogs.add(attacker.getName() + " attacks " + attacker.getName() + " for 10 damage.");
+        // battleLogs.add(defender.getName() + " attacks " + attacker.getName() + " for 8 damage.");
+        // battleLogs.add(attacker.getName() + " uses a special move! " + defender.getName() + " takes 20 damage.");
+        // battleLogs.add(defender.getName() + " is defeated!");
+    }
+
+    // 對換角色
+    public void switchRoles() {
+        Character temp = attacker;
+        attacker = defender;
+        defender = temp;
     }
 
     public Character getAttacker() {
@@ -46,6 +58,21 @@ public class Battle {
         System.out.println(attacker.getName() + " 進行了一次攻擊\n對 " + defender.getName() + " 造成了 " + damage + " 點傷害\n");
     }
 
+    // player do attack commend
+    public void doAttack() {
+        int damage = calculateDamage(attacker, defender);
+        String action = attacker.getName() + " attacks " + defender.getName() + " for " + damage + " damage.";
+        battleLogs.add(action);
+        defender.takeDamage(damage);
+    }
+
+    // player do defend commend
+    public void doDefend() {
+        String action = attacker.getName() + " defends, reducing damage.";
+        battleLogs.add(action);
+        // 添加防禦邏輯
+    }
+
     // show battle logs
     public String getNextLog(){
         if (currentLogIndex < battleLogs.size()) {
@@ -55,28 +82,28 @@ public class Battle {
     }
 
     // run one round of battle
-    public void battleTurn(Character player, Character enemy) {
+    public void battleTurn(Character attacker, Character defender) {
         // detect if battle is over
-        if (!player.isAlive() || !enemy.isAlive()) {
+        if (!attacker.isAlive() || !defender.isAlive()) {
             System.out.println("Battle is over.");
             return;
         }
 
         // Player's turn
-        performAttack(player, enemy);
+        performAttack(attacker, defender);
 
         // Check if enemy is defeated
-        if (!enemy.isAlive()) {
-            System.out.println(enemy.getName() + " 被擊倒了!");
+        if (!defender.isAlive()) {
+            System.out.println(defender.getName() + " 被擊倒了!");
             return;
         }
 
         // Enemy's turn
-        performAttack(enemy, player);
+        performAttack(defender, attacker);
 
         // Check if player is defeated
-        if (!player.isAlive()) {
-            System.out.println(player.getName() + " 被擊倒了!");
+        if (!attacker.isAlive()) {
+            System.out.println(attacker.getName() + " 被擊倒了!");
         }
     }
 
