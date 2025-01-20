@@ -1,3 +1,4 @@
+.temp/2a9d7f76/gdx64.dll
 fonts/Roboto-Regular.ttf
 libgdx.png
 ui/font-list.fnt
