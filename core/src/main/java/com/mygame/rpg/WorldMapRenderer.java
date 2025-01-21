@@ -20,8 +20,8 @@ public class WorldMapRenderer {
         for (Region region : worldMap.getAllRegions().values()) {
             Texture regionIcon = new Texture(region.getIconPath());
             // 假設區域的位置由其名稱對應的座標設定
-            int x = ...; // 設定區域的X座標
-            int y = ...; // 設定區域的Y座標
+            int x = 0; // 設定區域的X座標
+            int y = 0; // 設定區域的Y座標
             batch.draw(regionIcon, x, y, 64, 64); // 假設圖標大小為64x64像素
         }
     }

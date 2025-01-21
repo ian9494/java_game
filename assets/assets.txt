@@ -1,5 +1,5 @@
-.temp/2a9d7f76/gdx64.dll
 fonts/Roboto-Regular.ttf
+json/world_map.json
 libgdx.png
 ui/font-list.fnt
 ui/font-subtitle.fnt

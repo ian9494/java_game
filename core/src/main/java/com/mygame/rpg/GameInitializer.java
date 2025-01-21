@@ -12,8 +12,8 @@ public class GameInitializer {
         worldMap.addRegion(village);
         worldMap.addRegion(castle);
 
-        worldMap.connectRegions("森林", "村莊");
-        worldMap.connectRegions("村莊", "城堡");
+        // worldMap.connectRegions("森林", "村莊");
+        // worldMap.connectRegions("村莊", "城堡");
 
         return worldMap;
     }

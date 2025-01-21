@@ -2,6 +2,7 @@ package com.mygame.rpg;
 
 public class Character {
     private String name;
+    private int LV;
     private int hp;
     private int maxHp;
     private int mp;
@@ -9,8 +10,15 @@ public class Character {
     private int Atk;
     private int Def;
     private int Spd;
+    private int Location;
 
-    public Character(String name, int maxHp, int maxMp, int Atk, int Def, int Spd, int intelligence) {
+
+
+    public void setLocation(int location) {
+        Location = location;
+    }
+
+    public Character(String name, int maxHp, int maxMp, int Atk, int Def, int Spd) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
@@ -23,11 +31,13 @@ public class Character {
 
     // Getters and setters for attributes
     public String getName() { return name; }
+    public int getLV() { return LV; }
     public int getHp() { return hp; }
     public int getMp() { return mp; }
     public int getAtk() { return Atk; }
     public int getDef() { return Def; }
     public int getSpd() { return Spd; }
+    public int getLocation() {return Location;}
 
 
     // damage counter

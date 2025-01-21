@@ -92,6 +92,7 @@ public class Battle {
         // Player's turn
         performAttack(attacker, defender);
 
+        System.err.println("sys:check alive");
         // Check if enemy is defeated
         if (!defender.isAlive()) {
             System.out.println(defender.getName() + " 被擊倒了!");
