@@ -1,292 +1,244 @@
 {
-  "regions": [
-      {
-          "name": "Balst Village",
-          "description": "A mysterious and intriguing place known as Balst Village.",
-          "translated_description": "一個神秘而有趣的地方，稱為巴爾斯特村。",
-          "connections": ["Verdant Plains"],
-          "iconPath": "balst_village_icon.png",
-          "translation": "巴爾斯特村"
-      },
-      {
-          "name": "Verdant Plains",
-          "description": "A mysterious and intriguing place known as Verdant Plains.",
-          "translated_description": "一個神秘而有趣的地方，稱為蒼翠平原。",
-          "connections": ["Balst Village", "Orc Settlement", "Foggy Forest"],
-          "iconPath": "verdant_plains_icon.png",
-          "translation": "蒼翠平原"
-      },
-      {
-          "name": "Orc Settlement",
-          "description": "A mysterious and intriguing place known as Orc Settlement.",
-          "translated_description": "一個神秘而有趣的地方，稱為獸人部落。",
-          "connections": ["Balst Village"],
-          "iconPath": "orc_settlement_icon.png",
-          "translation": "獸人部落"
-      },
-      {
-          "name": "Foggy Forest",
-          "description": "A mysterious and intriguing place known as Foggy Forest.",
-          "translated_description": "一個神秘而有趣的地方，稱為迷霧森林。",
-          "connections": ["Verdant Plains", "Goblin Fortress", "Oak Town"],
-          "iconPath": "foggy_forest_icon.png",
-          "translation": "迷霧森林"
-      },
-      {
-          "name": "Oak Town",
-          "description": "A mysterious and intriguing place known as Oak Town.",
-          "translated_description": "一個神秘而有趣的地方，稱為橡木鎮。",
-          "connections": ["Foggy Forest", "Unforgettable Desert"],
-          "iconPath": "oak_town_icon.png",
-          "translation": "橡木鎮"
-      },
-      {
-          "name": "Goblin Fortress",
-          "description": "A mysterious and intriguing place known as Goblin Fortress.",
-          "translated_description": "一個神秘而有趣的地方，稱為哥布林城寨。",
-          "connections": ["Foggy Forest", "Glacier Peaks"],
-          "iconPath": "goblin_fortress_icon.png",
-          "translation": "哥布林城寨"
-      },
-      {
-          "name": "Unforgettable Desert",
-          "description": "A mysterious and intriguing place known as Unforgettable Desert.",
-          "translated_description": "一個神秘而有趣的地方，稱為難忘沙漠。",
-          "connections": ["Amberstead", "Oracle's Shrine"],
-          "iconPath": "unforgettable_desert_icon.png",
-          "translation": "難忘沙漠"
-      },
-      {
-          "name": "Amberstead",
-          "description": "A mysterious and intriguing place known as Amberstead.",
-          "translated_description": "一個神秘而有趣的地方，稱為村莊1。",
-          "connections": ["Unforgettable Desert", "Blood Crystal Mine"],
-          "iconPath": "amberstead_icon.png",
-          "translation": "村莊1"
-      },
-      {
-          "name": "Glacier Peaks",
-          "description": "A mysterious and intriguing place known as Glacier Peaks.",
-          "translated_description": "一個神秘而有趣的地方，稱為冰川高峰。",
-          "connections": ["Goblin Fortress", "Frosthaven"],
-          "iconPath": "glacier_peaks_icon.png",
-          "translation": "冰川高峰"
-      },
-      {
-          "name": "Frosthaven",
-          "description": "A mysterious and intriguing place known as Frosthaven.",
-          "translated_description": "一個神秘而有趣的地方，稱為村莊2。",
-          "connections": ["Glacier Peaks"],
-          "iconPath": "frosthaven_icon.png",
-          "translation": "村莊2"
-      },
-      {
-          "name": "Oracle's Shrine",
-          "description": "A mysterious and intriguing place known as Oracle's Shrine.",
-          "translated_description": "一個神秘而有趣的地方，稱為巫覡神廟。",
-          "connections": ["Unforgettable Desert", "Mistwood Rainforest"],
-          "iconPath": "oracles_shrine_icon.png",
-          "translation": "巫覡神廟"
-      },
-      {
-          "name": "Blood Crystal Mine",
-          "description": "A mysterious and intriguing place known as Blood Crystal Mine.",
-          "translated_description": "一個神秘而有趣的地方，稱為血晶礦場。",
-          "connections": ["Amberstead", "Phantom Mausoleum", "Venom Spider Nest"],
-          "iconPath": "blood_crystal_mine_icon.png",
-          "translation": "血晶礦場"
-      },
-      {
-          "name": "Phantom Mausoleum",
-          "description": "A mysterious and intriguing place known as Phantom Mausoleum.",
-          "translated_description": "一個神秘而有趣的地方，稱為幽魂陵墳。",
-          "connections": ["Blood Crystal Mine", "Frozen Abyss"],
-          "iconPath": "phantom_mausoleum_icon.png",
-          "translation": "幽魂陵墳"
-      },
-      {
-          "name": "Mistwood Rainforest",
-          "description": "A mysterious and intriguing place known as Mistwood Rainforest.",
-          "translated_description": "一個神秘而有趣的地方，稱為幻霧雨林。",
-          "connections": ["Venom Spider Nest", "Willowshade"],
-          "iconPath": "mistwood_rainforest_icon.png",
-          "translation": "幻霧雨林"
-      },
-      {
-          "name": "Venom Spider Nest",
-          "description": "A mysterious and intriguing place known as Venom Spider Nest.",
-          "translated_description": "一個神秘而有趣的地方，稱為毒蛛巢穴。",
-          "connections": ["Foggy Forest", "Blood Crystal Mine"],
-          "iconPath": "venom_spider_nest_icon.png",
-          "translation": "毒蛛巢穴"
-      },
-      {
-          "name": "Frozen Abyss",
-          "description": "A mysterious and intriguing place known as Frozen Abyss.",
-          "translated_description": "一個神秘而有趣的地方，稱為霜凍深淵。",
-          "connections": ["Phantom Mausoleum", "Shadow Spirit Sanctuary"],
-          "iconPath": "frozen_abyss_icon.png",
-          "translation": "霜凍深淵"
-      },
-      {
-          "name": "Willowshade",
-          "description": "A mysterious and intriguing place known as Willowshade.",
-          "translated_description": "一個神秘而有趣的地方，稱為村莊3。",
-          "connections": ["Crystal Mirage Lake", "Mistwood Rainforest", "Rotting Forest"],
-          "iconPath": "willowshade_icon.png",
-          "translation": "村莊3"
-      },
-      {
-          "name": "Crystal Mirage Lake",
-          "description": "A mysterious and intriguing place known as Crystal Mirage Lake.",
-          "translated_description": "一個神秘而有趣的地方，稱為水晶幻湖。",
-          "connections": ["Willowshade", "Shadow Spirit Sanctuary"],
-          "iconPath": "crystal_mirage_lake_icon.png",
-          "translation": "水晶幻湖"
-      },
-      {
-          "name": "Shadow Spirit Sanctuary",
-          "description": "A mysterious and intriguing place known as Shadow Spirit Sanctuary.",
-          "translated_description": "一個神秘而有趣的地方，稱為闇靈聖域。",
-          "connections": ["Frozen Abyss", "Crystal Mirage Lake", "Dark King's Fortress"],
-          "iconPath": "shadow_spirit_sanctuary_icon.png",
-          "translation": "闇靈聖域"
-      },
-      {
-          "name": "Rotting Forest",
-          "description": "A mysterious and intriguing place known as Rotting Forest.",
-          "translated_description": "一個神秘而有趣的地方，稱為腐朽之森。",
-          "connections": ["Willowshade", "Stormy Ocean"],
-          "iconPath": "rotting_forest_icon.png",
-          "translation": "腐朽之森"
-      },
-      {
-          "name": "Dark King's Fortress",
-          "description": "A mysterious and intriguing place known as Dark King's Fortress.",
-          "translated_description": "一個神秘而有趣的地方，稱為黑暗王城。",
-          "connections": ["Shadow Spirit Sanctuary", "Shadowy Black Forest"],
-          "iconPath": "dark_kings_fortress_icon.png",
-          "translation": "黑暗王城"
-      },
-      {
-          "name": "Morning Light Fox Isle",
-          "description": "A mysterious and intriguing place known as Morning Light Fox Isle.",
-          "translated_description": "一個神秘而有趣的地方，稱為晨光靈狐島。",
-          "connections": ["Stormy Ocean"],
-          "iconPath": "morning_light_fox_isle_icon.png",
-          "translation": "晨光靈狐島"
-      },
-      {
-          "name": "Stormy Ocean",
-          "description": "A mysterious and intriguing place known as Stormy Ocean.",
-          "translated_description": "一個神秘而有趣的地方，稱為風暴海洋。",
-          "connections": ["Rotting Forest", "Morning Light Fox Isle", "Shadowmere", "Underworld Cavern"],
-          "iconPath": "stormy_ocean_icon.png",
-          "translation": "風暴海洋"
-      },
-      {
-          "name": "Shadowmere",
-          "description": "A mysterious and intriguing place known as Shadowmere.",
-          "translated_description": "一個神秘而有趣的地方，稱為村莊4。",
-          "connections": ["Stormy Ocean", "Shadowy Black Forest"],
-          "iconPath": "shadowmere_icon.png",
-          "translation": "村莊4"
-      },
-      {
-          "name": "Shadowy Black Forest",
-          "description": "A mysterious and intriguing place known as Shadowy Black Forest.",
-          "translated_description": "一個神秘而有趣的地方，稱為暗影黑森林。",
-          "connections": ["Shadowmere", "Dark King's Fortress"],
-          "iconPath": "shadowy_black_forest_icon.png",
-          "translation": "暗影黑森林"
-      },
-      {
-          "name": "Underworld Cavern",
-          "description": "A mysterious and intriguing place known as Underworld Cavern.",
-          "translated_description": "一個神秘而有趣的地方，稱為冥界洞窟。",
-          "connections": ["Stormy Ocean", "Blazing Inferno Realm", "Fallen Land"],
-          "iconPath": "underworld_cavern_icon.png",
-          "translation": "冥界洞窟"
-      },
-      {
-          "name": "Blazing Inferno Realm",
-          "description": "A mysterious and intriguing place known as Blazing Inferno Realm.",
-          "translated_description": "一個神秘而有趣的地方，稱為烈焰魔界。",
-          "connections": ["Underworld Cavern"],
-          "iconPath": "blazing_inferno_realm_icon.png",
-          "translation": "烈焰魔界"
-      },
-      {
-          "name": "Fallen Land",
-          "description": "A mysterious and intriguing place known as Fallen Land.",
-          "translated_description": "一個神秘而有趣的地方，稱為墮落之境。",
-          "connections": ["Underworld Cavern"],
-          "iconPath": "fallen_land_icon.png",
-          "translation": "墮落之境"
-      },
-      {
-          "name": "Dark King's Fortress",
-          "description": "A mysterious and intriguing place known as Dark King's Fortress.",
-          "translated_description": "一個神秘而有趣的地方，稱為黑暗王城。",
-          "connections": ["Shadow Spirit Sanctuary", "Shadowy Black Forest"],
-          "iconPath": "dark_kings_fortress_icon.png",
-          "translation": "黑暗王城"
-      },
-      {
-          "name": "Morning Light Fox Isle",
-          "description": "A mysterious and intriguing place known as Morning Light Fox Isle.",
-          "translated_description": "一個神秘而有趣的地方，稱為晨光靈狐島。",
-          "connections": ["Stormy Ocean"],
-          "iconPath": "morning_light_fox_isle_icon.png",
-          "translation": "晨光靈狐島"
-      },
-      {
-          "name": "Stormy Ocean",
-          "description": "A mysterious and intriguing place known as Stormy Ocean.",
-          "translated_description": "一個神秘而有趣的地方，稱為風暴海洋。",
-          "connections": ["Rotting Forest", "Morning Light Fox Isle", "Shadowmere", "Underworld Cavern"],
-          "iconPath": "stormy_ocean_icon.png",
-          "translation": "風暴海洋"
-      },
-      {
-          "name": "Shadowmere",
-          "description": "A mysterious and intriguing place known as Shadowmere.",
-          "translated_description": "一個神秘而有趣的地方，稱為村莊4。",
-          "connections": ["Stormy Ocean", "Shadowy Black Forest"],
-          "iconPath": "shadowmere_icon.png",
-          "translation": "村莊4"
-      },
-      {
-          "name": "Shadowy Black Forest",
-          "description": "A mysterious and intriguing place known as Shadowy Black Forest.",
-          "translated_description": "一個神秘而有趣的地方，稱為暗影黑森林。",
-          "connections": ["Shadowmere", "Dark King's Fortress"],
-          "iconPath": "shadowy_black_forest_icon.png",
-          "translation": "暗影黑森林"
-      },
-      {
-          "name": "Underworld Cavern",
-          "description": "A mysterious and intriguing place known as Underworld Cavern.",
-          "translated_description": "一個神秘而有趣的地方，稱為冥界洞窟。",
-          "connections": ["Stormy Ocean", "Blazing Inferno Realm", "Fallen Land"],
-          "iconPath": "underworld_cavern_icon.png",
-          "translation": "冥界洞窟"
-      },
-      {
-          "name": "Blazing Inferno Realm",
-          "description": "A mysterious and intriguing place known as Blazing Inferno Realm.",
-          "translated_description": "一個神秘而有趣的地方，稱為烈焰魔界。",
-          "connections": ["Underworld Cavern"],
-          "iconPath": "blazing_inferno_realm_icon.png",
-          "translation": "烈焰魔界"
-      },
-      {
-          "name": "Fallen Land",
-          "description": "A mysterious and intriguing place known as Fallen Land.",
-          "translated_description": "一個神秘而有趣的地方，稱為墮落之境。",
-          "connections": ["Underworld Cavern"],
-          "iconPath": "fallen_land_icon.png",
-          "translation": "墮落之境"
-      }
-  ]
+    "regions": [
+        {
+            "name": "Balst Village",
+            "ID": 1,
+            "translation": "伊始之村",
+            "description": "初心者們的旅途開始之地",
+            "iconPath": "balst_village_icon.png",
+            "connections": [2]
+        },
+        {
+            "name": "Verdant Plains",
+            "ID":2,
+            "translation": "蒼翠平原",
+            "description": "翠綠的大草原，總能看到一些新手冒險家在草原上練習使用武器",
+            "iconPath": "verdant_plains_icon.png",
+            "connections": [1,3,5]
+        },
+        {
+            "name": "Desolate Highlands",
+            "ID":3,
+            "translation": "荒蕪高地",
+            "description": "一片荒涼的高地，到處都是飢荒的獸人",
+            "iconPath": "desolate_highlands_icon.png",
+            "connections": [2]
+        },
+        {
+            "name": "Oak Town",
+            "ID":4,
+            "translation": "橡木鎮",
+            "description": "在迷霧森林邊緣的一處小鎮，用原木蓋起的小房子看起來格外和藹可親",
+            "iconPath": "oak_town_icon.png",
+            "connections": [5,7]
+        },
+        {
+            "name": "Foggy Forest",
+            "ID":5,
+            "translation": "迷霧森林",
+            "description": "迷霧瀰漫的詭異森林，在裡面探索的每一步都得小心翼翼",
+            "iconPath": "foggy_forest_icon.png",
+            "connections": [2,4,6]
+        },
+        {
+            "name": "Howling Rift",
+            "ID":6,
+            "translation": "淒風裂谷",
+            "description": "",
+            "iconPath": "howling_rift_icon.png",
+            "connections": [5,9]
+        },
+        {
+            "name": "Unforgettable Desert",
+            "ID":7,
+            "translation": "遺忘沙漠",
+            "description": "",
+            "iconPath": "unforgettable_desert_icon.png",
+            "connections": [4,8]
+        },
+        {
+            "name": "Dust Fortress",
+            "ID":8,
+            "translation": "岩漠要塞",
+            "description": "矗立於沙漠中央的要塞，隱蔽在沙漠之中",
+            "iconPath": "dust_fortress_icon.png",
+            "connections": [7,12]
+        },
+        {
+            "name": "Glacier Peaks",
+            "ID":9,
+            "translation": "冰川高峰",
+            "description": "",
+            "iconPath": "glacier_peaks_icon.png",
+            "connections": [6,10,13]
+        },
+        {
+            "name": "Frostpine village",
+            "ID":10,
+            "translation": "雪淞鎮",
+            "description": "冰峰山腳下的小村落，這裡冷到不在火爐旁邊根本沒辦法睡覺",
+            "iconPath": "frostpine_village_icon.png",
+            "connections": [9]
+        },
+        {
+            "name": "Oracle's Shrine",
+            "ID":11,
+            "translation": "巫覡神廟",
+            "description": "",
+            "iconPath": "oracle's_shrine_icon.png",
+            "connections": [7,14]
+        },
+        {
+            "name": "Blood Crystal Mine",
+            "ID":12,
+            "translation": "血晶礦場",
+            "description": "",
+            "iconPath": "blood_crystal_mine_icon.png",
+            "connections": [8,13,15]
+        },
+        {
+            "name": "Phantom Mausoleum",
+            "ID":13,
+            "translation": "幽魂陵墳",
+            "description": "",
+            "iconPath": "phantom_mausoleum_icon.png",
+            "connections": [9,12,16]
+        },
+        {
+            "name": "Mistwood Rainforest",
+            "ID":14,
+            "translation": "幻霧雨林",
+            "description": "",
+            "iconPath": "mistwood_rainforest_icon.png",
+            "connections": [11,15,17]
+        },
+        {
+            "name": "Ember Field",
+            "ID":15,
+            "translation": "陽焰草原",
+            "description": "",
+            "iconPath": "ember_field_icon.png",
+            "connections": [12,14]
+        },
+        {
+            "name": "Frozen Abyss",
+            "ID":16,
+            "translation": "霜凍深淵",
+            "description": "",
+            "iconPath": "frozen_abyss_icon.png",
+            "connections": [13,19]
+        },
+        {
+            "name": "Lunar Town",
+            "ID":17,
+            "translation": "銀月村",
+            "description": "",
+            "iconPath": "lunar_town_icon.png",
+            "connections": [14,18,21]
+        },
+        {
+            "name": "Crystal Mirage Lake",
+            "ID":18,
+            "translation": "氤氳幻湖",
+            "description": "",
+            "iconPath": "crystal_mirage_lake_icon.png",
+            "connections": [17,19]
+        },
+        {
+            "name": "Twilight Sanctuary",
+            "ID":19,
+            "description": "暮光聖域",
+            "iconPath": "twilight_sanctuary_icon.png",
+            "connections": [16,18,20,23]
+        },
+        {
+            "name": "Flourishing Bloomland",
+            "ID":20,
+            "translation": "繁茂花境",
+            "description": "",
+            "iconPath": "flourishing_bloomland_icon.png",
+            "connections": [19]
+        },
+        {
+            "name": "Rotting Forest",
+            "ID":21,
+            "translation": "腐朽之森",
+            "description": "",
+            "iconPath": "rotting_forest_icon.png",
+            "connections": [17,24]
+        },
+        {
+            "name": "Jade Reefs",
+            "ID":22,
+            "translation": "碧海群礁",
+            "description": "",
+            "iconPath": "jade_reefs_icon.png",
+            "connections": [25]
+        },
+        {
+            "name": "Dark King's Fortress",
+            "ID":23,
+            "translation": "黑暗王城",
+            "description": "",
+            "iconPath": "dark_king's_fortress_icon.png",
+            "connections": [19,26]
+        },
+
+        {
+            "name": "Shrieking Fjord",
+            "ID":24,
+            "translation": "尖嘯峽灣",
+            "description": "",
+            "iconPath": "shrieking_fjord_icon.png",
+            "connections": [21,25,27]
+        },
+        {
+            "name": "Stormy Ocean",
+            "ID":25,
+            "translation": "風暴海洋",
+            "description": "",
+            "iconPath": "stormy_ocean_icon.png",
+            "connections": [24,26]
+        },
+        {
+            "name": "Shadowy Black Forest",
+            "ID":26,
+            "translation": "暗影黑森林",
+            "description": "",
+            "iconPath": "shadowy_black_forest_icon.png",
+            "connections": [23,25]
+        },
+        {
+            "name": "Underworld Cavern",
+            "ID":27,
+            "translation": "冥界洞窟",
+            "description": "",
+            "iconPath": "underworld_cavern_icon.png",
+            "connections": [24,28]
+        },
+        {
+            "name": "Blazing Inferno Realm",
+            "ID":28,
+            "translation": "烈焰魔界",
+            "description": "",
+            "iconPath": "blazing_inferno_realm_icon.png",
+            "connections": [27,29]
+        },
+        {
+            "name": "Rift of Shattering Dream",
+            "ID":29,
+            "translation": "蝕夢裂隙",
+            "description": "",
+            "iconPath": "rift_of_shattering_dream_icon.png",
+            "connections": [28]
+        },
+        {
+            "name": "Fallen Land",
+            "ID":30,
+            "translation": "墮落之境",
+            "description": "",
+            "iconPath": "fallen_land_icon.png",
+            "connections": [27]
+        }
+    ]
 }
