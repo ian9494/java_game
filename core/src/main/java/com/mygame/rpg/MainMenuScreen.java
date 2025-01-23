@@ -23,6 +23,7 @@ public class MainMenuScreen implements Screen {
     private final Character player;
     private final SpriteBatch batch;
     private final BitmapFont font;
+    private final BitmapFont largeFont;
     private final OrthographicCamera camera;
 
     private Stage stage; // 用於管理按鈕的舞台
@@ -34,61 +35,83 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(RPGGame game, Character player) {
         this.game = game;
-        this.player = player;
+        this.stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage); // 設定舞台為輸入處理器
 
+        this.player = player;
         this.batch = new SpriteBatch();
 
+        // 設定字體
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\NotoSansTC-Regular.ttf"));
+
+        // 24吋字體
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24; // 字體大小
         parameter.characters = "角色預覽現在事件地圖資訊互移動按鈕聊天室探索"; // 添加需要顯示的中文字符
         parameter.magFilter = Texture.TextureFilter.Linear; // 高品質濾波
         parameter.minFilter = Texture.TextureFilter.Linear; // 高品質濾波
-        font = generator.generateFont(parameter);
+        this.font = generator.generateFont(parameter);
+
+        // 48吋字體
+        FreeTypeFontGenerator.FreeTypeFontParameter largeFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        largeFontParameter.size = 48;
+        this.largeFont = generator.generateFont(largeFontParameter);
+
         generator.dispose();
 
+        // 建立skin然後添加字體
+        this.skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin.add("font", font, BitmapFont.class);
+        skin.add("large-font", largeFont, BitmapFont.class);
 
+        // 建立48吋標籤用的字體模式
+        Label.LabelStyle largeLabelStyle = new Label.LabelStyle();
+        largeLabelStyle.font = largeFont;
 
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 800, 600);
-
-        this.stage = new Stage(new ScreenViewport());
-        this.skin = new Skin(Gdx.files.internal("uiskin.json")); // 確保 assets 有 uiskin.json
-        // skin.add("label", font, BitmapFont.class);
-
-
-        // Labels
-        locationLabel = new Label("Location: 未知", skin);
-        hpLabel = new Label("HP: 100", skin);
-        levelLabel = new Label("Level: 1", skin);
-
-        // 添加到布局表格
-        Table table = new Table();
-        table.setFillParent(true);
-        table.pad(10);
-
-        table.top().left();
-        table.add(locationLabel).left().pad(5).row();
-        table.add(hpLabel).left().pad(5).row();
-        table.add(levelLabel).left().pad(5).row();
-
-        stage.addActor(table);
-
+        // 建立按鈕用的字體模式
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = font; // 使用生成的中文字體
+        style.font = this.font; // 使用生成的中文字體
         style.up = skin.newDrawable("default-round", Color.DARK_GRAY);
         style.down = skin.newDrawable("default-round-down", Color.DARK_GRAY);
         style.checked = skin.newDrawable("default-round", Color.BLUE);
         style.over = skin.newDrawable("default-round", Color.LIGHT_GRAY);
         skin.add("default", style);
 
-        Gdx.input.setInputProcessor(stage); // 設定舞台為輸入處理器
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, 800, 600);
+
+
+
+
+        // 添加到布局表格
+        Table table = new Table();
+        table.setFillParent(true);
+        table.pad(10);
+        stage.addActor(table);
+
+        createLabels(largeLabelStyle);
         createButtons();
+    }
+
+    private void createLabels(Label.LabelStyle largeLabelStyle) {
+        // Labels
+        locationLabel = new Label("Location: 未知", largeLabelStyle);
+        locationLabel.setPosition(1250, 600);
+
+        hpLabel = new Label("HP : 100", largeLabelStyle);
+        hpLabel.setPosition(200, 500);
+
+        levelLabel = new Label("Level : 1", largeLabelStyle);
+        levelLabel.setPosition(200, 420);
+
+        stage.addActor(locationLabel);
+        stage.addActor(hpLabel);
+        stage.addActor(levelLabel);
     }
 
     private void createButtons() {
         // 探索按鈕
-        TextButton exploreButton = new TextButton("探索", skin);
+        TextButton exploreButton = new TextButton("探索", skin, "default");
         exploreButton.setSize(200, 50);
         exploreButton.setPosition(1250, 400);
         exploreButton.addListener(new ClickListener() {
