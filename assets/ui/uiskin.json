@@ -434,5 +434,16 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
         resize: { titleFont: default, background: windowResize, titleFontColor: fontDisabled },
         border: { titleFont: default, background: windowBorder, titleFontColor: fontDisabled },
         dialog: { titleFont: default, background: window, titleFontColor: fontDisabled, stageBackground: alpha }
+    },
+    {
+      "default-font": {
+          "file": "fonts/NotoSansTC-Regular.ttf",
+          "size": 64
+      },
+      "label": {
+          "font": "default-font",
+          "font-color": "white"
+      }
     }
+
 }

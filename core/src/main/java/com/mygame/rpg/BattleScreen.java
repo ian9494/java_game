@@ -58,7 +58,6 @@ public class BattleScreen implements Screen {
         stage.addActor(defendButton);
     }
 
-
     public BattleScreen(Battle battle) {
         this.battle = battle;
         this.batch = new SpriteBatch();
@@ -95,7 +94,7 @@ public class BattleScreen implements Screen {
         }
 
         // 清除畫面
-        ScreenUtils.clear(0, 0, 0, 1); // 黑色背景
+        ScreenUtils.clear(255, 255, 255, 1); // 黑色背景
 
         // 更新相機
         camera.update();

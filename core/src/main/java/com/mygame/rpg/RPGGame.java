@@ -12,7 +12,12 @@ public class RPGGame extends Game {
     private SpriteBatch batch;
     private Character player;
     private Character enemy;
+
     private Battle battle;
+
+    public Character getPlayer() {return player;}
+    public Character getEnemy() {return enemy;}
+
 
     @Override
     public void create() {

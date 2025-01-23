@@ -12,12 +12,6 @@ public class Character {
     private int Spd;
     private int Location;
 
-
-
-    public void setLocation(int location) {
-        Location = location;
-    }
-
     public Character(String name, int maxHp, int maxMp, int Atk, int Def, int Spd) {
         this.name = name;
         this.maxHp = maxHp;
