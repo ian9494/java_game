@@ -2,20 +2,24 @@ package com.mygame.rpg;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.badlogic.gdx.Gdx;
 public class Battle {
     // objects
-    private Character attacker;
-    private Character defender;
+    private Character player;
+    private Character enemy;
 
+    private boolean playerTurn;
     private boolean isBattleOver;
 
     // 戰鬥進行記錄
     private final List<String> battleLogs = new ArrayList<>();
     private int currentLogIndex = 0;
 
-    public Battle(Character player1, Character player2) {
-        this.attacker = player1;
-        this.defender = player2;
+    public Battle(Character player, Character enemy) {
+        Gdx.app.log("battle", "enter battle");
+        this.player = player;
+        this.enemy = enemy;
         this.isBattleOver = false;
 
         // battleLogs.add(attacker.getName() + " attacks " + attacker.getName() + " for 10 damage.");
@@ -26,21 +30,21 @@ public class Battle {
 
     // 對換角色
     public void switchRoles() {
-        Character temp = attacker;
-        attacker = defender;
-        defender = temp;
+        Character temp = player;
+        player = enemy;
+        enemy = temp;
     }
 
-    public Character getAttacker() {
-        return attacker;
+    public Character getPlayer() {
+        return player;
     }
 
-    public Character getDefender() {
-        return defender;
+    public Character getEnemy() {
+        return enemy;
     }
 
     public boolean isBattleOver() {
-        return isBattleOver;
+        return !player.isAlive() || !enemy.isAlive();
     }
 
     // calculate damage
@@ -49,26 +53,18 @@ public class Battle {
         return Math.max(1, damage); // make attack do at least 1 damage
     }
 
-    // do one attack
-    public void performAttack(Character attacker, Character defender) {
-        int damage = calculateDamage(attacker, defender);
-        defender.takeDamage(damage);
-
-        battleLogs.add(attacker.getName() + " 進行了一次攻擊\n對 " + defender.getName() + " 造成了 " + damage + " 點傷害\n");
-        System.out.println(attacker.getName() + " 進行了一次攻擊\n對 " + defender.getName() + " 造成了 " + damage + " 點傷害\n");
-    }
-
     // player do attack commend
     public void doAttack() {
-        int damage = calculateDamage(attacker, defender);
-        String action = attacker.getName() + " attacks " + defender.getName() + " for " + damage + " damage.";
+        Gdx.app.log("battle:doAttack", "do an attack");
+        int damage = calculateDamage(player, enemy);
+        String action = player.getName() + " attacks " + enemy.getName() + " for " + damage + " damage.";
         battleLogs.add(action);
-        defender.takeDamage(damage);
+        enemy.takeDamage(damage);
     }
 
     // player do defend commend
     public void doDefend() {
-        String action = attacker.getName() + " defends, reducing damage.";
+        String action = player.getName() + " defends, reducing damage.";
         battleLogs.add(action);
         // 添加防禦邏輯
     }
@@ -83,24 +79,11 @@ public class Battle {
 
     // run one round of battle
     public void battleTurn(Character attacker, Character defender) {
+        Gdx.app.log("battle", "start new round");
+
         // detect if battle is over
-        if (!attacker.isAlive() || !defender.isAlive()) {
-            System.out.println("Battle is over.");
-            return;
-        }
+        if (isBattleOver()) return;
 
-        // Player's turn
-        performAttack(attacker, defender);
-
-        System.err.println("sys:check alive");
-        // Check if enemy is defeated
-        if (!defender.isAlive()) {
-            System.out.println(defender.getName() + " 被擊倒了!");
-            return;
-        }
-
-        // Enemy's turn
-        performAttack(defender, attacker);
 
         // Check if player is defeated
         if (!attacker.isAlive()) {
@@ -110,8 +93,8 @@ public class Battle {
 
     public String getBattleState() {
         StringBuilder state = new StringBuilder();
-        state.append("Player: ").append(attacker.getName()).append(" HP: ").append(attacker.getHp()).append("\n");
-        state.append("Enemy: ").append(defender.getName()).append(" HP: ").append(defender.getHp()).append("\n");
+        state.append("Player: ").append(player.getName()).append(" HP: ").append(player.getHp()).append("\n");
+        state.append("Enemy: ").append(enemy.getName()).append(" HP: ").append(enemy.getHp()).append("\n");
         return state.toString();
     }
 

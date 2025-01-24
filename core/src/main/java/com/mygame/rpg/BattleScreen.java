@@ -1,6 +1,7 @@
 package com.mygame.rpg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,13 +21,14 @@ public class BattleScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
     private final OrthographicCamera camera;
+    private final RPGGame game;
     private final Battle battle;
     private Stage stage;
     private Skin skin;
 
     private String currentBattleLog = ""; //現在戰鬥事件
     private float elapsedTime = 0;
-    private final float DISPLAY_INTERVAL = 1.5f; // 每個動作顯示時間
+    private final float DISPLAY_INTERVAL = 0.5f; // 每個動作顯示時間
 
     private void createButtons() {
         // 攻擊按鈕
@@ -58,7 +60,8 @@ public class BattleScreen implements Screen {
         stage.addActor(defendButton);
     }
 
-    public BattleScreen(Battle battle) {
+    public BattleScreen(RPGGame game, Battle battle) {
+        this.game = game;
         this.battle = battle;
         this.batch = new SpriteBatch();
 
@@ -94,7 +97,7 @@ public class BattleScreen implements Screen {
         }
 
         // 清除畫面
-        ScreenUtils.clear(255, 255, 255, 1); // 黑色背景
+        ScreenUtils.clear(0, 0, 0, 1); // 黑色背景
 
         // 更新相機
         camera.update();
@@ -114,8 +117,11 @@ public class BattleScreen implements Screen {
         }
 
         if (battle.isBattleOver()) {
-            font.draw(batch, "Battle Over! Winner: " +
-                    (battle.getAttacker().isAlive() ? battle.getAttacker().getName() : battle.getDefender().getName()), 50, 50);
+            System.out.println("--go mainmenu");
+            font.draw(batch, "Battle Over! Winner: " +(battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()), 50, 50);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                game.setScreen(new MainMenuScreen(game));
+            }
         }
 
         batch.end();

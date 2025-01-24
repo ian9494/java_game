@@ -1,5 +1,7 @@
 package com.mygame.rpg;
 
+import com.badlogic.gdx.Gdx;
+
 public class Character {
     private String name;
     private int LV;
@@ -41,7 +43,8 @@ public class Character {
 
     // detect if character is alive
     public boolean isAlive() {
-        return this.hp > 0;
+        Gdx.app.log("TAG", String.valueOf(this.hp));
+        return this.hp > 1;
     }
 
     // set character's HP and make sure the value is valid

@@ -20,7 +20,6 @@ import com.badlogic.gdx.Gdx;
 
 public class MainMenuScreen implements Screen {
     private final RPGGame game;
-    private final Character player;
     private final SpriteBatch batch;
     private final BitmapFont font;
     private final BitmapFont largeFont;
@@ -33,12 +32,11 @@ public class MainMenuScreen implements Screen {
     private Label hpLabel;
     private Label levelLabel;
 
-    public MainMenuScreen(RPGGame game, Character player) {
+    public MainMenuScreen(RPGGame game) {
         this.game = game;
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage); // 設定舞台為輸入處理器
 
-        this.player = player;
         this.batch = new SpriteBatch();
 
         // 設定字體
@@ -93,6 +91,7 @@ public class MainMenuScreen implements Screen {
         createButtons();
     }
 
+    // 創建標籤
     private void createLabels(Label.LabelStyle largeLabelStyle) {
         // Labels
         locationLabel = new Label("Location: 未知", largeLabelStyle);
@@ -109,6 +108,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(levelLabel);
     }
 
+    // 創建按鈕
     private void createButtons() {
         // 探索按鈕
         TextButton exploreButton = new TextButton("探索", skin, "default");
@@ -118,8 +118,10 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 // 進入探索邏輯
-                System.out.println("Exploring...");
-                // game.setScreen(new ExploreScreen(game, player)); // 假設有 ExploreScreen
+                Gdx.app.log("MainMenuScreen", "Exploring...");
+                Character player = game.getPlayer();
+                Character enemy = new Character("Monster", 50, 10, 10, 10, 10);
+                game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
             }
         });
 

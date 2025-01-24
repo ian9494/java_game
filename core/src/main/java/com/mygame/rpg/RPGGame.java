@@ -27,11 +27,8 @@ public class RPGGame extends Game {
         player = new Character("Hero", 100, 50, 20, 10, 15);
         enemy = new Character("Goblin", 80, 30, 15, 5, 10);
 
-        // 初始化戰鬥
-        battle = new Battle(player, enemy);
-
         // 設置 BattleScreen 為當前屏幕
-        setScreen(new MainMenuScreen(this, player));
+        setScreen(new MainMenuScreen(this));
     }
 
     @Override
