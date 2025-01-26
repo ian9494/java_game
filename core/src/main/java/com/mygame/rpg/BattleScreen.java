@@ -26,7 +26,7 @@ public class BattleScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
-    private String currentBattleLog = ""; //現在戰鬥事件
+    // private String currentBattleLog = ""; //現在戰鬥事件
     private float elapsedTime = 0;
     private final float DISPLAY_INTERVAL = 0.5f; // 每個動作顯示時間
 
@@ -89,15 +89,30 @@ public class BattleScreen implements Screen {
 
     public void render(float delta) {
 
-        // input logs
-        elapsedTime += delta;
-        if (elapsedTime >= DISPLAY_INTERVAL && !battle.isBattleOver()){
-            currentBattleLog = battle.getNextLog();
-            elapsedTime = 0;
-        }
+        // // input logs
+        // elapsedTime += delta;
+        // if (elapsedTime >= DISPLAY_INTERVAL && !battle.isBattleOver()){
+        //     currentBattleLog = battle.getNextLog();
+        //     elapsedTime = 0;
+        // }
 
         // 清除畫面
         ScreenUtils.clear(0, 0, 0, 1); // 黑色背景
+
+        // 更新行動條
+        battle.updateActionBar(delta);
+
+        // 獲取下一位行動者
+        Character actionCharacter = battle.getNextActionCharacter();
+        if (actionCharacter != null) {
+            if (actionCharacter == battle.getPlayer()) {
+                battle.logAction(actionCharacter.getName() + " attacks!");
+                battle.getEnemy().takeDamage(battle.calculateDamage(actionCharacter, battle.getEnemy()));
+            } else {
+                battle.logAction(actionCharacter.getName() + " attacks!");
+                battle.getPlayer().takeDamage(battle.calculateDamage(actionCharacter, battle.getPlayer()));
+            }
+        }
 
         // 更新相機
         camera.update();
@@ -105,23 +120,15 @@ public class BattleScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        // 繪製文字
-        font.getData().setScale(1);
-        font.draw(batch, "Hello Battle Screen!", 100, 100); // 顯示文字
-
+        // 繪製戰鬥狀態
         font.draw(batch, battle.getBattleState(), 50, 550); // 顯示場上資訊
+        font.draw(batch, "Last Action: " + battle.getLastLog(), 50, 400);
 
-        if (currentBattleLog != null) {
-
-            font.draw(batch, currentBattleLog, 50, 200); // 顯示目前的動作
-        }
-
+        // 結束戰鬥
         if (battle.isBattleOver()) {
             System.out.println("--go mainmenu");
-            font.draw(batch, "Battle Over! Winner: " +(battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()), 50, 50);
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                game.setScreen(new MainMenuScreen(game));
-            }
+            font.draw(batch, "Battle Over! Winner: " + (battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()) + " press ENTER to return", 50, 50);
+            game.setScreen(new MainMenuScreen(game));
         }
 
         batch.end();
@@ -129,9 +136,6 @@ public class BattleScreen implements Screen {
         // 更新並繪製舞台
         stage.act(delta);
         stage.draw();
-
-
-
 
     }
 

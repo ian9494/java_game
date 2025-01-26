@@ -13,6 +13,8 @@ public class Character {
     private int Def;
     private int Spd;
     private int Location;
+    private int actionBar; // 行動條
+
 
     public Character(String name, int maxHp, int maxMp, int Atk, int Def, int Spd) {
         this.name = name;
@@ -34,6 +36,7 @@ public class Character {
     public int getDef() { return Def; }
     public int getSpd() { return Spd; }
     public int getLocation() {return Location;}
+    public int getActionBar() {return actionBar;}
 
 
     // damage counter
@@ -43,11 +46,21 @@ public class Character {
 
     // detect if character is alive
     public boolean isAlive() {
-        Gdx.app.log("TAG", String.valueOf(this.hp));
+        // Gdx.app.log("TAG", String.valueOf(this.hp));
         return this.hp > 1;
     }
 
-    // set character's HP and make sure the value is valid
+    // increment action bar
+    public void incrementActionBar(float value) {
+        this.actionBar += value;
+    }
+
+    // reset action bar
+    public void resetActionBar() {
+        this.actionBar = 0;
+    }
+
+    // 設置角色的 HP 並確保值是有效的
     public void setHp(int hp) { this.hp = Math.max(0, Math.min(hp, maxHp)); }
 
 }
