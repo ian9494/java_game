@@ -13,8 +13,6 @@ public class RPGGame extends Game {
     private Character player;
     private Character enemy;
 
-    private Battle battle;
-
     public Character getPlayer() {return player;}
     public Character getEnemy() {return enemy;}
 

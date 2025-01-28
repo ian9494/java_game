@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import com.badlogic.gdx.Gdx;
+
 public class Battle {
     // objects
     private Character player;
@@ -13,6 +14,7 @@ public class Battle {
     // battle state
     private boolean playerTurn;
     private boolean isBattleOver;
+    private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
 
     // 行動隊列
     private final PriorityQueue<Character> actionQueue;
@@ -27,6 +29,7 @@ public class Battle {
         this.player = player;
         this.enemy = enemy;
         this.isBattleOver = false;
+        this.waitingForPlayerAction = false; // 初始化為 false
 
         this.battleLogs = new ArrayList<>();
         this.actionQueue = new PriorityQueue<>((a, b) -> Integer.compare(b.getActionBar(), a.getActionBar())); // 速度高者優先
@@ -38,10 +41,61 @@ public class Battle {
         actionQueue.add(enemy);
     }
 
+    // 執行戰鬥
+    private void processTurn(Character character) {
+        if (character == player) {
+            // 玩家行動
+            int damage = calculateDamage(player, enemy);
+            enemy.takeDamage(damage);
+
+            Gdx.app.log("BattleLog", player.getName() + " attacks " + enemy.getName() + " for " + damage + " damage.");
+            Gdx.app.log("BattleLog", enemy.getName() + " remaining HP: " + enemy.getHp());
+
+        } else if (character == enemy) {
+            // 敵人行動
+            int damage = calculateDamage(enemy, player);
+            player.takeDamage(damage);
+            Gdx.app.log("BattleLog", "waitingForPlayerAction: " + waitingForPlayerAction + "\n");
+            Gdx.app.log("BattleLog", enemy.getName() + " attacks " + player.getName() + " for " + damage + " damage.");
+            Gdx.app.log("BattleLog", player.getName() + " remaining HP: " + player.getHp());
+        }
+
+        // 檢查戰鬥是否結束
+        if (isBattleOver()) {
+            isBattleOver = true;
+            String winner = player.isAlive() ? player.getName() : enemy.getName();
+            Gdx.app.log("BattleLog", "Battle Over! Winner: " + winner);
+        }
+    }
+
     // update action bar
-    public void updateActionBar(float deltaTime) {
+    public void updateActionBar() {
+        if (waitingForPlayerAction) {
+            return; // 如果正在等待玩家操作，則不更新行動條
+        }
+
+        List<Character> readyToAct = new ArrayList<>();
+
         for (Character character : actionQueue) {
-            character.incrementActionBar(character.getSpd() * deltaTime); // 根據速度增加行動條
+            character.incrementActionBar(character.getSpd());
+
+            if (character.getActionBar() >= actionThreshold) {
+                character.setReadyToAct(true); // 設置角色為準備行動狀態
+                readyToAct.add(character);
+                Gdx.app.log("BattleLog - updateActionBar", "Character " + character.getName() + " is ready to act.");
+            }
+        }
+
+        for (Character character : readyToAct) {
+            actionQueue.remove(character);
+            if (character == player) {
+                waitingForPlayerAction = true; // 如果是玩家，設置等待玩家操作
+            } else {
+                processTurn(character); // 自動執行敵人的行動
+                character.resetActionBar();
+                character.setReadyToAct(false); // 重置行動狀態
+                actionQueue.add(character);
+            }
         }
     }
 
@@ -83,6 +137,8 @@ public class Battle {
         String action = player.getName() + " attacks " + enemy.getName() + " for " + damage + " damage.";
         battleLogs.add(action);
         enemy.takeDamage(damage);
+        actionQueue.add(player);
+        waitingForPlayerAction = false; // 玩家操作完成，繼續更新行動條
     }
 
     // player do defend commend
@@ -90,6 +146,7 @@ public class Battle {
         String action = player.getName() + " defends, reducing damage.";
         battleLogs.add(action);
         // 添加防禦邏輯
+        waitingForPlayerAction = false; // 玩家操作完成，繼續更新行動條
     }
 
     // show battle logs
@@ -110,27 +167,21 @@ public class Battle {
         return battleLogs.isEmpty() ? "" : battleLogs.get(battleLogs.size() - 1);
     }
 
-    // run one round of battle
-    public void battleTurn(Character player, Character enemy) {
-        Gdx.app.log("battle", "start new round");
+    // get all battle logs
+    public List<String> getBattleLogs() {
+        return new ArrayList<>(battleLogs); // 回傳所有行動日誌
+    }
 
-        // detect if battle is over
-        if (isBattleOver()) return;
-
-        // character's turn
-        if (playerTurn) {
-            int damage = calculateDamage(player, enemy);
-            enemy.takeDamage(damage);
-            battleLogs.add(player.getName() + "對" + enemy.getName() + "造成了" + damage + "點傷害");
+    // get action bar states
+    public String getActionBarStates() {
+        StringBuilder states = new StringBuilder("Action Bar States:\n");
+        for (Character character : actionQueue) {
+            states.append(character.getName())
+                  .append(" | Speed: ").append(character.getSpd())
+                  .append(" | ActionBar: ").append(character.getActionBar())
+                  .append("\n");
         }
-        // enemy's turn
-        else {
-            int damage = calculateDamage(enemy, player);
-            player.takeDamage(damage);
-            battleLogs.add(enemy.getName() + "對" + player.getName() + "造成了" + damage + "點傷害");
-        }
-        // switch side
-        playerTurn = !playerTurn;
+        return states.toString();
     }
 
     public String getBattleState() {
@@ -140,4 +191,8 @@ public class Battle {
         return state.toString();
     }
 
+    // 新增方法來檢查是否正在等待玩家操作
+    public boolean isWaitingForPlayerAction() {
+        return waitingForPlayerAction;
+    }
 }

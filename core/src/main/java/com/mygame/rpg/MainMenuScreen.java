@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,7 +19,8 @@ import com.badlogic.gdx.Gdx;
 
 public class MainMenuScreen implements Screen {
     private final RPGGame game;
-    private final SpriteBatch batch;
+    // 移除未使用的 batch 變數
+    // private final SpriteBatch batch;
     private final BitmapFont font;
     private final BitmapFont largeFont;
     private final OrthographicCamera camera;
@@ -37,7 +37,7 @@ public class MainMenuScreen implements Screen {
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage); // 設定舞台為輸入處理器
 
-        this.batch = new SpriteBatch();
+        // this.batch = new SpriteBatch(); // 移除未使用的 batch 變數
 
         // 設定字體
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\NotoSansTC-Regular.ttf"));
@@ -187,7 +187,7 @@ public class MainMenuScreen implements Screen {
     public void resume() {}
     @Override
     public void dispose() {
-        batch.dispose();
+        // batch.dispose(); // 移除未使用的 batch 變數
         font.dispose();
         stage.dispose();
     }

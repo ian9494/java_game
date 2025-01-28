@@ -1,7 +1,6 @@
 package com.mygame.rpg;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
-
 public class BattleScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
@@ -25,10 +23,6 @@ public class BattleScreen implements Screen {
     private final Battle battle;
     private Stage stage;
     private Skin skin;
-
-    // private String currentBattleLog = ""; //現在戰鬥事件
-    private float elapsedTime = 0;
-    private final float DISPLAY_INTERVAL = 0.5f; // 每個動作顯示時間
 
     private void createButtons() {
         // 攻擊按鈕
@@ -40,6 +34,13 @@ public class BattleScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 // 執行攻擊邏輯
                 battle.doAttack();
+
+                // 打印行動序列
+                Gdx.app.log("BattleLog", "=== Current Action Sequence ===");
+                for (String log : battle.getBattleLogs()) {
+                    Gdx.app.log("BattleLog", log);
+                }
+                Gdx.app.log("BattleLog", "==============================\n");
             }
         });
 
@@ -88,30 +89,12 @@ public class BattleScreen implements Screen {
     }
 
     public void render(float delta) {
-
-        // // input logs
-        // elapsedTime += delta;
-        // if (elapsedTime >= DISPLAY_INTERVAL && !battle.isBattleOver()){
-        //     currentBattleLog = battle.getNextLog();
-        //     elapsedTime = 0;
-        // }
-
         // 清除畫面
         ScreenUtils.clear(0, 0, 0, 1); // 黑色背景
 
         // 更新行動條
-        battle.updateActionBar(delta);
-
-        // 獲取下一位行動者
-        Character actionCharacter = battle.getNextActionCharacter();
-        if (actionCharacter != null) {
-            if (actionCharacter == battle.getPlayer()) {
-                battle.logAction(actionCharacter.getName() + " attacks!");
-                battle.getEnemy().takeDamage(battle.calculateDamage(actionCharacter, battle.getEnemy()));
-            } else {
-                battle.logAction(actionCharacter.getName() + " attacks!");
-                battle.getPlayer().takeDamage(battle.calculateDamage(actionCharacter, battle.getPlayer()));
-            }
+        if (!battle.isWaitingForPlayerAction()) {
+            battle.updateActionBar();
         }
 
         // 更新相機
@@ -126,7 +109,7 @@ public class BattleScreen implements Screen {
 
         // 結束戰鬥
         if (battle.isBattleOver()) {
-            System.out.println("--go mainmenu");
+            Gdx.app.log("BattleScreen", "go main menu");
             font.draw(batch, "Battle Over! Winner: " + (battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()) + " press ENTER to return", 50, 50);
             game.setScreen(new MainMenuScreen(game));
         }
@@ -136,7 +119,6 @@ public class BattleScreen implements Screen {
         // 更新並繪製舞台
         stage.act(delta);
         stage.draw();
-
     }
 
     @Override

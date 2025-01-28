@@ -1,6 +1,7 @@
 package com.mygame.rpg;
 
-import com.badlogic.gdx.Gdx;
+// 移除未使用的 Gdx import
+// import com.badlogic.gdx.Gdx;
 
 public class Character {
     private String name;
@@ -14,6 +15,7 @@ public class Character {
     private int Spd;
     private int Location;
     private int actionBar; // 行動條
+    private boolean readyToAct; // 新增布林值來標記角色是否準備好行動
 
 
     public Character(String name, int maxHp, int maxMp, int Atk, int Def, int Spd) {
@@ -25,6 +27,8 @@ public class Character {
         this.Atk = Atk;
         this.Def = Def;
         this.Spd = Spd;
+        this.actionBar = 0;
+        this.readyToAct = false;
     }
 
     // Getters and setters for attributes
@@ -37,6 +41,8 @@ public class Character {
     public int getSpd() { return Spd; }
     public int getLocation() {return Location;}
     public int getActionBar() {return actionBar;}
+    public boolean isReadyToAct() { return readyToAct; }
+    public void setReadyToAct(boolean readyToAct) { this.readyToAct = readyToAct; }
 
 
     // damage counter
@@ -51,13 +57,17 @@ public class Character {
     }
 
     // increment action bar
-    public void incrementActionBar(float value) {
+    public void incrementActionBar(int value) {
         this.actionBar += value;
+        if (this.actionBar >= 100) {
+            this.readyToAct = true;
+        }
     }
 
     // reset action bar
     public void resetActionBar() {
         this.actionBar = 0;
+        this.readyToAct = false;
     }
 
     // 設置角色的 HP 並確保值是有效的
