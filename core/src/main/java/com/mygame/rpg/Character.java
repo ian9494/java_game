@@ -4,31 +4,25 @@ package com.mygame.rpg;
 // import com.badlogic.gdx.Gdx;
 
 public class Character {
-    private String name;
-    private int LV;
-    private int hp;
-    private int maxHp;
-    private int mp;
-    private int maxMp;
-    private int Atk;
-    private int Def;
-    private int Spd;
-    private int Location;
-    private int actionBar; // 行動條
-    private boolean readyToAct; // 新增布林值來標記角色是否準備好行動
+    protected String name;
+    protected int LV;
+    protected int exp;
+    protected int expToNextLV;
+    protected int hp;
+    protected int maxHp;
+    protected int mp;
+    protected int maxMp;
+    protected int Atk;
+    protected int Def;
+    protected int Spd;
+    protected int Location;
+    protected int actionBar; // 行動條
+    protected boolean readyToAct; // 新增布林值來標記角色是否準備好行動
 
 
-    public Character(String name, int maxHp, int maxMp, int Atk, int Def, int Spd) {
+    public Character(String name, int LV) {
         this.name = name;
-        this.maxHp = maxHp;
-        this.hp = maxHp;
-        this.maxMp = maxMp;
-        this.mp = maxMp;
-        this.Atk = Atk;
-        this.Def = Def;
-        this.Spd = Spd;
-        this.actionBar = 0;
-        this.readyToAct = false;
+        this.LV = LV;
     }
 
     // Getters and setters for attributes
@@ -53,7 +47,7 @@ public class Character {
     // detect if character is alive
     public boolean isAlive() {
         // Gdx.app.log("TAG", String.valueOf(this.hp));
-        return this.hp > 1;
+        return this.hp > 0;
     }
 
     // increment action bar

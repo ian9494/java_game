@@ -119,8 +119,8 @@ public class MainMenuScreen implements Screen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 // 進入探索邏輯
                 Gdx.app.log("MainMenuScreen", "Exploring...");
-                Character player = game.getPlayer();
-                Character enemy = new Character("Monster", 50, 10, 10, 10, 10);
+                Player player = game.getPlayer();
+                Enemy enemy = new Enemy("Monster", 50, 10, 10, 10, 10);
                 game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
             }
         });
