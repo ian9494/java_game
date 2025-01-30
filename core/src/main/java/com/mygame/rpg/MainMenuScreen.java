@@ -45,7 +45,7 @@ public class MainMenuScreen implements Screen {
         // 24吋字體
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24; // 字體大小
-        parameter.characters = "角色預覽現在事件地圖資訊互移動按鈕聊天室探索"; // 添加需要顯示的中文字符
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "角色預覽現在事件地圖資訊互移動按鈕聊天室探索"; // 添加需要顯示的中文字符
         parameter.magFilter = Texture.TextureFilter.Linear; // 高品質濾波
         parameter.minFilter = Texture.TextureFilter.Linear; // 高品質濾波
         this.font = generator.generateFont(parameter);

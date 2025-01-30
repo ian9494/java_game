@@ -14,6 +14,7 @@ public class Battle {
     // battle state
     private boolean playerTurn;
     private boolean isBattleOver;
+    private boolean battleOver;
     private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
 
     private String battleResult;
@@ -123,9 +124,24 @@ public class Battle {
             if (!battleOver) {
                 int expGained = enemy.getExpReward();
                 player.gainExp(expGained);
+                itemReward = enemy.getRandomDrop();
+                battleResult = player.getName() + " defeated " + enemy.getName() + "! Gained " + expGained + " EXP.";
+                battleOver = true;
 
             }
+            return true;
         }
+        return !player.isAlive();
+    }
+
+    // get battle result
+    public String getBattleResult() {
+        return battleResult;
+    }
+
+    // get item reward
+    public String getItemReward() {
+        return itemReward;
     }
 
     // calculate damage
