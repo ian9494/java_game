@@ -8,13 +8,16 @@ import com.badlogic.gdx.Gdx;
 
 public class Battle {
     // objects
-    private Character player;
-    private Character enemy;
+    private Player player;
+    private Enemy enemy;
 
     // battle state
     private boolean playerTurn;
     private boolean isBattleOver;
     private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
+
+    private String battleResult;
+    private String itemReward;
 
     // 行動隊列
     private final PriorityQueue<Character> actionQueue;
@@ -24,7 +27,7 @@ public class Battle {
     private final List<String> battleLogs;
     private int currentLogIndex = 0;
 
-    public Battle(Character player, Character enemy) {
+    public Battle(Player player, Enemy enemy) {
         Gdx.app.log("battle", "enter battle");
         this.player = player;
         this.enemy = enemy;
@@ -111,17 +114,18 @@ public class Battle {
     }
 
     // get player and enemy
-    public Character getPlayer() {
-        return player;
-    }
-
-    public Character getEnemy() {
-        return enemy;
-    }
+    public Character getPlayer() {return player;}
+    public Character getEnemy() {return enemy;}
 
     // 判斷戰鬥是否結束
     public boolean isBattleOver() {
-        return actionQueue.stream().anyMatch(c -> !c.isAlive());
+        if (!enemy.isAlive()) {
+            if (!battleOver) {
+                int expGained = enemy.getExpReward();
+                player.gainExp(expGained);
+
+            }
+        }
     }
 
     // calculate damage

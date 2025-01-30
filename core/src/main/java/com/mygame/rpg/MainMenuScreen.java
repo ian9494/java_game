@@ -120,7 +120,7 @@ public class MainMenuScreen implements Screen {
                 // 進入探索邏輯
                 Gdx.app.log("MainMenuScreen", "Exploring...");
                 Player player = game.getPlayer();
-                Enemy enemy = new Enemy("Monster", 50, 10, 10, 10, 10);
+                Enemy enemy = new Enemy("Monster", 50, 10, 10, 10, 10, 100, null);
                 game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
             }
         });
@@ -133,8 +133,8 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 // 進入角色檢視畫面
-                System.out.println("Viewing Character...");
-                // game.setScreen(new CharacterScreen(game, player)); // 假設有 CharacterScreen
+                Gdx.app.log("Main Menu", "Viewing Character...");
+                game.setScreen(new CharacterScreen(game, game.getPlayer())); // 假設有 CharacterScreen
             }
         });
 

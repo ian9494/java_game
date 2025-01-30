@@ -28,8 +28,12 @@ public class Character {
     // Getters and setters for attributes
     public String getName() { return name; }
     public int getLV() { return LV; }
+    public int getExp() { return exp; }
+    public int getExpToNextLV() { return expToNextLV; }
     public int getHp() { return hp; }
+    public int getMaxHp() { return maxHp; }
     public int getMp() { return mp; }
+    public int getMaxMp() { return maxMp; }
     public int getAtk() { return Atk; }
     public int getDef() { return Def; }
     public int getSpd() { return Spd; }

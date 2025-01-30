@@ -6,6 +6,9 @@ public class Player extends Character {
     private int exp;
     private int expToNextLV;
 
+    public int getExpToNextLV() { return expToNextLV; }
+    public int getExp() { return exp; }
+
     public Player(String name) {
         super(name, 1); // 玩家初始等級 1
         this.exp = 0;
@@ -13,7 +16,8 @@ public class Player extends Character {
     }
 
     // 根據等級計算數值
-    private void updateStats() {
+    public void updateStats() {
+        Gdx.app.log("Player - Status", "Updating stats for " + name + "...");
         this.maxHp = (100 + (LV - 1) * 20);
         this.maxMp = 50 + (LV - 1) * 10;
         this.Atk = 10 + (LV - 1) * 3;
@@ -22,6 +26,7 @@ public class Player extends Character {
         this.hp = maxHp;
         this.mp = maxMp;
         this.expToNextLV = LV * (LV * 20);
+        Gdx.app.log("Player - Status", "expToNextLV: " + expToNextLV);
     }
 
     // 獲得經驗
