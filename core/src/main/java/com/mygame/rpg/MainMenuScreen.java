@@ -120,7 +120,7 @@ public class MainMenuScreen implements Screen {
                 // 進入探索邏輯
                 Gdx.app.log("MainMenuScreen", "Exploring...");
                 Player player = game.getPlayer();
-                Enemy enemy = new Enemy("Monster", 50, 10, 10, 10, 10, 100, null);
+                Enemy enemy = new Enemy("Monster", 50, 10, 10, 0, 10, 100, null);
                 game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
             }
         });

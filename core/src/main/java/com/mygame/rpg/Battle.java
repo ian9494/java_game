@@ -125,6 +125,11 @@ public class Battle {
                 int expGained = enemy.getExpReward();
                 player.gainExp(expGained);
                 itemReward = enemy.getRandomDrop();
+
+                if (itemReward != null) { // 確保有掉落物品
+                player.addItem(itemReward); // 獲得掉落物品
+                }
+
                 battleResult = player.getName() + " defeated " + enemy.getName() + "! Gained " + expGained + " EXP.";
                 battleOver = true;
 

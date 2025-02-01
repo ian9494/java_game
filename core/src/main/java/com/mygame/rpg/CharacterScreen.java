@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import java.util.List;
 
 public class CharacterScreen implements Screen {
     private final RPGGame game;
@@ -110,8 +111,20 @@ public class CharacterScreen implements Screen {
         font.draw(batch, "DEF: " + player.getDef(), 100, 320);
         font.draw(batch, "SPD: " + player.getSpd(), 100, 290);
 
-        batch.end();
+        // 顯示背包
+        font.draw(batch, "Inventory:", 300, 550);
+        List<String> inventory = player.getInventory();
+        int y = 220;
+        if (inventory.isEmpty()) {
+            font.draw(batch, "No items.", 100, y);
+        } else {
+            for (String item : inventory) {
+                font.draw(batch, "- " + item, 100, y);
+                y -= 25;
+            }
+        }
 
+        batch.end();
         stage.act(delta);
         stage.draw();
     }

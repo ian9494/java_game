@@ -3,6 +3,8 @@ package com.mygame.rpg;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.utils.Null;
+
 public class Enemy extends Character {
     private int expReward;
     private List<String> itemDrops;
@@ -25,7 +27,7 @@ public class Enemy extends Character {
 
     public String getRandomDrop() {
         if (itemDrops == null || itemDrops.isEmpty()) {
-            return "no item dropped";
+            return null;
         }
         Random rand = new Random();
         return itemDrops.get(rand.nextInt(itemDrops.size()));

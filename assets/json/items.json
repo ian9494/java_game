@@ -1,0 +1,185 @@
+{
+    "items": [
+        {
+            "id": 101,
+            "name": "Coin Pouch",
+            "chinese_name": "金幣袋",
+            "rarity": "common",
+            "type": "consumable",
+            "price": 0,
+            "effect": {
+            "gold_range": [5, 10]
+            },
+            "stackable": true,
+            "usage_limit": 1
+        },
+        {
+            "id": 102,
+            "name": "Low HP Potion",
+            "chinese_name": "低階HP藥水",
+            "rarity": "uncommon",
+            "type": "consumable",
+            "price": 50,
+            "effect": {
+            "hp_restore": {
+                "value": 20
+            }
+            },
+            "stackable": true,
+            "usage_limit": 1
+        },
+        {
+            "id": 103,
+            "name": "Low MP Potion",
+            "chinese_name": "低階MP藥水",
+            "rarity": "uncommon",
+            "type": "consumable",
+            "price": 50,
+            "effect": {
+            "mp_restore": {
+                "value": 20
+            }
+            },
+            "stackable": true,
+            "usage_limit": 1
+        },
+        {
+            "id": 104,
+            "name": "Low Strength Potion",
+            "chinese_name": "低階力量藥水",
+            "rarity": "uncommon",
+            "type": "consumable",
+            "price": 80,
+            "effect": {
+            "atk_boost": {
+                "value": 0.1,
+                "duration": 5
+            }
+            },
+            "stackable": false,
+            "usage_limit": 1
+        },
+        {
+            "id": 105,
+            "name": "Low Hardening Potion",
+            "chinese_name": "低階硬化藥水",
+            "rarity": "uncommon",
+            "type": "consumable",
+            "price": 80,
+            "effect": {
+            "def_boost": {
+                "value": 0.1,
+                "duration": 5
+            }
+            },
+            "stackable": false,
+            "usage_limit": 1
+        },
+        {
+            "id": 106,
+            "name": "Low Speed Potion",
+            "chinese_name": "低階提速藥水",
+            "rarity": "uncommon",
+            "type": "consumable",
+            "price": 80,
+            "effect": {
+            "spd_boost": {
+                "value": 0.1,
+                "duration": 5
+            }
+            },
+            "stackable": false,
+            "usage_limit": 1
+        },
+        {
+            "id": 201,
+            "name": "Wood",
+            "chinese_name": "木材",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 202,
+            "name": "Stone",
+            "chinese_name": "石頭",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 203,
+            "name": "Thread",
+            "chinese_name": "絲線",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 204,
+            "name": "Plant Fiber",
+            "chinese_name": "植物纖維",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 205,
+            "name": "Metal Scrap",
+            "chinese_name": "金屬碎片",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 206,
+            "name": "Leather",
+            "chinese_name": "皮革",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 207,
+            "name": "Cotton",
+            "chinese_name": "棉花",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 208,
+            "name": "Coal",
+            "chinese_name": "煤炭",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 209,
+            "name": "Copper Ore",
+            "chinese_name": "紅銅礦",
+            "rarity": "common",
+            "type": "material",
+            "stackable": true
+        },
+        {
+            "id": 210,
+            "name": "Copper Ingot",
+            "chinese_name": "紅銅錠",
+            "rarity": "uncommon",
+            "type": "material",
+            "stackable": true,
+            "crafting": {
+            "ingredients": [
+                { "id": 209, "quantity": 1 },
+                { "id": 208, "quantity": 1 }
+            ],
+            "requirements": [
+                "smelting_furnace(這是先放著 沒確定條件)",
+                "town_smithy"
+            ]
+            }
+        }
+    ]
+}

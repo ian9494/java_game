@@ -1,18 +1,24 @@
 package com.mygame.rpg;
 
 import com.badlogic.gdx.Gdx;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Player extends Character {
     private int exp;
     private int expToNextLV;
 
+    private List<String> inventory;
+
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
+    public List<String> getInventory() { return inventory; }
 
     public Player(String name) {
         super(name, 1); // 玩家初始等級 1
         this.exp = 0;
         updateStats(); // 依據等級計算屬性
+        this.inventory = new ArrayList<>();
     }
 
     // 根據等級計算數值
@@ -36,6 +42,14 @@ public class Player extends Character {
             LVUp();
         }
     }
+
+    // 獲得物品
+    public void addItem(String item) {
+        inventory.add(item);
+        Gdx.app.log("Player - Inventory", name + " obtained " + item + "!");
+    }
+
+
 
     // 升級
     private void LVUp() {
