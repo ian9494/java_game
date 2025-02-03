@@ -1,6 +1,7 @@
 .temp/2a9d7f76/gdx64.dll
 fonts/NotoSansTC-Regular.ttf
 fonts/Roboto-Regular.ttf
+json/items.json
 json/world_map.json
 libgdx.png
 ui/font-list.fnt
