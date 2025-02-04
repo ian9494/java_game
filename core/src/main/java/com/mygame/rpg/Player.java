@@ -17,6 +17,7 @@ public class Player extends Character {
     public Player(String name) {
         super(name, 1); // 玩家初始等級 1
         this.exp = 0;
+        this.LocationID = 1; // 初始位置為 1
         updateStats(); // 依據等級計算屬性
         this.inventory = new ArrayList<>();
     }
