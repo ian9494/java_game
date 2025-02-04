@@ -49,8 +49,6 @@ public class Player extends Character {
         Gdx.app.log("Player - Inventory", name + " obtained " + item + "!");
     }
 
-
-
     // 升級
     private void LVUp() {
         exp -= expToNextLV;
@@ -58,5 +56,10 @@ public class Player extends Character {
         expToNextLV += LV * 20; // 升級所需經驗增加
         updateStats(); // 重新計算屬性
         Gdx.app.log("Player - Status", name + " Leveled up to " + LV + "!");
+    }
+
+    // 移動到新地點
+    public void setLocationID(int locationID) {
+        this.LocationID = locationID;
     }
 }

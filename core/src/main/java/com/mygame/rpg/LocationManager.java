@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LocationManager {
-    private Map<String, Location> locations;
+    private Map<Integer, Location> locations; // 使用 ID 作為 Key
 
     public LocationManager() {
         locations = new HashMap<>();
@@ -18,12 +18,13 @@ public class LocationManager {
     }
 
     private void loadLocations() {
-        FileHandle file = Gdx.files.internal("world_map.json");
+        FileHandle file = Gdx.files.internal("json\\world_map.json");
         JsonReader jsonReader = new JsonReader();
         JsonValue json = jsonReader.parse(file);
 
         for (JsonValue locationJson : json.get("locations")) {
-            String name = locationJson.name();
+            int id = locationJson.getInt("id");
+            String name = locationJson.getString("name");
             String chineseName = locationJson.getString("chinese_name");
             boolean isTown = locationJson.getBoolean("is_town");
 
@@ -37,21 +38,21 @@ public class LocationManager {
                 possibleEnemies.add(enemy.asString());
             }
 
-            List<String> connections = new ArrayList<>();
+            List<Integer> connections = new ArrayList<>();
             for (JsonValue connection : locationJson.get("connections")) {
-                connections.add(connection.asString());
+                connections.add(connection.asInt());
             }
 
-            locations.put(name, new Location(name, chineseName, isTown, gatherableItems, possibleEnemies, connections));
+            locations.put(id, new Location(id, name, chineseName, isTown, gatherableItems, possibleEnemies, connections));
         }
     }
 
-    public Location getLocationByName(String name) {
-        return locations.get(name);
+    public Location getLocationByID(int id) {
+        return locations.get(id);
     }
 
-    public List<String> getConnections(int locationCode) {
-        Location location = locations.get(locationCode);
+    public List<Integer> getConnections(int locationID) {
+        Location location = locations.get(locationID);
         return (location != null) ? location.getConnections() : new ArrayList<>();
     }
 }

@@ -17,8 +17,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.Gdx;
 
+import java.util.Random;
+import java.util.List;
+
 public class MainMenuScreen implements Screen {
     private final RPGGame game;
+    private final Player player;
+    private final LocationManager locationManager;
     // 移除未使用的 batch 變數
     // private final SpriteBatch batch;
     private final BitmapFont font;
@@ -34,6 +39,9 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(RPGGame game) {
         this.game = game;
+        this.player = game.getPlayer();
+        this.locationManager = new LocationManager();
+
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage); // 設定舞台為輸入處理器
 
@@ -111,17 +119,31 @@ public class MainMenuScreen implements Screen {
     // 創建按鈕
     private void createButtons() {
         // 探索按鈕
-        TextButton exploreButton = new TextButton("探索", skin, "default");
+        TextButton exploreButton = new TextButton("Explore", skin);
         exploreButton.setSize(200, 50);
-        exploreButton.setPosition(1250, 400);
+        exploreButton.setPosition(50, 400);
         exploreButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                // 進入探索邏輯
-                Gdx.app.log("MainMenuScreen", "Exploring...");
-                Player player = game.getPlayer();
-                Enemy enemy = new Enemy("Monster", 50, 10, 10, 0, 10, 100, null);
-                game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
+                Location currentLocation = locationManager.getLocationByID(player.getLocationID());
+
+                if (currentLocation.isTown()) {
+                    System.out.println("This is a town. No exploration possible.");
+                    return;
+                }
+
+                Random random = new Random();
+                int eventType = random.nextInt(2); // 0: 採集, 1: 遭遇敵人
+
+                if (eventType == 0 && !currentLocation.getGatherableItems().isEmpty()) {
+                    String gatheredItem = currentLocation.getGatherableItems().get(random.nextInt(currentLocation.getGatherableItems().size()));
+                    player.addItem(gatheredItem);
+                    System.out.println("You found: " + gatheredItem);
+                } else if (!currentLocation.getPossibleEnemies().isEmpty()) {
+                    String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));
+                    Enemy enemy = new Enemy(enemyName, 50, 0, 10, 5, 10, 100, null);
+                    game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
+                }
             }
         });
 
@@ -139,22 +161,27 @@ public class MainMenuScreen implements Screen {
         });
 
         // 移動按鈕
-        TextButton moveButton = new TextButton("移動", skin);
-        moveButton.setSize(200, 50);
-        moveButton.setPosition(1250, 200);
-        moveButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                // 進入地圖選擇畫面
-                System.out.println("Moving to a new location...");
-                // game.setScreen(new MapScreen(game, player)); // 假設有 MapScreen
-            }
-        });
+        List<Integer> connections = locationManager.getConnections(player.getLocationID());
+        int yPosition = 300;
+        for (int locationName : connections) {
+            TextButton moveButton = new TextButton("Move to " + locationName, skin);
+            moveButton.setSize(200, 50);
+            moveButton.setPosition(50, yPosition);
+            moveButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                    player.setLocationID(locationName);
+                    System.out.println("Moved to " + locationName);
+                }
+            });
+            stage.addActor(moveButton);
+            yPosition -= 60;
+        }
 
         // 添加按鈕到舞台
         stage.addActor(exploreButton);
         stage.addActor(characterButton);
-        stage.addActor(moveButton);
+
     }
 
     @Override
@@ -163,7 +190,7 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // 繪製labels
-        locationLabel.setText("Location: " + game.getPlayer().getLocation());
+        locationLabel.setText("Location: " + game.getPlayer().getLocationID());
         hpLabel.setText("HP: " + game.getPlayer().getHp());
         levelLabel.setText("Level: " + game.getPlayer().getLV());
 

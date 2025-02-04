@@ -15,7 +15,7 @@ public class Character {
     protected int Atk;
     protected int Def;
     protected int Spd;
-    protected int Location;
+    protected int LocationID;
     protected int actionBar; // 行動條
     protected boolean readyToAct; // 新增布林值來標記角色是否準備好行動
 
@@ -37,7 +37,7 @@ public class Character {
     public int getAtk() { return Atk; }
     public int getDef() { return Def; }
     public int getSpd() { return Spd; }
-    public int getLocation() {return Location;}
+    public int getLocationID() {return LocationID;}
     public int getActionBar() {return actionBar;}
     public boolean isReadyToAct() { return readyToAct; }
     public void setReadyToAct(boolean readyToAct) { this.readyToAct = readyToAct; }

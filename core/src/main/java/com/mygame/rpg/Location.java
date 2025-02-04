@@ -3,20 +3,26 @@ package com.mygame.rpg;
 import java.util.List;
 
 public class Location {
+    private int id;
     private String name;
     private String chineseName;
     private boolean isTown;
     private List<String> gatherableItems;
     private List<String> possibleEnemies;
-    private List<String> connections; // **新增相鄰地區**
+    private List<Integer> connections; // **使用 ID 來存放相鄰地區**
 
-    public Location(String name, String chineseName, boolean isTown, List<String> gatherableItems, List<String> possibleEnemies, List<String> connections) {
+    public Location(int id, String name, String chineseName, boolean isTown, List<String> gatherableItems, List<String> possibleEnemies, List<Integer> connections) {
+        this.id = id;
         this.name = name;
         this.chineseName = chineseName;
         this.isTown = isTown;
         this.gatherableItems = gatherableItems;
         this.possibleEnemies = possibleEnemies;
         this.connections = connections;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -39,7 +45,7 @@ public class Location {
         return possibleEnemies;
     }
 
-    public List<String> getConnections() {
+    public List<Integer> getConnections() {
         return connections;
     }
 }

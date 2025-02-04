@@ -1,8 +1,8 @@
-.temp/2a9d7f76/gdx64.dll
 fonts/NotoSansTC-Regular.ttf
 fonts/Roboto-Regular.ttf
 json/items.json
 json/world_map.json
+json/world_map_v1_data_copy.json
 libgdx.png
 ui/font-list.fnt
 ui/font-subtitle.fnt
