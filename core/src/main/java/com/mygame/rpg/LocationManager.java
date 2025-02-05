@@ -51,6 +51,12 @@ public class LocationManager {
         return locations.get(id);
     }
 
+    // 回傳 Location 的 name
+    public String getLocationName(int id) {
+        Location location = locations.get(id);
+        return (location != null) ? location.getName() : "";
+    }
+
     public List<Integer> getConnections(int locationID) {
         Location location = locations.get(locationID);
         return (location != null) ? location.getConnections() : new ArrayList<>();

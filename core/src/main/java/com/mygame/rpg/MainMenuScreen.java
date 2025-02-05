@@ -24,10 +24,13 @@ public class MainMenuScreen implements Screen {
     private final RPGGame game;
     private final Player player;
     private final LocationManager locationManager;
-    // 移除未使用的 batch 變數
-    // private final SpriteBatch batch;
+
+    private final int uiButtonPos = 1250;
+
     private final BitmapFont font;
     private final BitmapFont largeFont;
+    private final Label.LabelStyle labelStyle;
+    private final Label.LabelStyle largeLabelStyle;
     private final OrthographicCamera camera;
 
     private Stage stage; // 用於管理按鈕的舞台
@@ -36,6 +39,7 @@ public class MainMenuScreen implements Screen {
     private Label locationLabel;
     private Label hpLabel;
     private Label levelLabel;
+    private Label moveToLabel;
 
     public MainMenuScreen(RPGGame game) {
         this.game = game;
@@ -70,8 +74,12 @@ public class MainMenuScreen implements Screen {
         skin.add("font", font, BitmapFont.class);
         skin.add("large-font", largeFont, BitmapFont.class);
 
+        // 建立24吋標籤用的字體模式
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
         // 建立48吋標籤用的字體模式
-        Label.LabelStyle largeLabelStyle = new Label.LabelStyle();
+        largeLabelStyle = new Label.LabelStyle();
         largeLabelStyle.font = largeFont;
 
         // 建立按鈕用的字體模式
@@ -85,9 +93,6 @@ public class MainMenuScreen implements Screen {
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800, 600);
-
-
-
 
         // 添加到布局表格
         Table table = new Table();
@@ -105,6 +110,9 @@ public class MainMenuScreen implements Screen {
         locationLabel = new Label("Location: 未知", largeLabelStyle);
         locationLabel.setPosition(1250, 600);
 
+        moveToLabel = new Label("Move to:", labelStyle);
+        moveToLabel.setPosition(1250, 250);
+
         hpLabel = new Label("HP : 100", largeLabelStyle);
         hpLabel.setPosition(200, 500);
 
@@ -114,6 +122,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(locationLabel);
         stage.addActor(hpLabel);
         stage.addActor(levelLabel);
+        stage.addActor(moveToLabel);
     }
 
     // 創建按鈕
@@ -121,7 +130,7 @@ public class MainMenuScreen implements Screen {
         // 探索按鈕
         TextButton exploreButton = new TextButton("Explore", skin);
         exploreButton.setSize(200, 50);
-        exploreButton.setPosition(50, 400);
+        exploreButton.setPosition(uiButtonPos, 400);
         exploreButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -150,7 +159,7 @@ public class MainMenuScreen implements Screen {
         // 檢視角色按鈕
         TextButton characterButton = new TextButton("角色", skin);
         characterButton.setSize(200, 50);
-        characterButton.setPosition(1250, 300);
+        characterButton.setPosition(uiButtonPos, 300);
         characterButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -162,16 +171,19 @@ public class MainMenuScreen implements Screen {
 
         // 移動按鈕
         List<Integer> connections = locationManager.getConnections(player.getLocationID());
-        int yPosition = 300;
-        for (int locationName : connections) {
-            TextButton moveButton = new TextButton("Move to " + locationName, skin);
+        int yPosition = 200;
+        for (int locationID : connections) {
+            String locationName = locationManager.getLocationName(locationID);
+            TextButton moveButton = new TextButton(locationName, skin);
             moveButton.setSize(200, 50);
-            moveButton.setPosition(50, yPosition);
+            moveButton.setPosition(uiButtonPos, yPosition);
             moveButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                    player.setLocationID(locationName);
-                    System.out.println("Moved to " + locationName);
+                    player.setLocationID(locationID);
+                    refreshButtons();
+                    updateLocationLabel();
+                    Gdx.app.log("Main Menu-buttons", "Moved to " + locationName);
                 }
             });
             stage.addActor(moveButton);
@@ -181,8 +193,21 @@ public class MainMenuScreen implements Screen {
         // 添加按鈕到舞台
         stage.addActor(exploreButton);
         stage.addActor(characterButton);
-
     }
+
+    // 更新位置標籤
+    private void updateLocationLabel() {
+        locationLabel.setText("Location:\n" + locationManager.getLocationName(player.getLocationID()));
+    }
+
+    // 更新角色標籤
+    private void refreshButtons() {
+        // 移除所有按鈕
+        stage.clear();
+        createLabels(largeLabelStyle);
+        createButtons();
+    }
+
 
     @Override
     public void render(float delta) {
@@ -194,6 +219,7 @@ public class MainMenuScreen implements Screen {
         hpLabel.setText("HP: " + game.getPlayer().getHp());
         levelLabel.setText("Level: " + game.getPlayer().getLV());
 
+        updateLocationLabel();
         // 繪製按鈕
         stage.act(delta);
         stage.draw();
