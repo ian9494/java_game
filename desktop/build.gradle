@@ -145,7 +145,7 @@ task fatJar(type: Jar) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE // 避免重複檔案
 
     archiveBaseName.set("fantasy RPG") // 輸出的檔案名稱
-    archiveVersion.set("build 1") // 版本號
+    archiveVersion.set("build 2") // 版本號
 
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }

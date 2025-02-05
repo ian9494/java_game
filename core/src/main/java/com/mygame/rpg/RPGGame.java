@@ -20,6 +20,7 @@ public class RPGGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        Gdx.app.setApplicationLogger(new FileLogger("game_log.txt"));
 
         // 初始化角色
         player = new Player("Hero");
