@@ -8,11 +8,11 @@ public class Player extends Character {
     private int exp;
     private int expToNextLV;
 
-    private List<String> inventory;
+    private List<DropItem> inventory;
 
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
-    public List<String> getInventory() { return inventory; }
+    public List<DropItem> getInventory() { return inventory; }
 
     public Player(String name) {
         super(name, 1); // 玩家初始等級 1
@@ -29,7 +29,7 @@ public class Player extends Character {
         this.maxMp = 50 + (LV - 1) * 10;
         this.Atk = 10 + (LV - 1) * 3;
         this.Def = 5 + (LV - 1) * 2;
-        this.Spd = 10 + (LV - 1);
+        this.Spd = 20;
         this.hp = maxHp;
         this.mp = maxMp;
         this.expToNextLV = LV * (LV * 20);
@@ -45,7 +45,7 @@ public class Player extends Character {
     }
 
     // 獲得物品
-    public void addItem(String item) {
+    public void addItem(DropItem item) {
         inventory.add(item);
         Gdx.app.log("Player - Inventory", name + " obtained " + item + "!");
     }

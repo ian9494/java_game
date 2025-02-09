@@ -113,12 +113,12 @@ public class CharacterScreen implements Screen {
 
         // 顯示背包
         font.draw(batch, "Inventory:", 300, 550);
-        List<String> inventory = player.getInventory();
+        List<DropItem> inventory = player.getInventory();
         int y = 220;
         if (inventory.isEmpty()) {
             font.draw(batch, "No items.", 100, y);
         } else {
-            for (String item : inventory) {
+            for (DropItem item : inventory) {
                 font.draw(batch, "- " + item, 100, y);
                 y -= 25;
             }

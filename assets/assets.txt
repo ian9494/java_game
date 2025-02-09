@@ -1,6 +1,9 @@
 fonts/NotoSansTC-Regular.ttf
 fonts/Roboto-Regular.ttf
+game_log.txt
+json/gatherable.json
 json/items.json
+json/region_monsters.json
 json/world_map.json
 json/world_map_v1_data_copy.json
 libgdx.png

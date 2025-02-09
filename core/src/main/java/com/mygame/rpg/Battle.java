@@ -18,7 +18,7 @@ public class Battle {
     private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
 
     private String battleResult;
-    private String itemReward;
+    private DropItem itemReward;
 
     // 行動隊列
     private final PriorityQueue<Character> actionQueue;
@@ -145,7 +145,7 @@ public class Battle {
     }
 
     // get item reward
-    public String getItemReward() {
+    public DropItem getItemReward() {
         return itemReward;
     }
 

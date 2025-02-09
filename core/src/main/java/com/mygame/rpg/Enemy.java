@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.Null;
 
 public class Enemy extends Character {
     private int expReward;
-    private List<String> itemDrops;
+    private List<DropItem> itemDrops;
 
-    public Enemy(String name, int hp, int mp, int Atk, int Def, int Spd, int expReward, List<String> itemsDrops) {
+    public Enemy(String name, int hp, int mp, int Atk, int Def, int Spd, int expReward, List<DropItem> itemsDrops) {
         super(name, 1); // 怪物等級通常不變
         this.maxHp = hp;
         this.maxMp = mp;
@@ -25,7 +25,7 @@ public class Enemy extends Character {
 
     public int getExpReward() {return expReward; }
 
-    public String getRandomDrop() {
+    public DropItem getRandomDrop() {
         if (itemDrops == null || itemDrops.isEmpty()) {
             return null;
         }

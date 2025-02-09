@@ -136,23 +136,44 @@ public class MainMenuScreen implements Screen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Location currentLocation = locationManager.getLocationByID(player.getLocationID());
 
+                // 如果是城鎮，則無法探索
                 if (currentLocation.isTown()) {
-                    System.out.println("This is a town. No exploration possible.");
+                    Gdx.app.log("Main menu-explore", "This is a town. No exploration possible.");
                     return;
                 }
 
+                Gdx.app.log("Main_menu-explore", "Exploring...");
+
+                // 隨機遇敵或採集
                 Random random = new Random();
                 int eventType = random.nextInt(2); // 0: 採集, 1: 遭遇敵人
+                Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
+                List<GatherableObject> gatherableObjects = locationManager.getGatherablesObjects(player.getLocationID());
 
-                if (eventType == 0 && !currentLocation.getGatherableItems().isEmpty()) {
-                    String gatheredItem = currentLocation.getGatherableItems().get(random.nextInt(currentLocation.getGatherableItems().size()));
-                    player.addItem(gatheredItem);
-                    System.out.println("You found: " + gatheredItem);
-                } else if (!currentLocation.getPossibleEnemies().isEmpty()) {
-                    String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));
-                    Enemy enemy = new Enemy(enemyName, 50, 0, 10, 5, 10, 100, null);
-                    game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
+                if (gatherableObjects.isEmpty()) {
+                    Gdx.app.log("Main_menu-explore", "No gatherable objects found.");
                 }
+
+                // 採集
+                if (eventType == 0) {
+                    Gdx.app.log("Main_menu-explore", "Gathering...");
+                    for (GatherableObject object : gatherableObjects) {
+                        Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
+                        for (DropItem dropItem : object.getDropItems()) {
+                            int dropChance = random.nextInt(100);
+                            if (dropChance < dropItem.getDropRate()) {
+                                int dropCount = dropItem.getRandomDropCount();
+                                // player.addItem(dropItem.getItemID(), dropCount);
+                                Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
+                            }
+                        }
+                    }
+                // 遭遇敵人
+                 } //else if (!currentLocation.getPossibleEnemies().isEmpty()) {
+                //     String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));
+                //     Enemy enemy = new Enemy(enemyName, 50, 0, 10, 5, 10, 100, null);
+                //     game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
+                // }
             }
         });
 

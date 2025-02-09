@@ -93,7 +93,7 @@
         },
         {
             "id": 201,
-            "name": "Wood",
+            "name": "Plank",
             "chinese_name": "木材",
             "rarity": "common",
             "type": "material",
@@ -109,7 +109,7 @@
         },
         {
             "id": 203,
-            "name": "Thread",
+            "name": "Silk",
             "chinese_name": "絲線",
             "rarity": "common",
             "type": "material",
