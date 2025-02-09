@@ -157,13 +157,14 @@ public class MainMenuScreen implements Screen {
                 // 採集
                 if (eventType == 0) {
                     Gdx.app.log("Main_menu-explore", "Gathering...");
+
                     for (GatherableObject object : gatherableObjects) {
                         Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
                         for (DropItem dropItem : object.getDropItems()) {
                             int dropChance = random.nextInt(100);
                             if (dropChance < dropItem.getDropRate()) {
                                 int dropCount = dropItem.getRandomDropCount();
-                                // player.addItem(dropItem.getItemID(), dropCount);
+                                player.addItem(dropItem.getItemID(), dropCount);
                                 Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
                             }
                         }

@@ -1,22 +1,39 @@
 package com.mygame.rpg;
 
+import java.util.List;
+
 public class Item {
     private String itemID;
     private String name;
+    private String chineseName;
+    private String rarity;
+    private String type;
+    private int price;
+    private int maxStack;
     private String description;
     private int quantity;
+    private boolean stackable;
 
-    public Item(String itemID, String name, String description, int quantity) {
+    private List<Effect> effects;
+
+    private ItemManager itemManager = ItemManager.getInstance();
+
+    public Item(String itemID, int quantity) {
         this.itemID = itemID;
-        this.name = name;
-        this.description = description;
         this.quantity = quantity;
+        setItemName();
     }
 
     public String getItemID() { return itemID; }
     public String getName() { return name; }
     public String getDescription() { return description; }
     public int getQuantity() { return quantity; }
+
+    public void setItemName() {
+        this.name = ItemManager.getInstance().getItemName(itemID);
+        // this.description = ItemManager.getInstance().getItemDescription(itemID);
+        this.chineseName = ItemManager.getInstance().getItemChineseName(itemID);
+    }
 
     public void addQuantity(int amount) {
         this.quantity += amount;

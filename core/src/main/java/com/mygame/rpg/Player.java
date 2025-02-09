@@ -3,23 +3,25 @@ package com.mygame.rpg;
 import com.badlogic.gdx.Gdx;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Player extends Character {
     private int exp;
     private int expToNextLV;
 
-    private List<DropItem> inventory;
+    private Map<String, Item> inventory;
 
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
-    public List<DropItem> getInventory() { return inventory; }
+    public Map<String, Item> getInventory() { return inventory; }
 
     public Player(String name) {
         super(name, 1); // 玩家初始等級 1
         this.exp = 0;
         this.LocationID = 1; // 初始位置為 1
         updateStats(); // 依據等級計算屬性
-        this.inventory = new ArrayList<>();
+        this.inventory = new HashMap<>();
     }
 
     // 根據等級計算數值
@@ -45,9 +47,25 @@ public class Player extends Character {
     }
 
     // 獲得物品
-    public void addItem(DropItem item) {
-        inventory.add(item);
-        Gdx.app.log("Player - Inventory", name + " obtained " + item + "!");
+    public void addItem(String itemID, int amount) {
+        if (inventory.containsKey(itemID)) {
+            inventory.get(itemID).addQuantity(amount);
+        } else {
+            inventory.put(itemID, new Item(itemID, amount));
+        }
+        Gdx.app.log("Player-inventory", name + " x" + amount + " 獲得！");
+    }
+
+    // 移除物品
+    public void removeItem(String itemID, int amount) {
+        if (inventory.containsKey(itemID)) {
+            Item item = inventory.get(itemID);
+            item.removeQuantity(amount);
+            if (item.getQuantity() == 0) {
+                inventory.remove(itemID);
+            }
+            System.out.println("移除了 " + item.getName() + " x" + amount);
+        }
     }
 
     // 升級
