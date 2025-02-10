@@ -8,6 +8,7 @@
                     "chinese_name": "白樺樹",
                     "description": "一種常見的樹，砍下可以獲得木材",
                     "iconPath": "Birch_Tree.png",
+                    "encounter_rate": 20,
                     "drop_items" : [
                         {
                             "item_ID": "201",
@@ -21,6 +22,7 @@
                     "chinese_name": "岩石",
                     "description": "一塊普通的岩石，可以獲得石頭",
                     "iconPath": "Rock.png",
+                    "encounter_rate": 20,
                     "drop_items" : [
                         {
                             "item_ID": "202",
@@ -34,6 +36,7 @@
                     "chinese_name": "棉花植物",
                     "description": "一個棉花植物，可以獲得棉花",
                     "iconPath": "Cotton_Plant.png",
+                    "encounter_rate": 20,
                     "drop_items" : [
                         {
                             "item_ID": "207",
@@ -52,6 +55,7 @@
                     "chinese_name": "雜草",
                     "description": "一株普通的植物，可以獲得植物纖維",
                     "iconPath": "Plant.png",
+                    "encounter_rate": 15,
                     "drop_items" : [
                         {
                             "item_ID": "204",
@@ -65,6 +69,7 @@
                     "chinese_name": "煤礦",
                     "description": "一塊煤礦，可以獲得煤",
                     "iconPath": "Coal_Ore.png",
+                    "encounter_rate": 15,
                     "drop_items" : [
                         {
                             "item_ID": "208",
@@ -84,6 +89,7 @@
                     "chinese_name": "銅礦",
                     "description": "一塊銅礦，可以獲得銅礦",
                     "iconPath": "Leather.png",
+                    "encounter_rate": 10,
                     "drop_items" : [
                         {
                             "item_ID": "209",

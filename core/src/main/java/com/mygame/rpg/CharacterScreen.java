@@ -113,14 +113,15 @@ public class CharacterScreen implements Screen {
         font.draw(batch, "SPD: " + player.getSpd(), 100, 290);
 
         // 顯示背包
-        font.draw(batch, "Inventory:", 300, 550);
+        font.draw(batch, "Inventory:", 100, 250);
         Map<String, Item> inventory = player.getInventory();
         int y = 220;
         if (inventory.isEmpty()) {
             font.draw(batch, "No items.", 100, y);
         } else {
             for (Map.Entry<String, Item> entry : inventory.entrySet()) {
-                font.draw(batch, "- " + entry.getValue(), 100, y);
+                Item item = entry.getValue();
+                font.draw(batch, "- " + item.getName() + " ×" + item.getQuantity(), 100, y);
                 y -= 25;
             }
         }

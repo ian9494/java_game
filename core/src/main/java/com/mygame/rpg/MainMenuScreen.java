@@ -148,27 +148,41 @@ public class MainMenuScreen implements Screen {
                 Random random = new Random();
                 int eventType = random.nextInt(2); // 0: 採集, 1: 遭遇敵人
                 Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
+
+                // 採集物品
                 List<GatherableObject> gatherableObjects = locationManager.getGatherablesObjects(player.getLocationID());
-
-                if (gatherableObjects.isEmpty()) {
-                    Gdx.app.log("Main_menu-explore", "No gatherable objects found.");
-                }
-
-                // 採集
                 if (eventType == 0) {
                     Gdx.app.log("Main_menu-explore", "Gathering...");
 
+                    int totalEncounterRate = 0;
+                    // 計算總遭遇率
                     for (GatherableObject object : gatherableObjects) {
-                        Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
-                        for (DropItem dropItem : object.getDropItems()) {
-                            int dropChance = random.nextInt(100);
-                            if (dropChance < dropItem.getDropRate()) {
-                                int dropCount = dropItem.getRandomDropCount();
-                                player.addItem(dropItem.getItemID(), dropCount);
-                                Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
+                        totalEncounterRate += object.getEncounterRate();
+                    }
+                    int roll = random.nextInt(totalEncounterRate);
+                    int cumulativeEncounterRate = 0;
+
+                    for (GatherableObject object : gatherableObjects) {
+                        cumulativeEncounterRate += object.getEncounterRate();
+                        Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
+                        if (roll < cumulativeEncounterRate) {
+                            Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
+                            for (DropItem dropItem : object.getDropItems()) {
+                                int dropChance = random.nextInt(100);
+                                if (dropChance < dropItem.getDropRate()) {
+                                    int dropCount = dropItem.getRandomDropCount();
+                                    player.addItem(dropItem.getItemID(), dropCount);
+                                    Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
+                                }
+                                else {
+                                    Gdx.app.log("Main_menu-explore", "You didn't get any " + dropItem.getItemID());
+                                }
                             }
+
+                            return;
                         }
                     }
+
                 // 遭遇敵人
                  } //else if (!currentLocation.getPossibleEnemies().isEmpty()) {
                 //     String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));

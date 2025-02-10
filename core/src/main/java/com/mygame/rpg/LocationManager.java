@@ -64,6 +64,7 @@ public class LocationManager {
                 String chineseName = objectJson.getString("chinese_name");
                 String description = objectJson.getString("description");
                 String iconPath = objectJson.getString("iconPath");
+                int encounterRate = objectJson.getInt("encounter_rate");
 
                 // 讀取 gatherable_object 中的 drop_items
                 List<DropItem> dropItems = new ArrayList<>();
@@ -76,7 +77,7 @@ public class LocationManager {
                     dropItems.add(new DropItem(itemID, minDrop, maxDrop, dropRate));
                 }
 
-                gatherableList.add(new GatherableObject(objectName, chineseName, description, iconPath, dropItems));
+                gatherableList.add(new GatherableObject(encounterRate, objectName, chineseName, description, iconPath, dropItems));
             }
 
             gatherablesByLocation.put(regionID, gatherableList);
