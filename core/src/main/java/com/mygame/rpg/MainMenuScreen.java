@@ -182,13 +182,15 @@ public class MainMenuScreen implements Screen {
                             return;
                         }
                     }
+                }
 
                 // 遭遇敵人
-                 } //else if (!currentLocation.getPossibleEnemies().isEmpty()) {
-                //     String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));
-                //     Enemy enemy = new Enemy(enemyName, 50, 0, 10, 5, 10, 100, null);
-                //     game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
-                // }
+                else if (!currentLocation.getPossibleEnemies().isEmpty()) {
+                    String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));
+                    dropItems = new ArrayList<>();
+                    Monster enemy = new Monster(enemyName, 50, 0, 10, 5, 10, 100, dropItems);
+                    game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
+                }
             }
         });
 

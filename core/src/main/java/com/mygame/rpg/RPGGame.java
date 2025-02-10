@@ -11,10 +11,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class RPGGame extends Game {
     private SpriteBatch batch;
     private Player player;
-    private Enemy enemy;
+    private Monster enemy;
 
     public Player getPlayer() {return player;}
-    public Enemy getEnemy() {return enemy;}
+    public Monster getEnemy() {return enemy;}
 
 
     @Override
@@ -24,7 +24,6 @@ public class RPGGame extends Game {
 
         // 初始化角色
         player = new Player("Hero");
-        enemy = new Enemy("Goblin", 80, 30, 15, 5, 10, 100, null);
 
         // 設置 BattleScreen 為當前屏幕
         setScreen(new MainMenuScreen(this));

@@ -9,11 +9,11 @@ import com.badlogic.gdx.Gdx;
 public class Battle {
     // objects
     private Player player;
-    private Enemy enemy;
+    private Monster enemy;
 
     // battle state
-    private boolean playerTurn;
-    private boolean isBattleOver;
+    // private boolean playerTurn;
+    // private boolean isBattleOver;
     private boolean battleOver;
     private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
 
@@ -28,11 +28,11 @@ public class Battle {
     private final List<String> battleLogs;
     private int currentLogIndex = 0;
 
-    public Battle(Player player, Enemy enemy) {
+    public Battle(Player player, Monster enemy) {
         Gdx.app.log("battle", "enter battle");
         this.player = player;
         this.enemy = enemy;
-        this.isBattleOver = false;
+        // this.isBattleOver = false;
         this.waitingForPlayerAction = false; // 初始化為 false
 
         this.battleLogs = new ArrayList<>();
@@ -66,7 +66,7 @@ public class Battle {
 
         // 檢查戰鬥是否結束
         if (isBattleOver()) {
-            isBattleOver = true;
+            // isBattleOver = true;
             String winner = player.isAlive() ? player.getName() : enemy.getName();
             Gdx.app.log("BattleLog", "Battle Over! Winner: " + winner);
         }

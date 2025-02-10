@@ -5,12 +5,18 @@ import java.util.Random;
 
 import com.badlogic.gdx.utils.Null;
 
-public class Enemy extends Character {
+public class Monster extends Character {
+    private String monsterID;
+    private String chineseName;
+    private String description;
     private int expReward;
     private List<DropItem> itemDrops;
 
-    public Enemy(String name, int hp, int mp, int Atk, int Def, int Spd, int expReward, List<DropItem> itemsDrops) {
+    public Monster(String monsterID, String name, String chineseName, String description, int hp, int Atk, int Def, int Spd, int expReward, int gold, String iconPath, int encounter_rate, List<DropItem> itemsDrops) {
         super(name, 1); // 怪物等級通常不變
+        this.monsterID = monsterID;
+        this.chineseName = chineseName;
+        this.description = description;
         this.maxHp = hp;
         this.maxMp = mp;
         this.Atk = Atk;

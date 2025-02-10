@@ -12,6 +12,7 @@ import java.util.Map;
 public class LocationManager {
     private Map<Integer, Location> locations; // 使用 ID 作為 Key
     private Map<Integer, List<GatherableObject>> gatherablesByLocation; // 使用 Location ID 作為 Key
+    private Map<Integer, List<Monster>> monstersByLocation; // 使用 Location ID 作為 Key
 
     public LocationManager() {
         // 初始化 locations 和 gatherablesByLocation
@@ -82,6 +83,47 @@ public class LocationManager {
 
             gatherablesByLocation.put(regionID, gatherableList);
             Gdx.app.log("LocationManager", "Loaded gatherables for region " + regionID);
+        }
+    }
+
+    // 從 region_monster.json 讀取怪物
+    private void loadMonsters() {
+        FileHandle file = Gdx.files.internal("json/region_monster.json");
+        JsonReader jsonReader = new JsonReader();
+        JsonValue json = jsonReader.parse(file);
+
+        for (JsonValue regionJson : json.get("regions")) {
+            int regionID = regionJson.getInt("region_ID");
+            List<Monster> monsterList = new ArrayList<>();
+
+            // 讀取 monsters
+            for (JsonValue monsterJson : regionJson.get("monsters")) {
+                String monsterID = monsterJson.getString("monster_ID");
+                String name = monsterJson.getString("name");
+                String chineseName = monsterJson.getString("chinese_name");
+                String description = monsterJson.getString("description");
+                String iconPath = monsterJson.getString("iconPath");
+                int encounterRate = monsterJson.getInt("encounter_rate");
+
+                // 計算HP
+                int maxHPBase = monsterJson.get("attributes").get("max_HP").getInt("base");
+                int maxHPGrowth = monsterJson.get("attributes").get("max_HP").getInt("growth");
+                int maxHP = maxHPBase + maxHPGrowth;
+                // 計算atk
+                int atkBase = monsterJson.get("attributes").get("atk").getInt("base");
+                int atkGrowth = monsterJson.get("attributes").get("atk").getInt("growth");
+                int atk = atkBase + atkGrowth;
+
+                int def = monsterJson.get("attributes").getInt("def");
+                int spd = monsterJson.get("attributes").getInt("spd");
+                int exp = monsterJson.get("attributes").getInt("exp");
+                int gold = monsterJson.get("attributes").getInt("gold");
+
+                monsterList.add(new Monster(monsterID, name, chineseName, description, maxHP, atk, def, spd, exp, gold, iconPath, encounterRate, null));
+            }
+
+            monstersByLocation.put(regionID, monsterList);
+            Gdx.app.log("LocationManager", "Loaded monsters for region " + regionID);
         }
     }
 
