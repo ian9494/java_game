@@ -9,6 +9,7 @@
                     "chinese_name": "哥布林盜賊",
                     "description": "一種矮小的怪物，經常在草原上出沒",
                     "iconPath": "Goblin_thief.png",
+                    "rate": "10",
                     "attributes": {
                         "Lv": [1, 5],
                         "hp":  {"base" : 5,  "growth": 2},
@@ -27,8 +28,76 @@
                     }
                 },
                 {
-                    "monster_ID": 2,
-                    "monster_name": ""
+                    "monster_ID": 202,
+                    "monster_name": "Goblin_archer",
+                    "chinese_name": "哥布林射手",
+                    "description": "一種矮小的怪物，經常在草原上出沒",
+                    "iconPath": "Goblin_archer.png",
+                    "rate": "10",
+                    "attributes": {
+                        "Lv": [1, 5],
+                        "hp":  {"base" : 3,  "growth": 2},
+                        "atk": {"base" : 9,  "growth": 1},
+                        "def": 0,
+                        "spd": 20,
+                        "exp": 10,
+                        "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 203,
+                    "monster_name": "Goblin_assassin",
+                    "chinese_name": "哥布林刺客",
+                    "description": "一種矮小的怪物，經常在草原上出沒",
+                    "iconPath": "Goblin_assassin.png",
+                    "rate": "5",
+                    "attributes": {
+                        "Lv": [8, 10],
+                        "hp":  {"base" : -2,  "growth": 3},
+                        "atk": {"base" : 2,  "growth": 2},
+                        "def": 10,
+                        "spd": 40,
+                        "exp": 10,
+                        "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 204,
+                    "monster_name": "Goblin_elite",
+                    "chinese_name": "精銳哥布林",
+                    "description": "一種矮小的怪物，經常在草原上出沒",
+                    "iconPath": "Goblin_elite.png",
+                    "rate": "5",
+                    "attributes": {
+                        "Lv": [8, 10],
+                        "hp":  {"base" : 2,  "growth": 3},
+                        "atk": {"base" : -3,  "growth": 2},
+                        "def": 15,
+                        "spd": 20,
+                        "exp": 10,
+                        "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
                 }
             ]
         }
