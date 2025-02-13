@@ -150,8 +150,8 @@ public class MainMenuScreen implements Screen {
                 Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
 
                 // 採集物品
-                List<GatherableObject> gatherableObjects = locationManager.getGatherablesObjects(player.getLocationID());
                 if (eventType == 0) {
+                    List<GatherableObject> gatherableObjects = locationManager.getGatherablesObjects(player.getLocationID());
                     Gdx.app.log("Main_menu-explore", "Gathering...");
 
                     int totalEncounterRate = 0;
@@ -172,10 +172,10 @@ public class MainMenuScreen implements Screen {
                                 if (dropChance < dropItem.getDropRate()) {
                                     int dropCount = dropItem.getRandomDropCount();
                                     player.addItem(dropItem.getItemID(), dropCount);
-                                    Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
+                                    // Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
                                 }
                                 else {
-                                    Gdx.app.log("Main_menu-explore", "You didn't get any " + dropItem.getItemID());
+                                    // Gdx.app.log("Main_menu-explore", "You didn't get any " + dropItem.getItemID());
                                 }
                             }
 
@@ -185,11 +185,23 @@ public class MainMenuScreen implements Screen {
                 }
 
                 // 遭遇敵人
-                else if (!currentLocation.getPossibleEnemies().isEmpty()) {
-                    String enemyName = currentLocation.getPossibleEnemies().get(random.nextInt(currentLocation.getPossibleEnemies().size()));
-                    dropItems = new ArrayList<>();
-                    Monster enemy = new Monster(enemyName, 50, 0, 10, 5, 10, 100, dropItems);
-                    game.setScreen(new BattleScreen(game, new Battle(player, enemy)));
+                else {
+                    List<Monster> possibleMonsters = locationManager.getMonsters(player.getLocationID());
+                    int totalEncounterRate = 0;
+                    for (Monster monster : possibleMonsters) {
+                        totalEncounterRate += monster.getEncounterRate();
+                    }
+                    int roll = random.nextInt(totalEncounterRate);
+                    int cumulativeEncounterRate = 0;
+
+                    for (Monster monster : possibleMonsters) {
+                        cumulativeEncounterRate += monster.getEncounterRate();
+                        if (roll < cumulativeEncounterRate) {
+                            Gdx.app.log("Main_menu-explore", "You encountered a " + monster.getName());
+                            game.setScreen(new BattleScreen(game, new Battle(player, monster)));
+                            return;
+                        }
+                    }
                 }
             }
         });

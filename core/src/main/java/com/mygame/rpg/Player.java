@@ -48,12 +48,14 @@ public class Player extends Character {
 
     // 獲得物品
     public void addItem(String itemID, int amount) {
+        Item addingItem = new Item(itemID, amount);
+        addingItem.setItemName();
         if (inventory.containsKey(itemID)) {
             inventory.get(itemID).addQuantity(amount);
         } else {
-            inventory.put(itemID, new Item(itemID, amount));
+            inventory.put(itemID, addingItem);
         }
-        Gdx.app.log("Player-inventory", name + " x" + amount + " 獲得！");
+        Gdx.app.log("Player-inventory", name + " x" + amount + " " + addingItem.getName());
     }
 
     // 移除物品

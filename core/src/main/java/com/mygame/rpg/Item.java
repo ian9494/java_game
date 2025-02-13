@@ -21,7 +21,6 @@ public class Item {
     public Item(String itemID, int quantity) {
         this.itemID = itemID;
         this.quantity = quantity;
-        setItemName();
     }
 
     public String getItemID() { return itemID; }
@@ -31,7 +30,10 @@ public class Item {
 
     public void setItemName() {
         this.name = ItemManager.getInstance().getItemName(itemID);
-        // this.description = ItemManager.getInstance().getItemDescription(itemID);
+        this.description = ItemManager.getInstance().getItemDescription(itemID);
+    }
+
+    public void setChineseName() {
         this.chineseName = ItemManager.getInstance().getItemChineseName(itemID);
     }
 

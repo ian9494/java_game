@@ -10,10 +10,13 @@ public class Monster extends Character {
     private String chineseName;
     private String description;
     private int expReward;
+    private int encounter_rate;
+    private int gold;
     private List<DropItem> itemDrops;
 
     public Monster(String monsterID, String name, String chineseName, String description, int hp, int Atk, int Def, int Spd, int expReward, int gold, String iconPath, int encounter_rate, List<DropItem> itemsDrops) {
         super(name, 1); // 怪物等級通常不變
+        this.encounter_rate = encounter_rate;
         this.monsterID = monsterID;
         this.chineseName = chineseName;
         this.description = description;
@@ -24,12 +27,14 @@ public class Monster extends Character {
         this.Spd = Spd;
         this.hp = maxHp;
         this.mp = maxMp;
+        this.gold = gold;
         this.expReward = expReward;
         this.itemDrops = itemsDrops;
 
     }
 
     public int getExpReward() {return expReward; }
+    public int getEncounterRate() { return encounter_rate; }
 
     public DropItem getRandomDrop() {
         if (itemDrops == null || itemDrops.isEmpty()) {

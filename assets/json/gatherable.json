@@ -13,7 +13,7 @@
                         {
                             "item_ID": "201",
                             "drop_count": [1, 3],
-                            "drop_rate": 30
+                            "drop_rate": 100
                         }
                     ]
                 },
@@ -27,7 +27,7 @@
                         {
                             "item_ID": "202",
                             "drop_count": [1, 2],
-                            "drop_rate": 20
+                            "drop_rate": 100
                         }
                     ]
                 },
@@ -41,12 +41,12 @@
                         {
                             "item_ID": "207",
                             "drop_count": [1, 2],
-                            "drop_rate": 15
+                            "drop_rate": 100
                         },
                         {
                             "item_ID": "204",
                             "drop_count": [1,1],
-                            "drop_rate": 10
+                            "drop_rate": 100
                         }
                     ]
                 },
@@ -60,7 +60,7 @@
                         {
                             "item_ID": "204",
                             "drop_count": [1, 2],
-                            "drop_rate": 25
+                            "drop_rate": 100
                         }
                     ]
                 },
@@ -74,12 +74,12 @@
                         {
                             "item_ID": "208",
                             "drop_count": [1, 2],
-                            "drop_rate": 15
+                            "drop_rate": 100
                         },
                         {
                             "item_ID": "202",
                             "drop_count": [1, 2],
-                            "drop_rate": 15
+                            "drop_rate": 100
                         }
 
                     ]
@@ -94,12 +94,12 @@
                         {
                             "item_ID": "209",
                             "drop_count": [1, 2],
-                            "drop_rate": 10
+                            "drop_rate": 100
                         },
                         {
                             "item_ID": "202",
                             "drop_count": [1, 2],
-                            "drop_rate": 10
+                            "drop_rate": 100
                         }
                     ]
                 }

@@ -12,7 +12,7 @@ public class ItemManager {
     private Map<String, String> itemNames = new HashMap<>();
     private Map<String, String> chineseNames = new HashMap<>();
     private Map<String, String> rarity = new HashMap<>();
-    // private Map<String, String> itemDescriptions = new HashMap<>();
+    private Map<String, String> itemDescriptions = new HashMap<>();
     private Map<String, String> itemIcons = new HashMap<>();
     private Map<String, String> itemTypes = new HashMap<>();
     private Map<String, String> itemEffects = new HashMap<>();
@@ -53,7 +53,7 @@ public class ItemManager {
         return rarity.getOrDefault(itemID, "Common");
     }
 
-    // public String getItemDescription(String itemID) {
-    //     return itemDescriptions.getOrDefault(itemID, "No description available.");
-    // }
+    public String getItemDescription(String itemID) {
+        return itemDescriptions.getOrDefault(itemID, "No description available.");
+    }
 }

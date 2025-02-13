@@ -18,10 +18,12 @@ public class LocationManager {
         // 初始化 locations 和 gatherablesByLocation
         locations = new HashMap<>();
         gatherablesByLocation = new HashMap<>();
+        monstersByLocation = new HashMap<>();
 
         // 讀取 locations 和 gatherables
         loadLocations();
         loadGatherables();
+        loadMonsters();
     }
 
     // 從 world_map.json 讀取 locations
@@ -45,7 +47,10 @@ public class LocationManager {
                 connections.add(connection.asInt());
             }
 
-            locations.put(id, new Location(id, name, chineseName, description, isTown, connections));
+            Location location = new Location(id, name, chineseName, description, isTown, connections);
+            locations.put(id, location);
+
+            location.printPossibleMonsters();
         }
     }
 
@@ -88,7 +93,7 @@ public class LocationManager {
 
     // 從 region_monster.json 讀取怪物
     private void loadMonsters() {
-        FileHandle file = Gdx.files.internal("json/region_monster.json");
+        FileHandle file = Gdx.files.internal("json/region_monsters.json");
         JsonReader jsonReader = new JsonReader();
         JsonValue json = jsonReader.parse(file);
 
@@ -99,20 +104,25 @@ public class LocationManager {
             // 讀取 monsters
             for (JsonValue monsterJson : regionJson.get("monsters")) {
                 String monsterID = monsterJson.getString("monster_ID");
-                String name = monsterJson.getString("name");
+                String name = monsterJson.has("name") ? monsterJson.getString("name") : "Unknown";
+                Gdx.app.log("LocationManager", "Loaded monster " + name);
                 String chineseName = monsterJson.getString("chinese_name");
                 String description = monsterJson.getString("description");
                 String iconPath = monsterJson.getString("iconPath");
                 int encounterRate = monsterJson.getInt("encounter_rate");
 
+                // 隨機取出一個等級
+                int minLv = monsterJson.get("attributes").get("Lv").get(0).asInt();
+                int maxLv = monsterJson.get("attributes").get("Lv").get(1).asInt();
+                int Lv = minLv + (int)(Math.random() * ((maxLv - minLv) + 1));
                 // 計算HP
-                int maxHPBase = monsterJson.get("attributes").get("max_HP").getInt("base");
-                int maxHPGrowth = monsterJson.get("attributes").get("max_HP").getInt("growth");
-                int maxHP = maxHPBase + maxHPGrowth;
+                int maxHPBase = monsterJson.get("attributes").get("hp").getInt("base");
+                int maxHPGrowth = monsterJson.get("attributes").get("hp").getInt("growth");
+                int maxHP = maxHPBase + maxHPGrowth*Lv;
                 // 計算atk
                 int atkBase = monsterJson.get("attributes").get("atk").getInt("base");
                 int atkGrowth = monsterJson.get("attributes").get("atk").getInt("growth");
-                int atk = atkBase + atkGrowth;
+                int atk = atkBase + atkGrowth*Lv;
 
                 int def = monsterJson.get("attributes").getInt("def");
                 int spd = monsterJson.get("attributes").getInt("spd");
@@ -130,6 +140,11 @@ public class LocationManager {
     // 根據地區 ID 獲取該地區的可採集物品
     public List<GatherableObject> getGatherablesObjects(int locationID) {
         return gatherablesByLocation.getOrDefault(locationID, new ArrayList<>());
+    }
+
+    // 根據地區 ID 獲取該地區的怪物
+    public List<Monster> getMonsters(int locationID) {
+        return monstersByLocation.getOrDefault(locationID, new ArrayList<>());
     }
 
     public Location getLocationByID(int id) {
