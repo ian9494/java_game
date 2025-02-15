@@ -55,7 +55,7 @@ public class Player extends Character {
         } else {
             inventory.put(itemID, addingItem);
         }
-        Gdx.app.log("Player-inventory", name + " x" + amount + " " + addingItem.getName());
+        Gdx.app.log("Player-inventory", name + " gets x" + amount + " " + addingItem.getName());
     }
 
     // 移除物品

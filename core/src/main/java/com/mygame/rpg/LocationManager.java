@@ -129,7 +129,18 @@ public class LocationManager {
                 int exp = monsterJson.get("attributes").getInt("exp");
                 int gold = monsterJson.get("attributes").getInt("gold");
 
-                monsterList.add(new Monster(monsterID, name, chineseName, description, maxHP, atk, def, spd, exp, gold, iconPath, encounterRate, null));
+                // 載入 itemDrops
+                List<DropItem> itemDrops = new ArrayList<>();
+                for (JsonValue dropItemJson : monsterJson.get("attributes").get("drop_items")) {
+                    String itemID = dropItemJson.getString("item_ID");
+                    int minDrop = dropItemJson.get("drop_count").get(0).asInt();
+                    int maxDrop = dropItemJson.get("drop_count").get(1).asInt();
+                    int dropRate = dropItemJson.getInt("drop_rate");
+
+                    itemDrops.add(new DropItem(itemID, minDrop, maxDrop, dropRate));
+                }
+
+                monsterList.add(new Monster(monsterID, name, chineseName, description, maxHP, atk, def, spd, exp, gold, iconPath, encounterRate, itemDrops));
             }
 
             monstersByLocation.put(regionID, monsterList);

@@ -125,10 +125,10 @@ public class Battle {
                 int expGained = enemy.getExpReward();
                 player.gainExp(expGained);
                 itemReward = enemy.getRandomDrop();
-                Gdx.app.log("battle - isBattleOver", "getting drops" + itemReward.getItemID());
+                Gdx.app.log("battle - isBattleOver", "getting drops " + itemReward.getItemID());
 
                 if (itemReward != null) { // 確保有掉落物品
-                player.addItem(battleResult, expGained); // 獲得掉落物品
+                player.addItem(itemReward.getItemID(), itemReward.getRandomDropCount()); // 獲得掉落物品
                 }
 
                 battleResult = player.getName() + " defeated " + enemy.getName() + "! Gained " + expGained + " EXP.";

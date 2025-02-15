@@ -42,7 +42,7 @@ public class ItemManager {
     }
 
     public String getItemName(String itemID) {
-        return itemNames.getOrDefault(itemID, "Unknown Item");
+        return itemNames.get(itemID);
     }
 
     public String getItemChineseName(String itemID) {

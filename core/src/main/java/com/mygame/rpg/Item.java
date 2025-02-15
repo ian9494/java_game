@@ -1,6 +1,7 @@
 package com.mygame.rpg;
 
 import java.util.List;
+import com.badlogic.gdx.Gdx;
 
 public class Item {
     private String itemID;
