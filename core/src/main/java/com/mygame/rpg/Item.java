@@ -19,6 +19,8 @@ public class Item {
 
     private ItemManager itemManager = ItemManager.getInstance();
 
+    public Item() {}
+
     public Item(String itemID, int quantity) {
         this.itemID = itemID;
         this.quantity = quantity;

@@ -23,7 +23,7 @@ public class RPGGame extends Game {
         // Gdx.app.setApplicationLogger(new FileLogger("game_log.txt")); // 設置日誌文件
 
         // 初始化角色
-        player = new Player("Hero");
+        player = Player.loadFromFile("save/player.json");
 
         // 設置 BattleScreen 為當前屏幕
         setScreen(new MainMenuScreen(this));
@@ -37,6 +37,7 @@ public class RPGGame extends Game {
 
     @Override
     public void dispose() {
+        player.saveToFile("save/player.json"); // 關閉遊戲時自動存檔
         batch.dispose();
         if (getScreen() != null) {
             getScreen().dispose();

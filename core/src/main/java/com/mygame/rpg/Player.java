@@ -1,6 +1,9 @@
 package com.mygame.rpg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +18,15 @@ public class Player extends Character {
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
     public Map<String, Item> getInventory() { return inventory; }
+
+    // 必須有無參數建構子，否則會無法建立物件
+    public Player() {
+        super("Default", 1); // 設定預設角色名稱與等級
+        this.exp = 0;
+        this.expToNextLV = 100;
+        this.LocationID = 1;
+        this.inventory = new HashMap<>();
+    }
 
     public Player(String name) {
         super(name, 1); // 玩家初始等級 1
@@ -82,5 +94,27 @@ public class Player extends Character {
     // 移動到新地點
     public void setLocationID(int locationID) {
         this.LocationID = locationID;
+    }
+
+    // 存檔到json
+    public void saveToFile(String fileName) {
+        Json json = new Json();
+        String playerData = json.prettyPrint(this); // 轉成可讀 JSON 格式
+
+        FileHandle file = Gdx.files.local(fileName);
+        file.writeString(playerData, false);
+        Gdx.app.log("Player - Save file", "存檔完成: " + fileName);
+    }
+
+    // 從json載入
+    public static Player loadFromFile(String fileName) {
+        FileHandle file = Gdx.files.local(fileName);
+        if (!file.exists()) {
+            Gdx.app.log("Player - Load file", "存檔不存在，即將創建新角色");
+            return new Player("Hero");
+        }
+
+        Json json = new Json();
+        return json.fromJson(Player.class, file.readString());
     }
 }
