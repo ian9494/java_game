@@ -59,7 +59,7 @@ public class Player extends Character {
     }
 
     // 獲得物品
-    public void addItem(String itemID, int amount) {
+    public String addItem(String itemID, int amount) {
         Item addingItem = new Item(itemID, amount);
         addingItem.setItemName();
         if (inventory.containsKey(itemID)) {
@@ -68,6 +68,7 @@ public class Player extends Character {
             inventory.put(itemID, addingItem);
         }
         Gdx.app.log("Player-inventory", name + " gets x" + amount + " " + addingItem.getName());
+        return addingItem.getName();
     }
 
     // 移除物品

@@ -21,6 +21,7 @@ public class DropItem {
     }
 
     public String getItemID() { return itemID; }
+    public String getName() {return name; }
     public int getDropRate() { return dropRate; }
 
     // 從item.json取得item name

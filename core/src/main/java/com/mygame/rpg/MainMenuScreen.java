@@ -36,10 +36,15 @@ public class MainMenuScreen implements Screen {
     private Stage stage; // 用於管理按鈕的舞台
     private Skin skin; // 按鈕的樣式
 
+    private Label gatherResultLabel;
     private Label locationLabel;
     private Label hpLabel;
     private Label levelLabel;
     private Label moveToLabel;
+
+    private float gatherResultDisplayTime;
+
+    private boolean isGatherResultVisible = false;
 
     public MainMenuScreen(RPGGame game) {
         this.game = game;
@@ -119,10 +124,15 @@ public class MainMenuScreen implements Screen {
         levelLabel = new Label("Level : 1", largeLabelStyle);
         levelLabel.setPosition(200, 420);
 
+        gatherResultLabel = new Label("", labelStyle);
+        gatherResultLabel.setPosition(200, 350);
+        gatherResultLabel.setVisible(false);
+
         stage.addActor(locationLabel);
         stage.addActor(hpLabel);
         stage.addActor(levelLabel);
         stage.addActor(moveToLabel);
+        stage.addActor(gatherResultLabel);
     }
 
     // 創建按鈕
@@ -167,21 +177,38 @@ public class MainMenuScreen implements Screen {
                         Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
                         if (roll < cumulativeEncounterRate) {
                             Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
+
+                            StringBuilder resultText = new StringBuilder("You found: ");
+                            boolean foundItem = false;
+
                             for (DropItem dropItem : object.getDropItems()) {
                                 int dropChance = random.nextInt(100);
                                 if (dropChance < dropItem.getDropRate()) {
                                     int dropCount = dropItem.getRandomDropCount();
-                                    player.addItem(dropItem.getItemID(), dropCount);
+                                    String addingItemName = player.addItem(dropItem.getItemID(), dropCount);
+
+                                    resultText.append(addingItemName);
+                                    foundItem = true;
                                     // Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
                                 }
-                                else {
-                                    // Gdx.app.log("Main_menu-explore", "You didn't get any " + dropItem.getItemID());
-                                }
                             }
+
+                            if (!foundItem) {
+                                resultText = new StringBuilder("You find nothing");
+                            }
+
+                            gatherResultLabel.setText(resultText.toString());
+                            gatherResultLabel.setVisible(true);
+                            gatherResultDisplayTime = 3.0f;
+                            isGatherResultVisible = true;
 
                             return;
                         }
                     }
+                    gatherResultLabel.setText("You found nothing.");
+                    gatherResultLabel.setVisible(true);
+                    gatherResultDisplayTime = 3.0f;
+                    isGatherResultVisible = true;
                 }
 
                 // 遭遇敵人
@@ -268,6 +295,14 @@ public class MainMenuScreen implements Screen {
         locationLabel.setText("Location: " + game.getPlayer().getLocationID());
         hpLabel.setText("HP: " + game.getPlayer().getHp());
         levelLabel.setText("Level: " + game.getPlayer().getLV());
+
+        if (isGatherResultVisible) {
+            gatherResultDisplayTime -= delta;
+            if (gatherResultDisplayTime <= 0) {
+                gatherResultLabel.setVisible(false);
+                isGatherResultVisible = false;
+            }
+        }
 
         updateLocationLabel();
         // 繪製按鈕
