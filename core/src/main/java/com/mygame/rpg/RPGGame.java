@@ -16,6 +16,11 @@ public class RPGGame extends Game {
     public Player getPlayer() {return player;}
     public Monster getEnemy() {return enemy;}
 
+    private BattleScreen battleScreen;
+
+    public BattleScreen getBattleScreen() {
+        return battleScreen;
+    }
 
     @Override
     public void create() {

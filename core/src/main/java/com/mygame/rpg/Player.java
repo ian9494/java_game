@@ -85,11 +85,31 @@ public class Player extends Character {
 
     // 升級
     private void LVUp() {
+        // 紀錄上一級資訊以便做比對
+        int oldMaxHp = maxHp;
+        int oldMaxMp = maxMp;
+        int oldAtk = Atk;
+        int oldDef = Def;
+
         exp -= expToNextLV;
         LV++;
         expToNextLV += LV * 20; // 升級所需經驗增加
-        updateStats(); // 重新計算屬性
-        Gdx.app.log("Player - Status", name + " Leveled up to " + LV + "!");
+
+        updateStats(); // 重新計算屬性`
+
+        // 編輯升級資訊
+        StringBuilder levelUpMessage = new StringBuilder();
+        levelUpMessage.append("Level up to ").append(LV).append("!\n");
+        levelUpMessage.append("HP: ").append(oldMaxHp).append(" -> ").append(maxHp).append("\n");
+        levelUpMessage.append("MP: ").append(oldMaxMp).append(" -> ").append(maxMp).append("\n");
+        levelUpMessage.append("ATK: ").append(oldAtk).append(" -> ").append(Atk).append("\n");
+        levelUpMessage.append("DEF: ").append(oldDef).append(" -> ").append(Def).append("\n");
+
+        Gdx.app.log("Player - LevelUp", levelUpMessage.toString());
+
+        // 觸發 UI 顯示升級訊息
+        RPGGame game = (RPGGame) Gdx.app.getApplicationListener();
+        game.getBattleScreen().showLevelUpMessage(levelUpMessage.toString());
     }
 
     // 移動到新地點

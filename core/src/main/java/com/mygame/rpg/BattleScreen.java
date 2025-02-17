@@ -25,14 +25,21 @@ public class BattleScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
+    private TextButton attackButton;
+    private TextButton defendButton;
+
     private Label rewardLabel;
     private TextButton continueButton;
     private boolean showRewards = false;
 
+    private Label levelUpLabel;
+    private TextButton levelUpOkButton;
+    private boolean isLevelUpVisible = false;
+
 
     private void createButtons() {
         // 攻擊按鈕
-        TextButton attackButton = new TextButton("Attack", skin);
+        attackButton = new TextButton("Attack", skin);
         attackButton.setSize(150, 50);
         attackButton.setPosition(50, 50);
         attackButton.addListener(new ClickListener() {
@@ -51,7 +58,7 @@ public class BattleScreen implements Screen {
         });
 
         // 防禦按鈕
-        TextButton defendButton = new TextButton("Defend", skin);
+        defendButton = new TextButton("Defend", skin);
         defendButton.setSize(150, 50);
         defendButton.setPosition(220, 50);
         defendButton.addListener(new ClickListener() {
@@ -91,6 +98,40 @@ public class BattleScreen implements Screen {
             }
         });
         stage.addActor(continueButton);
+    }
+
+    private void createLevelUpUI() {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
+        // 升級訊息標籤
+        levelUpLabel = new Label("", labelStyle);
+        levelUpLabel.setPosition(200, 450);
+        levelUpLabel.setVisible(false);
+        stage.addActor(levelUpLabel);
+
+        // OK 按鈕
+        levelUpOkButton = new TextButton("確定", skin);
+        levelUpOkButton.setSize(150, 50);
+        levelUpOkButton.setPosition(300, 350);
+        levelUpOkButton.setVisible(false);
+        levelUpOkButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                levelUpLabel.setVisible(false);
+                levelUpOkButton.setVisible(false);
+                isLevelUpVisible = false;
+            }
+        });
+
+        stage.addActor(levelUpOkButton);
+    }
+
+    public void showLevelUpMessage(String message) {
+        levelUpLabel.setText(message);
+        levelUpLabel.setVisible(true);
+        levelUpOkButton.setVisible(true);
+        isLevelUpVisible = true;
     }
 
 
@@ -152,6 +193,9 @@ public class BattleScreen implements Screen {
                 int expGained = battle.getEnemy().getExpReward();
                 DropItem itemRewards = battle.getItemReward();
 
+                attackButton.setVisible(false);
+                defendButton.setVisible(false);
+
                 StringBuilder rewardText = new StringBuilder("Battle ended\n" +
                                                              "Gained exp: " + expGained);
                 if (itemRewards != null) {
@@ -164,6 +208,14 @@ public class BattleScreen implements Screen {
                 rewardLabel.setVisible(true);
                 continueButton.setVisible(true);
             }
+
+            if (isLevelUpVisible) {
+                batch.end();
+                stage.act(delta);
+                stage.draw();
+                return;
+            }
+
 
             // font.draw(batch, "Battle Over! Winner: " + (battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()) + " press ENTER to return", 50, 50);
             // game.setScreen(new MainMenuScreen(game));
