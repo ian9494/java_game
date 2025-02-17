@@ -76,11 +76,12 @@ public class LocationManager {
                 List<DropItem> dropItems = new ArrayList<>();
                 for (JsonValue dropItemJson : objectJson.get("drop_items")) {
                     String itemID = dropItemJson.getString("item_ID");
+                    String itemName = dropItemJson.getString("name");
                     int minDrop = dropItemJson.get("drop_count").get(0).asInt();
                     int maxDrop = dropItemJson.get("drop_count").get(1).asInt();
                     int dropRate = dropItemJson.getInt("drop_rate");
 
-                    dropItems.add(new DropItem(itemID, minDrop, maxDrop, dropRate));
+                    dropItems.add(new DropItem(itemID, itemName, minDrop, maxDrop, dropRate));
                 }
 
                 gatherableList.add(new GatherableObject(encounterRate, objectName, chineseName, description, iconPath, dropItems));
@@ -133,11 +134,12 @@ public class LocationManager {
                 List<DropItem> itemDrops = new ArrayList<>();
                 for (JsonValue dropItemJson : monsterJson.get("attributes").get("drop_items")) {
                     String itemID = dropItemJson.getString("item_ID");
+                    String itemName = dropItemJson.getString("name");
                     int minDrop = dropItemJson.get("drop_count").get(0).asInt();
                     int maxDrop = dropItemJson.get("drop_count").get(1).asInt();
                     int dropRate = dropItemJson.getInt("drop_rate");
 
-                    itemDrops.add(new DropItem(itemID, minDrop, maxDrop, dropRate));
+                    itemDrops.add(new DropItem(itemID, itemName, minDrop, maxDrop, dropRate));
                 }
 
                 monsterList.add(new Monster(monsterID, name, chineseName, description, maxHP, atk, def, spd, exp, gold, iconPath, encounterRate, itemDrops));

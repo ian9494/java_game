@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class BattleScreen implements Screen {
     private final SpriteBatch batch;
@@ -23,6 +24,11 @@ public class BattleScreen implements Screen {
     private final Battle battle;
     private Stage stage;
     private Skin skin;
+
+    private Label rewardLabel;
+    private TextButton continueButton;
+    private boolean showRewards = false;
+
 
     private void createButtons() {
         // 攻擊按鈕
@@ -60,6 +66,33 @@ public class BattleScreen implements Screen {
         stage.addActor(attackButton);
         stage.addActor(defendButton);
     }
+
+    private void createRewardUI() {
+        // 設定獎勵標籤
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
+        rewardLabel = new Label("", labelStyle);
+        rewardLabel.setPosition(200, 400);
+        rewardLabel.setVisible(false);
+        stage.addActor(rewardLabel);
+
+        // 設定繼續按鈕
+        continueButton = new TextButton("back", skin);
+
+        continueButton.setSize(200, 50);
+        continueButton.setPosition(300, 250);
+        continueButton.setVisible(false);
+        continueButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                Gdx.app.log("BattleScreen", "go main menu");
+                game.setScreen(new MainMenuScreen(game)); // 返回主選單
+            }
+        });
+        stage.addActor(continueButton);
+    }
+
 
     public BattleScreen(RPGGame game, Battle battle) {
         this.game = game;
@@ -107,11 +140,33 @@ public class BattleScreen implements Screen {
         font.draw(batch, battle.getBattleState(), 50, 550); // 顯示場上資訊
         font.draw(batch, "Last Action: " + battle.getLastLog(), 50, 400);
 
+        createRewardUI();
+
         // 結束戰鬥
         if (battle.isBattleOver()) {
-            Gdx.app.log("BattleScreen", "go main menu");
-            font.draw(batch, "Battle Over! Winner: " + (battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()) + " press ENTER to return", 50, 50);
-            game.setScreen(new MainMenuScreen(game));
+
+            if (!showRewards) {
+                Gdx.app.log("battleScreen", "showRewards");
+                showRewards = true;
+
+                int expGained = battle.getEnemy().getExpReward();
+                DropItem itemRewards = battle.getItemReward();
+
+                StringBuilder rewardText = new StringBuilder("Battle ended\n" +
+                                                             "Gained exp: " + expGained);
+                if (itemRewards != null) {
+                    rewardText.append("\nGet item: ").append(itemRewards.getName());
+                } else {
+                    rewardText.append("\nNo item found");
+                }
+
+                rewardLabel.setText(rewardText.toString());
+                rewardLabel.setVisible(true);
+                continueButton.setVisible(true);
+            }
+
+            // font.draw(batch, "Battle Over! Winner: " + (battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()) + " press ENTER to return", 50, 50);
+            // game.setScreen(new MainMenuScreen(game));
         }
 
         batch.end();

@@ -115,8 +115,8 @@ public class Battle {
     }
 
     // get player and enemy
-    public Character getPlayer() {return player;}
-    public Character getEnemy() {return enemy;}
+    public Player getPlayer() {return player;}
+    public Monster getEnemy() {return enemy;}
 
     // 判斷戰鬥是否結束
     public boolean isBattleOver() {

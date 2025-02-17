@@ -13,11 +13,12 @@ public class DropItem {
 
     private int dropRate; // 掉落機率（百分比）
 
-    public DropItem(String itemID, int minDrop, int maxDrop, int dropRate) {
+    public DropItem(String itemID, String name, int minDrop, int maxDrop, int dropRate) {
         this.itemID = itemID;
         this.minDrop = minDrop;
         this.maxDrop = maxDrop;
         this.dropRate = dropRate;
+        this.name = name;
     }
 
     public String getItemID() { return itemID; }
