@@ -188,6 +188,7 @@ public class MainMenuScreen implements Screen {
                                     String addingItemName = player.addItem(dropItem.getItemID(), dropCount);
 
                                     resultText.append(addingItemName);
+                                    resultText.append(" ×"+ dropCount);
                                     foundItem = true;
                                     // Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
                                 }
