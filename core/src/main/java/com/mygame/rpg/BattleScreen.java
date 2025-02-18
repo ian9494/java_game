@@ -15,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygame.rpg.RPGGame;
 
 public class BattleScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
     private final OrthographicCamera camera;
-    private final RPGGame game;
+    private RPGGame game;
     private final Battle battle;
     private Stage stage;
     private Skin skin;
@@ -35,6 +36,8 @@ public class BattleScreen implements Screen {
     private Label levelUpLabel;
     private TextButton levelUpOkButton;
     private boolean isLevelUpVisible = false;
+
+    // Removed the constructor to ensure all final fields are initialized
 
 
     private void createButtons() {
@@ -106,14 +109,14 @@ public class BattleScreen implements Screen {
 
         // 升級訊息標籤
         levelUpLabel = new Label("", labelStyle);
-        levelUpLabel.setPosition(200, 450);
+        levelUpLabel.setPosition(700, 400);
         levelUpLabel.setVisible(false);
         stage.addActor(levelUpLabel);
 
         // OK 按鈕
-        levelUpOkButton = new TextButton("確定", skin);
+        levelUpOkButton = new TextButton("confirm", skin);
         levelUpOkButton.setSize(150, 50);
-        levelUpOkButton.setPosition(300, 350);
+        levelUpOkButton.setPosition(800, 250);
         levelUpOkButton.setVisible(false);
         levelUpOkButton.addListener(new ClickListener() {
             @Override
@@ -133,7 +136,6 @@ public class BattleScreen implements Screen {
         levelUpOkButton.setVisible(true);
         isLevelUpVisible = true;
     }
-
 
     public BattleScreen(RPGGame game, Battle battle) {
         this.game = game;
@@ -182,9 +184,23 @@ public class BattleScreen implements Screen {
         font.draw(batch, "Last Action: " + battle.getLastLog(), 50, 400);
 
         createRewardUI();
+        createLevelUpUI();
+
+        if (isLevelUpVisible) {
+            rewardLabel.setVisible(false); // **如果顯示升級 UI，隱藏獎勵 UI**
+            continueButton.setVisible(false);
+
+            attackButton.setVisible(false);
+            defendButton.setVisible(false);
+
+            batch.end();
+            stage.act(delta);
+            stage.draw();
+            return;
+        }
 
         // 結束戰鬥
-        if (battle.isBattleOver()) {
+        if (battle.isBattleOver() && !isLevelUpVisible) {
 
             if (!showRewards) {
                 Gdx.app.log("battleScreen", "showRewards");
@@ -208,14 +224,6 @@ public class BattleScreen implements Screen {
                 rewardLabel.setVisible(true);
                 continueButton.setVisible(true);
             }
-
-            if (isLevelUpVisible) {
-                batch.end();
-                stage.act(delta);
-                stage.draw();
-                return;
-            }
-
 
             // font.draw(batch, "Battle Over! Winner: " + (battle.getPlayer().isAlive() ? battle.getPlayer().getName() : battle.getEnemy().getName()) + " press ENTER to return", 50, 50);
             // game.setScreen(new MainMenuScreen(game));

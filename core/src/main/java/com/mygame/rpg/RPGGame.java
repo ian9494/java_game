@@ -13,10 +13,14 @@ public class RPGGame extends Game {
     private Player player;
     private Monster enemy;
 
+    private BattleScreen battleScreen;
+
     public Player getPlayer() {return player;}
     public Monster getEnemy() {return enemy;}
 
-    private BattleScreen battleScreen;
+    public void setBattleScreen(BattleScreen battleScreen) {
+        this.battleScreen = battleScreen;
+    }
 
     public BattleScreen getBattleScreen() {
         return battleScreen;

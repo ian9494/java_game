@@ -226,7 +226,11 @@ public class MainMenuScreen implements Screen {
                         cumulativeEncounterRate += monster.getEncounterRate();
                         if (roll < cumulativeEncounterRate) {
                             Gdx.app.log("Main_menu-explore", "You encountered a " + monster.getName());
-                            game.setScreen(new BattleScreen(game, new Battle(player, monster)));
+
+                            BattleScreen battleScreen = new BattleScreen(game, new Battle(player, monster));
+
+                            game.setBattleScreen(battleScreen);
+                            game.setScreen(battleScreen);
                             return;
                         }
                     }
