@@ -12,13 +12,20 @@ import java.util.Map;
 public class Player extends Character {
     private int exp;
     private int expToNextLV;
+<<<<<<< Updated upstream
     private int gold = 0;
+=======
+    private int gold;
+>>>>>>> Stashed changes
 
     private Map<String, Item> inventory;
 
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
+    public int getGold() { return gold; }
     public Map<String, Item> getInventory() { return inventory; }
+
+    public void setGold(int gold) { this.gold = gold; }
 
     // 必須有無參數建構子，否則會無法建立物件
     public Player() {
@@ -33,6 +40,7 @@ public class Player extends Character {
         super(name, 1); // 玩家初始等級 1
         this.exp = 0;
         this.LocationID = 1; // 初始位置為 1
+        this.gold = 0;
         updateStats(); // 依據等級計算屬性
         this.inventory = new HashMap<>();
     }
@@ -141,14 +149,14 @@ public class Player extends Character {
 
         FileHandle file = Gdx.files.local(fileName);
         file.writeString(playerData, false);
-        Gdx.app.log("Player - Save file", "存檔完成: " + fileName);
+        Gdx.app.log("Player - Save file", "file saved: " + fileName);
     }
 
     // 從json載入
     public static Player loadFromFile(String fileName) {
         FileHandle file = Gdx.files.local(fileName);
         if (!file.exists()) {
-            Gdx.app.log("Player - Load file", "存檔不存在，即將創建新角色");
+            Gdx.app.log("Player - Load file", "save file not found: " + fileName);
             return new Player("Hero");
         }
 

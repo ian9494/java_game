@@ -29,6 +29,7 @@ public class Item {
     public String getItemID() { return itemID; }
     public String getName() { return name; }
     public String getDescription() { return description; }
+    public int getPrice() { return price; }
     public int getQuantity() { return quantity; }
 
     public void setItemName() {
