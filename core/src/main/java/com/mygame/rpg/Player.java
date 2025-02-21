@@ -12,6 +12,7 @@ import java.util.Map;
 public class Player extends Character {
     private int exp;
     private int expToNextLV;
+    private int gold = 0;
 
     private Map<String, Item> inventory;
 
@@ -50,6 +51,12 @@ public class Player extends Character {
         Gdx.app.log("Player - Status", "expToNextLV: " + expToNextLV);
     }
 
+    // 恢復 HP 與 MP
+    public void restoreHPMP(int percentage) {
+        hp = (int) (maxHp * (percentage / 100.0f));
+        mp = (int) (maxMp * (percentage / 100.0f));
+    }
+
     // 獲得經驗
     public void gainExp(int amount) {
         exp += amount;
@@ -81,6 +88,16 @@ public class Player extends Character {
             }
             System.out.println("移除了 " + item.getName() + " x" + amount);
         }
+    }
+
+    // 花費金幣
+    public boolean spendGold(int amount) {
+        gold -= amount;
+        if (gold < 0) {
+            gold += amount;
+            return false;
+        }
+        return true;
     }
 
     // 升級

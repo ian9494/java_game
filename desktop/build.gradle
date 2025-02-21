@@ -22,10 +22,15 @@ sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = 'com.mygame.rpg.lwjgl3.desktopLauncher'
 application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-lwjgl3'
-java.sourceCompatibility = 21
-java.targetCompatibility = 21
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(21)
+}
+
+compileJava {
+  options.encoding = 'UTF-8'
+  options.release = 8
 }
 
 dependencies {
@@ -144,8 +149,8 @@ task fatJar(type: Jar) {
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE // 避免重複檔案
 
-    archiveBaseName.set("fantasy RPG") // 輸出的檔案名稱
-    archiveVersion.set("build 2") // 版本號
+    archiveBaseName.set("fantasy_RPG") // 輸出的檔案名稱
+    archiveVersion.set("build-2") // 版本號
 
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
