@@ -12,20 +12,15 @@ import java.util.Map;
 public class Player extends Character {
     private int exp;
     private int expToNextLV;
-<<<<<<< Updated upstream
-    private int gold = 0;
-=======
     private int gold;
->>>>>>> Stashed changes
 
     private Map<String, Item> inventory;
 
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
     public int getGold() { return gold; }
-    public Map<String, Item> getInventory() { return inventory; }
-
     public void setGold(int gold) { this.gold = gold; }
+    public Map<String, Item> getInventory() { return inventory; }
 
     // 必須有無參數建構子，否則會無法建立物件
     public Player() {
@@ -40,7 +35,6 @@ public class Player extends Character {
         super(name, 1); // 玩家初始等級 1
         this.exp = 0;
         this.LocationID = 1; // 初始位置為 1
-        this.gold = 0;
         updateStats(); // 依據等級計算屬性
         this.inventory = new HashMap<>();
     }
@@ -57,12 +51,6 @@ public class Player extends Character {
         this.mp = maxMp;
         this.expToNextLV = LV * (LV * 20);
         Gdx.app.log("Player - Status", "expToNextLV: " + expToNextLV);
-    }
-
-    // 恢復 HP 與 MP
-    public void restoreHPMP(int percentage) {
-        hp = (int) (maxHp * (percentage / 100.0f));
-        mp = (int) (maxMp * (percentage / 100.0f));
     }
 
     // 獲得經驗
@@ -98,43 +86,29 @@ public class Player extends Character {
         }
     }
 
-    // 花費金幣
-    public boolean spendGold(int amount) {
-        gold -= amount;
-        if (gold < 0) {
-            gold += amount;
-            return false;
-        }
-        return true;
-    }
-
     // 升級
     private void LVUp() {
-        // 紀錄上一級資訊以便做比對
-        int oldMaxHp = maxHp;
-        int oldMaxMp = maxMp;
-        int oldAtk = Atk;
-        int oldDef = Def;
-
         exp -= expToNextLV;
         LV++;
         expToNextLV += LV * 20; // 升級所需經驗增加
+        updateStats(); // 重新計算屬性
+        Gdx.app.log("Player - Status", name + " Leveled up to " + LV + "!");
+    }
 
-        updateStats(); // 重新計算屬性`
+    // 消耗金幣
+    public boolean spendGold(int amount) {
+        if (gold >= amount) {
+            gold -= amount;
+            return true;
+        } else {
+            Gdx.app.log("Player - Spend gold", "Not enough gold!");
+            return false;
+        }
+    }
 
-        // 編輯升級資訊
-        StringBuilder levelUpMessage = new StringBuilder();
-        levelUpMessage.append("Level up to ").append(LV).append("!\n");
-        levelUpMessage.append("HP: ").append(oldMaxHp).append(" -> ").append(maxHp).append("\n");
-        levelUpMessage.append("MP: ").append(oldMaxMp).append(" -> ").append(maxMp).append("\n");
-        levelUpMessage.append("ATK: ").append(oldAtk).append(" -> ").append(Atk).append("\n");
-        levelUpMessage.append("DEF: ").append(oldDef).append(" -> ").append(Def).append("\n");
-
-        Gdx.app.log("Player - LevelUp", levelUpMessage.toString());
-
-        // 觸發 UI 顯示升級訊息
-        RPGGame game = (RPGGame) Gdx.app.getApplicationListener();
-        game.getBattleScreen().showLevelUpMessage(levelUpMessage.toString());
+    public void restoreHPMP(int percentage) {
+        hp = Math.min(hp + maxHp * percentage / 100, maxHp);
+        mp = Math.min(mp + maxMp * percentage / 100, maxMp);
     }
 
     // 移動到新地點
@@ -149,14 +123,14 @@ public class Player extends Character {
 
         FileHandle file = Gdx.files.local(fileName);
         file.writeString(playerData, false);
-        Gdx.app.log("Player - Save file", "file saved: " + fileName);
+        Gdx.app.log("Player - Save file", "存檔完成: " + fileName);
     }
 
     // 從json載入
     public static Player loadFromFile(String fileName) {
         FileHandle file = Gdx.files.local(fileName);
         if (!file.exists()) {
-            Gdx.app.log("Player - Load file", "save file not found: " + fileName);
+            Gdx.app.log("Player - Load file", "存檔不存在，即將創建新角色");
             return new Player("Hero");
         }
 

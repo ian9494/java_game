@@ -146,95 +146,99 @@ public class MainMenuScreen implements Screen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Location currentLocation = locationManager.getLocationByID(player.getLocationID());
 
-                // 如果是城鎮，則無法探索
+                // 如果是城鎮，則進入 TownScreen
                 if (currentLocation.isTown()) {
-                    Gdx.app.log("Main menu-explore", "This is a town. No exploration possible.");
+                    Gdx.app.log("Main_menu-explore", "Entering town...");
+                    game.setScreen(new TownScreen(game, player));
                     return;
                 }
 
-                Gdx.app.log("Main_menu-explore", "Exploring...");
-
-                // 隨機遇敵或採集
-                Random random = new Random();
-                int eventType = random.nextInt(2); // 0: 採集, 1: 遭遇敵人
-                Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
-
-                // 採集物品
-                if (eventType == 0) {
-                    List<GatherableObject> gatherableObjects = locationManager.getGatherablesObjects(player.getLocationID());
-                    Gdx.app.log("Main_menu-explore", "Gathering...");
-
-                    int totalEncounterRate = 0;
-                    // 計算總遭遇率
-                    for (GatherableObject object : gatherableObjects) {
-                        totalEncounterRate += object.getEncounterRate();
-                    }
-                    int roll = random.nextInt(totalEncounterRate);
-                    int cumulativeEncounterRate = 0;
-
-                    for (GatherableObject object : gatherableObjects) {
-                        cumulativeEncounterRate += object.getEncounterRate();
-                        Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
-                        if (roll < cumulativeEncounterRate) {
-                            Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
-
-                            StringBuilder resultText = new StringBuilder("You found: ");
-                            boolean foundItem = false;
-
-                            for (DropItem dropItem : object.getDropItems()) {
-                                int dropChance = random.nextInt(100);
-                                if (dropChance < dropItem.getDropRate()) {
-                                    int dropCount = dropItem.getRandomDropCount();
-                                    String addingItemName = player.addItem(dropItem.getItemID(), dropCount);
-
-                                    resultText.append(addingItemName);
-                                    resultText.append(" ×"+ dropCount + " ");
-                                    foundItem = true;
-                                    // Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
-                                }
-                            }
-
-                            if (!foundItem) {
-                                resultText = new StringBuilder("You find nothing");
-                            }
-
-                            gatherResultLabel.setText(resultText.toString());
-                            gatherResultLabel.setVisible(true);
-                            gatherResultDisplayTime = 3.0f;
-                            isGatherResultVisible = true;
-
-                            return;
-                        }
-                    }
-                    gatherResultLabel.setText("You found nothing.");
-                    gatherResultLabel.setVisible(true);
-                    gatherResultDisplayTime = 3.0f;
-                    isGatherResultVisible = true;
-                }
-
-                // 遭遇敵人
                 else {
-                    List<Monster> possibleMonsters = locationManager.getMonsters(player.getLocationID());
-                    int totalEncounterRate = 0;
-                    for (Monster monster : possibleMonsters) {
-                        totalEncounterRate += monster.getEncounterRate();
+                    Gdx.app.log("Main_menu-explore", "Exploring...");
+
+                    // 隨機遇敵或採集
+                    Random random = new Random();
+                    int eventType = random.nextInt(2); // 0: 採集, 1: 遭遇敵人
+                    Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
+
+                    // 採集物品
+                    if (eventType == 0) {
+                        List<GatherableObject> gatherableObjects = locationManager.getGatherablesObjects(player.getLocationID());
+                        Gdx.app.log("Main_menu-explore", "Gathering...");
+
+                        int totalEncounterRate = 0;
+                        // 計算總遭遇率
+                        for (GatherableObject object : gatherableObjects) {
+                            totalEncounterRate += object.getEncounterRate();
+                        }
+                        int roll = random.nextInt(totalEncounterRate);
+                        int cumulativeEncounterRate = 0;
+
+                        for (GatherableObject object : gatherableObjects) {
+                            cumulativeEncounterRate += object.getEncounterRate();
+                            Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
+                            if (roll < cumulativeEncounterRate) {
+                                Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
+
+                                StringBuilder resultText = new StringBuilder("You found: ");
+                                boolean foundItem = false;
+
+                                for (DropItem dropItem : object.getDropItems()) {
+                                    int dropChance = random.nextInt(100);
+                                    if (dropChance < dropItem.getDropRate()) {
+                                        int dropCount = dropItem.getRandomDropCount();
+                                        String addingItemName = player.addItem(dropItem.getItemID(), dropCount);
+
+                                        resultText.append(addingItemName);
+                                        resultText.append(" ×"+ dropCount + " ");
+                                        foundItem = true;
+                                        // Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
+                                    }
+                                }
+
+                                if (!foundItem) {
+                                    resultText = new StringBuilder("You find nothing");
+                                }
+
+                                gatherResultLabel.setText(resultText.toString());
+                                gatherResultLabel.setVisible(true);
+                                gatherResultDisplayTime = 3.0f;
+                                isGatherResultVisible = true;
+
+                                return;
+                            }
+                        }
+                        gatherResultLabel.setText("You found nothing.");
+                        gatherResultLabel.setVisible(true);
+                        gatherResultDisplayTime = 3.0f;
+                        isGatherResultVisible = true;
                     }
-                    int roll = random.nextInt(totalEncounterRate);
-                    int cumulativeEncounterRate = 0;
 
-                    for (Monster monster : possibleMonsters) {
-                        cumulativeEncounterRate += monster.getEncounterRate();
-                        if (roll < cumulativeEncounterRate) {
-                            Gdx.app.log("Main_menu-explore", "You encountered a " + monster.getName());
+                    // 遭遇敵人
+                    else {
+                        List<Monster> possibleMonsters = locationManager.getMonsters(player.getLocationID());
+                        int totalEncounterRate = 0;
+                        for (Monster monster : possibleMonsters) {
+                            totalEncounterRate += monster.getEncounterRate();
+                        }
+                        int roll = random.nextInt(totalEncounterRate);
+                        int cumulativeEncounterRate = 0;
 
-                            BattleScreen battleScreen = new BattleScreen(game, new Battle(player, monster));
+                        for (Monster monster : possibleMonsters) {
+                            cumulativeEncounterRate += monster.getEncounterRate();
+                            if (roll < cumulativeEncounterRate) {
+                                Gdx.app.log("Main_menu-explore", "You encountered a " + monster.getName());
 
-                            game.setBattleScreen(battleScreen);
-                            game.setScreen(battleScreen);
-                            return;
+                                BattleScreen battleScreen = new BattleScreen(game, new Battle(player, monster));
+
+                                game.setBattleScreen(battleScreen);
+                                game.setScreen(battleScreen);
+                                return;
+                            }
                         }
                     }
                 }
+
             }
         });
 
@@ -323,7 +327,10 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {}
     @Override
-    public void hide() {}
+    public void hide() {
+        // 重置輸入處理器
+        // Gdx.input.setInputProcessor(null);
+    }
     @Override
     public void pause() {}
     @Override
@@ -332,6 +339,9 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         // batch.dispose(); // 移除未使用的 batch 變數
         font.dispose();
+        largeFont.dispose();
         stage.dispose();
+        skin.dispose();
+
     }
 }

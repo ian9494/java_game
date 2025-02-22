@@ -26,6 +26,12 @@ public class Item {
         this.quantity = quantity;
     }
 
+    public Item(String itemID, String name, int price) {
+        this.itemID = itemID;
+        this.name = name;
+        this.price = price;
+    }
+
     public String getItemID() { return itemID; }
     public String getName() { return name; }
     public String getDescription() { return description; }

@@ -1,16 +1,35 @@
 package com.mygame.rpg;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import java.util.ArrayList;
 import java.util.List;
 
 public class townShop {
     private List<Item> shopInventory;
 
-    public townShop(List<Item> shopInventory) {
-        this.shopInventory = shopInventory;
+    public townShop(String jsonFilePath) {
+        this.shopInventory = loadShopInventoryFromJson(jsonFilePath);
+    }
+
+    private List<Item> loadShopInventoryFromJson(String jsonFilePath) {
+        Json json = new Json();
+        ArrayList<JsonValue> jsonData = json.fromJson(ArrayList.class, Gdx.files.internal(jsonFilePath).readString());
+        List<Item> inventory = new ArrayList<>();
+        for (JsonValue itemValue : jsonData) {
+            Item item = new Item(itemValue.getString("itemID"), itemValue.getString("name"), itemValue.getInt("price"));
+            inventory.add(item);
+        }
+        return inventory;
+    }
+
+    public List<Item> getInventory() {
+        return shopInventory;
     }
 
     // buy item from shop
-    public void buyItem(Player player, int itemIndex) {
+    public void buyItem(Player player, int itemIndex, int quantity) {
         Item item = shopInventory.get(itemIndex);
         if (player.getGold() >= item.getPrice()) {
             player.setGold(player.getGold() - item.getPrice());
