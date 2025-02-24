@@ -12,9 +12,9 @@
                     "encounter_rate": 10,
                     "attributes": {
                         "Lv": [1, 5],
-                        "hp":  {"base" : 5,  "growth": 2},
-                        "atk": {"base" : 3,  "growth": 1},
-                        "def": 0,
+                        "hp":  {"base" : 15,  "growth": 3},
+                        "atk": {"base" : 5,  "growth": 3},
+                        "def": 5,
                         "spd": 30,
                         "exp": 10,
                         "gold": 4,
