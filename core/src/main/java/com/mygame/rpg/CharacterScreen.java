@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -76,6 +77,7 @@ public class CharacterScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         createButtons();
+        createInventoryUI();
     }
 
     private void createButtons() {
@@ -92,6 +94,32 @@ public class CharacterScreen implements Screen {
 
         stage.addActor(backButton);
     }
+
+    private void createInventoryUI() {
+        int y = 500;
+        for (Map.Entry<String, Item> entry : player.getInventory().entrySet()) {
+            Item item = entry.getValue();
+
+            // 過濾"material" 類型的物品
+            if (item.getType().equals("material")) {
+                continue;
+            }
+            TextButton useButton = new TextButton(item.getName() + " x" + item.getQuantity(), skin);
+            useButton.setSize(250, 50);
+            useButton.setPosition(800, y);
+            y -= 60;
+
+            useButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    player.useItem(item.getItemID());
+                }
+            });
+
+            stage.addActor(useButton);
+            }
+    }
+
 
     @Override
     public void render(float delta) {
@@ -110,17 +138,18 @@ public class CharacterScreen implements Screen {
         font.draw(batch, "ATK: " + player.getAtk(), 100, 350);
         font.draw(batch, "DEF: " + player.getDef(), 100, 320);
         font.draw(batch, "SPD: " + player.getSpd(), 100, 290);
+        font.draw(batch, "Gold: " + player.getGold(), 100, 260);
 
         // 顯示背包
-        font.draw(batch, "Inventory:", 100, 250);
+        font.draw(batch, "Inventory:", 400, 500);
         Map<String, Item> inventory = player.getInventory();
-        int y = 220;
+        int y = 470;
         if (inventory.isEmpty()) {
-            font.draw(batch, "No items.", 100, y);
+            font.draw(batch, "No items.", 400, y);
         } else {
             for (Map.Entry<String, Item> entry : inventory.entrySet()) {
                 Item item = entry.getValue();
-                font.draw(batch, "- " + item.getName() + " ×" + item.getQuantity(), 100, y);
+                font.draw(batch, "- " + item.getName() + " ×" + item.getQuantity(), 400, y);
                 y -= 25;
             }
         }

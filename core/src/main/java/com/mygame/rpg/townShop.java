@@ -29,14 +29,16 @@ public class townShop {
     }
 
     // buy item from shop
-    public void buyItem(Player player, int itemIndex, int quantity) {
+    public boolean buyItem(Player player, int itemIndex, int quantity) {
         Item item = shopInventory.get(itemIndex);
         if (player.getGold() >= item.getPrice()) {
             player.setGold(player.getGold() - item.getPrice());
             player.addItem(item.getItemID(), 1);
             System.out.println("You bought " + item.getName() + " for " + item.getPrice() + " gold.");
+            return true;
         } else {
             System.out.println("You don't have enough gold to buy " + item.getName());
+            return false;
         }
     }
 

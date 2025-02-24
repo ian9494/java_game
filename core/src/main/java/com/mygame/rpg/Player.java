@@ -19,6 +19,7 @@ public class Player extends Character {
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
     public int getGold() { return gold; }
+    public int addGold(int amount) { return gold += amount; }
     public void setGold(int gold) { this.gold = gold; }
     public Map<String, Item> getInventory() { return inventory; }
 
@@ -106,10 +107,46 @@ public class Player extends Character {
         }
     }
 
+    // 恢復 HP 與 MP
     public void restoreHPMP(int percentage) {
         hp = Math.min(hp + maxHp * percentage / 100, maxHp);
         mp = Math.min(mp + maxMp * percentage / 100, maxMp);
     }
+
+    // 使用道具
+    public void useItem(String itemID) {
+        if (inventory.containsKey(itemID)) {
+            Item item = inventory.get(itemID);
+            item.useItem(this); // 讓道具的效果作用在玩家身上
+            item.removeQuantity(1); // 消耗 1 個道具
+            if (item.getQuantity() == 0) {
+                inventory.remove(itemID);
+            }
+            Gdx.app.log("Player-inventory", "使用了 " + item.getName());
+        } else {
+            Gdx.app.log("Player-inventory", "沒有這個道具: " + itemID);
+        }
+    }
+
+    public void addTemporaryBuff(String type, int value, int duration) {
+        switch (type) {
+            case "atk":
+                this.Atk += value;
+                break;
+
+            case "def":
+                this.Def += value;
+                break;
+
+            case "spd":
+                this.Spd += value;
+                break;
+
+            default:
+                Gdx.app.log("Player - Buff", "Unknown buff type: " + type);
+        }
+    }
+
 
     // 移動到新地點
     public void setLocationID(int locationID) {

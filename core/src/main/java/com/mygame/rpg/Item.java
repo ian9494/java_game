@@ -32,26 +32,72 @@ public class Item {
         this.price = price;
     }
 
+    // Getters and setters
     public String getItemID() { return itemID; }
     public String getName() { return name; }
     public String getDescription() { return description; }
     public int getPrice() { return price; }
     public int getQuantity() { return quantity; }
+    public String getType() { return type; }
 
+    // 設定物品名稱
     public void setItemName() {
         this.name = ItemManager.getInstance().getItemName(itemID);
         this.description = ItemManager.getInstance().getItemDescription(itemID);
     }
 
+    // 設定中文名稱
     public void setChineseName() {
         this.chineseName = ItemManager.getInstance().getItemChineseName(itemID);
     }
 
+    // 增加物品數量
     public void addQuantity(int amount) {
         this.quantity += amount;
     }
 
+    // 移除物品數量
     public void removeQuantity(int amount) {
         this.quantity = Math.max(0, this.quantity - amount);
     }
+
+    // 使用物品
+    public void useItem(Player player) {
+        if (effects != null) {
+            for (Effect effect : effects) {
+                switch (effect.getType()) {
+                    case "hp_restore":
+                        player.setHp(player.getHp() + effect.getValue());
+                        break;
+
+                    case "mp_restore":
+                        player.setMp(player.getMp() + effect.getValue());
+                        break;
+
+                    case "atk_boost":
+                        player.addTemporaryBuff("atk", effect.getValue(), effect.getDuration());
+                        break;
+
+                    case "def_boost":
+                        player.addTemporaryBuff("def", effect.getValue(), effect.getDuration());
+                        break;
+
+                    case "spd_boost":
+                        player.addTemporaryBuff("spd", effect.getValue(), effect.getDuration());
+                        break;
+
+                    case "gold_range":
+                        int minGold = effect.getValue();
+                        int maxGold = effect.getDuration();
+                        int earnedGold = minGold + (int)(Math.random() * (maxGold - minGold));
+                        player.setGold(player.addGold(earnedGold));
+                        break;
+
+                    default:
+                        System.out.println("Unknown effect type: " + effect.getType());
+                }
+            }
+        }
+    }
+
 }

@@ -28,6 +28,7 @@ public class BattleScreen implements Screen {
 
     private TextButton attackButton;
     private TextButton defendButton;
+    private TextButton useItemButton;
 
     private Label rewardLabel;
     private TextButton continueButton;
@@ -71,6 +72,18 @@ public class BattleScreen implements Screen {
                 battle.doDefend();
             }
         });
+
+        useItemButton = new TextButton("Use Item", skin);
+        useItemButton.setSize(150, 50);
+        useItemButton.setPosition(400, 50);
+        useItemButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                battle.getPlayer().useItem("102"); // 測試使用 低階HP藥水
+            }
+        });
+stage.addActor(useItemButton);
+
 
         // 添加按鈕到舞台
         stage.addActor(attackButton);

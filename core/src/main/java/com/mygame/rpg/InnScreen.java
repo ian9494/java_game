@@ -18,6 +18,9 @@ public class InnScreen implements Screen {
     private final Stage stage;
     private final Skin skin;
 
+    private Label goldLabel;
+    private Label messageLabel;
+
     public InnScreen(RPGGame game, Player player, Inn inn) {
         this.game = game;
         this.player = player;
@@ -38,11 +41,25 @@ public class InnScreen implements Screen {
         table.add(innLabel).padBottom(20);
         table.row();
 
+        goldLabel = new Label("Gold: " + player.getGold(), skin);
+        table.add(goldLabel).padBottom(20);
+        table.row();
+
+        messageLabel = new Label("", skin);
+        table.add(messageLabel).padBottom(20);
+        table.row();
+
         TextButton basicRoomButton = new TextButton("normal room - 10 gold", skin);
         basicRoomButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                inn.rest(player, false);
+                boolean success = inn.rest(player, false);
+                if (success) {
+                    messageLabel.setText("You have rested in the normal room.");
+                } else {
+                    messageLabel.setText("You don't have enough gold to rest in the normal room.");
+                }
+                goldLabel.setText("Gold: " + player.getGold());
             }
         });
         table.add(basicRoomButton).padBottom(10);
@@ -52,7 +69,13 @@ public class InnScreen implements Screen {
         premiumRoomButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                inn.rest(player, true);
+                boolean success = inn.rest(player, true);
+                if (success) {
+                    messageLabel.setText("You have rested in the premium room.");
+                } else {
+                    messageLabel.setText("You don't have enough gold to rest in the premium room.");
+                }
+                goldLabel.setText("Gold: " + player.getGold());
             }
         });
         table.add(premiumRoomButton).padBottom(10);

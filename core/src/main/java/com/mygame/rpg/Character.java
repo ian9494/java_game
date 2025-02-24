@@ -70,5 +70,5 @@ public class Character {
 
     // 設置角色的 HP 並確保值是有效的
     public void setHp(int hp) { this.hp = Math.max(0, Math.min(hp, maxHp)); }
-
+    public void setMp(int mp) { this.mp = Math.max(0, Math.min(mp, maxMp)); }
 }
