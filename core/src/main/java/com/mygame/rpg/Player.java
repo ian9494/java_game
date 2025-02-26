@@ -65,7 +65,7 @@ public class Player extends Character {
     // 獲得物品
     public String addItem(String itemID, int amount) {
         Item addingItem = new Item(itemID, amount);
-        addingItem.setItemName();
+        addingItem.setItemInfo();
         if (inventory.containsKey(itemID)) {
             inventory.get(itemID).addQuantity(amount);
         } else {

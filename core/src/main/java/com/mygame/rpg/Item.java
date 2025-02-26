@@ -41,9 +41,10 @@ public class Item {
     public String getType() { return type; }
 
     // 設定物品名稱
-    public void setItemName() {
+    public void setItemInfo() {
         this.name = ItemManager.getInstance().getItemName(itemID);
         this.description = ItemManager.getInstance().getItemDescription(itemID);
+        this.type = ItemManager.getInstance().getItemType(itemID);
     }
 
     // 設定中文名稱

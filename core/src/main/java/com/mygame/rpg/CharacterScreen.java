@@ -99,14 +99,17 @@ public class CharacterScreen implements Screen {
         int y = 500;
         for (Map.Entry<String, Item> entry : player.getInventory().entrySet()) {
             Item item = entry.getValue();
+            item.setItemInfo();
 
             // 過濾"material" 類型的物品
             if (item.getType().equals("material")) {
+                Gdx.app.log("Item", "Skipping material item: " + item.getName());
                 continue;
             }
+            Gdx.app.log("Item", "Adding item: " + item.getName() + item.getType());
             TextButton useButton = new TextButton(item.getName() + " x" + item.getQuantity(), skin);
             useButton.setSize(250, 50);
-            useButton.setPosition(800, y);
+            useButton.setPosition(1200, y);
             y -= 60;
 
             useButton.addListener(new ClickListener() {

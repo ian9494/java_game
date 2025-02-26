@@ -38,6 +38,7 @@ public class ItemManager {
             itemNames.put(id, item.getString("name"));
             // itemDescriptions.put(id, item.getString("description"));
             chineseNames.put(id, item.getString("chinese_name"));
+            itemTypes.put(id, item.getString("type"));
         }
     }
 
@@ -55,5 +56,9 @@ public class ItemManager {
 
     public String getItemDescription(String itemID) {
         return itemDescriptions.getOrDefault(itemID, "No description available.");
+    }
+
+    public String getItemType(String itemID) {
+        return itemTypes.getOrDefault(itemID, "Consumable");
     }
 }
