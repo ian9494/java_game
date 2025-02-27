@@ -11,6 +11,12 @@ public class Effect {
         this.duration = duration;
     }
 
+    public Effect() {}
+
+    public void setEffect(String type) {
+        this.type = type;
+    }
+
     public String getType() { return type; }
     public int getValue() { return value; }
     public int getDuration() { return duration; }

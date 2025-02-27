@@ -83,7 +83,7 @@ public class Player extends Character {
             if (item.getQuantity() == 0) {
                 inventory.remove(itemID);
             }
-            System.out.println("移除了 " + item.getName() + " x" + amount);
+            Gdx.app.log("Player-inventory", "removed " + item.getName() + " x" + amount);
         }
     }
 
@@ -122,9 +122,9 @@ public class Player extends Character {
             if (item.getQuantity() == 0) {
                 inventory.remove(itemID);
             }
-            Gdx.app.log("Player-inventory", "使用了 " + item.getName());
+            Gdx.app.log("Player-inventory", "used " + item.getName());
         } else {
-            Gdx.app.log("Player-inventory", "沒有這個道具: " + itemID);
+            Gdx.app.log("Player-inventory", "do not have item: " + itemID);
         }
     }
 
@@ -160,14 +160,14 @@ public class Player extends Character {
 
         FileHandle file = Gdx.files.local(fileName);
         file.writeString(playerData, false);
-        Gdx.app.log("Player - Save file", "存檔完成: " + fileName);
+        Gdx.app.log("Player - Save file", "file saved: " + fileName);
     }
 
     // 從json載入
     public static Player loadFromFile(String fileName) {
         FileHandle file = Gdx.files.local(fileName);
         if (!file.exists()) {
-            Gdx.app.log("Player - Load file", "存檔不存在，即將創建新角色");
+            Gdx.app.log("Player - Load file", "file don't exist: " + fileName);
             return new Player("Hero");
         }
 

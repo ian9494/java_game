@@ -34,6 +34,7 @@ public class Monster extends Character {
     }
 
     public int getExpReward() {return expReward; }
+    public int getGoldReward() { return gold; }
     public int getEncounterRate() { return encounter_rate; }
 
     public DropItem getRandomDrop() {

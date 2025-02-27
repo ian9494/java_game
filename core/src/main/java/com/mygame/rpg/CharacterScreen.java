@@ -103,10 +103,10 @@ public class CharacterScreen implements Screen {
 
             // 過濾"material" 類型的物品
             if (item.getType().equals("material")) {
-                Gdx.app.log("Item", "Skipping material item: " + item.getName());
+                // Gdx.app.log("Item", "Skipping material item: " + item.getName());
                 continue;
             }
-            Gdx.app.log("Item", "Adding item: " + item.getName() + item.getType());
+            // Gdx.app.log("Item", "Adding item: " + item.getName() + item.getType());
             TextButton useButton = new TextButton(item.getName() + " x" + item.getQuantity(), skin);
             useButton.setSize(250, 50);
             useButton.setPosition(1200, y);

@@ -123,6 +123,8 @@ public class Battle {
         if (!enemy.isAlive()) {
             if (!battleOver) {
                 int expGained = enemy.getExpReward();
+                int goldGained = enemy.getGoldReward();
+                player.addGold(goldGained);
                 player.gainExp(expGained);
                 itemReward = enemy.getRandomDrop();
                 Gdx.app.log("battle - isBattleOver", "getting drops " + itemReward.getItemID());

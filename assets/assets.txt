@@ -9,7 +9,6 @@ json/shopInventory.json
 json/world_map.json
 json/world_map_v1_data_copy.json
 libgdx.png
-save/player.json
 ui/font-list.fnt
 ui/font-subtitle.fnt
 ui/font-window.fnt

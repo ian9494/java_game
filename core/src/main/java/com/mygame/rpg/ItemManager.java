@@ -15,7 +15,7 @@ public class ItemManager {
     private Map<String, String> itemDescriptions = new HashMap<>();
     private Map<String, String> itemIcons = new HashMap<>();
     private Map<String, String> itemTypes = new HashMap<>();
-    private Map<String, String> itemEffects = new HashMap<>();
+    private Map<String, Effect> itemEffects = new HashMap<>();
 
     private ItemManager() {
         loadItems();
@@ -39,6 +39,10 @@ public class ItemManager {
             // itemDescriptions.put(id, item.getString("description"));
             chineseNames.put(id, item.getString("chinese_name"));
             itemTypes.put(id, item.getString("type"));
+
+            Effect effect = new Effect();
+            effect.setEffect(item.getString("effect"));
+            itemEffects.put(id, effect);
         }
     }
 
@@ -60,5 +64,9 @@ public class ItemManager {
 
     public String getItemType(String itemID) {
         return itemTypes.getOrDefault(itemID, "Consumable");
+    }
+
+    public Effect getItemEffect(String itemID) {
+        return itemEffects.getOrDefault(itemID, new Effect());
     }
 }

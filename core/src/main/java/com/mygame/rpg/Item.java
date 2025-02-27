@@ -1,6 +1,7 @@
 package com.mygame.rpg;
 
 import java.util.List;
+import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 
 public class Item {
@@ -45,6 +46,11 @@ public class Item {
         this.name = ItemManager.getInstance().getItemName(itemID);
         this.description = ItemManager.getInstance().getItemDescription(itemID);
         this.type = ItemManager.getInstance().getItemType(itemID);
+
+        Effect effect = ItemManager.getInstance().getItemEffect(itemID);
+        if (effect != null) {
+            this.effects = Arrays.asList(effect);
+        }
     }
 
     // 設定中文名稱
@@ -64,7 +70,9 @@ public class Item {
 
     // 使用物品
     public void useItem(Player player) {
+        Gdx.app.log("Item", "Using item: " + name);
         if (effects != null) {
+            Gdx.app.log("Item", "Item has effects: " + effects.size());
             for (Effect effect : effects) {
                 switch (effect.getType()) {
                     case "hp_restore":
@@ -92,6 +100,7 @@ public class Item {
                         int maxGold = effect.getDuration();
                         int earnedGold = minGold + (int)(Math.random() * (maxGold - minGold));
                         player.setGold(player.addGold(earnedGold));
+                        Gdx.app.log("Item", "Earned gold: " + earnedGold);
                         break;
 
                     default:

@@ -8,8 +8,8 @@
             "type": "consumable",
             "price": 0,
             "effect": {
-            "gold_range": [5, 10]
-            },
+                "gold_range": [5, 10]
+                },
             "stackable": true,
             "usage_limit": 1
         },
