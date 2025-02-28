@@ -8,8 +8,10 @@
             "type": "consumable",
             "price": 0,
             "effect": {
-                "gold_range": [5, 10]
-                },
+                "gold_range":{
+                    "value": [5, 10]
+                }
+            },
             "stackable": true,
             "usage_limit": 1
         },
@@ -21,9 +23,9 @@
             "type": "consumable",
             "price": 50,
             "effect": {
-            "hp_restore": {
-                "value": 20
-            }
+                "hp_restore": {
+                    "value": 20
+                }
             },
             "stackable": true,
             "usage_limit": 1
@@ -36,9 +38,9 @@
             "type": "consumable",
             "price": 50,
             "effect": {
-            "mp_restore": {
-                "value": 20
-            }
+                "mp_restore": {
+                    "value": 20
+                }
             },
             "stackable": true,
             "usage_limit": 1
@@ -51,10 +53,10 @@
             "type": "consumable",
             "price": 80,
             "effect": {
-            "atk_boost": {
-                "value": 0.1,
-                "duration": 5
-            }
+                "atk_boost": {
+                    "value": 0.1,
+                    "duration": 5
+                }
             },
             "stackable": false,
             "usage_limit": 1
@@ -66,11 +68,11 @@
             "rarity": "uncommon",
             "type": "consumable",
             "price": 80,
-            "effect": {
-            "def_boost": {
-                "value": 0.1,
-                "duration": 5
-            }
+                "effect": {
+                "def_boost": {
+                    "value": 0.1,
+                    "duration": 5
+                }
             },
             "stackable": false,
             "usage_limit": 1
@@ -82,11 +84,11 @@
             "rarity": "uncommon",
             "type": "consumable",
             "price": 80,
-            "effect": {
-            "spd_boost": {
-                "value": 0.1,
-                "duration": 5
-            }
+                "effect": {
+                "spd_boost": {
+                    "value": 0.1,
+                    "duration": 5
+                }
             },
             "stackable": false,
             "usage_limit": 1

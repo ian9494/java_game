@@ -5,20 +5,27 @@ public class Effect {
     private int value;
     private int duration;
 
-    public Effect(String type, int value, int duration) {
+    public void setEffect(String type, int value) {
+        this.type = type;
+        this.value = value;
+        this.duration = 0;
+    }
+
+    public void setEffect(String type, int value, int duration) {
         this.type = type;
         this.value = value;
         this.duration = duration;
     }
 
-    public Effect() {}
-
-    public void setEffect(String type) {
-        this.type = type;
+    public String getType() {
+        return type;
     }
 
-    public String getType() { return type; }
-    public int getValue() { return value; }
-    public int getDuration() { return duration; }
+    public int getValue() {
+        return value;
+    }
 
+    public int getDuration() {
+        return duration;
+    }
 }

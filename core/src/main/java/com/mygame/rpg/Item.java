@@ -74,6 +74,10 @@ public class Item {
         if (effects != null) {
             Gdx.app.log("Item", "Item has effects: " + effects.size());
             for (Effect effect : effects) {
+                Gdx.app.log("Item-useItemc", "Effect type: " + effect.getType());
+                if (effect.getType() == null) {
+                    continue;
+                }
                 switch (effect.getType()) {
                     case "hp_restore":
                         player.setHp(player.getHp() + effect.getValue());

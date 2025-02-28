@@ -18,6 +18,7 @@ public class townShop {
         ArrayList<JsonValue> jsonData = json.fromJson(ArrayList.class, Gdx.files.internal(jsonFilePath).readString());
         List<Item> inventory = new ArrayList<>();
         for (JsonValue itemValue : jsonData) {
+            Gdx.app.log("townShop-loadItem", itemValue.getString("name"));
             Item item = new Item(itemValue.getString("itemID"), itemValue.getString("name"), itemValue.getInt("price"));
             inventory.add(item);
         }

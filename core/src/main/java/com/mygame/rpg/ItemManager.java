@@ -33,15 +33,41 @@ public class ItemManager {
         JsonReader jsonReader = new JsonReader();
         JsonValue json = jsonReader.parse(file);
 
-        for (JsonValue item : json.get("items")) {
+        JsonValue items = json.get("items");
+        if (items == null) {
+            throw new IllegalArgumentException("JSON 文件中缺少 'items' 鍵");
+        }
+
+        for (JsonValue item : items) {
             String id = item.getString("id");
             itemNames.put(id, item.getString("name"));
-            // itemDescriptions.put(id, item.getString("description"));
             chineseNames.put(id, item.getString("chinese_name"));
             itemTypes.put(id, item.getString("type"));
+            rarity.put(id, item.getString("rarity"));
 
             Effect effect = new Effect();
-            effect.setEffect(item.getString("effect"));
+            JsonValue effectValue = item.get("effect");
+            if (effectValue != null) {
+                Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id);
+                for (JsonValue effectEntry : effectValue) {
+                    if (effectEntry.isObject()) {
+                        for (JsonValue entry : effectEntry) {
+                            if (entry.has("value")) {
+                                JsonValue value = entry.get("value");
+                                if (value.isArray()) {
+                                    effect.setEffect(entry.name(), value.get(0).asInt(), value.get(1).asInt());
+                                } else {
+                                    effect.setEffect(entry.name(), value.asInt(), entry.getInt("duration", 0));
+                                }
+                            }
+                        }
+                    } else if (effectEntry.isArray()) {
+                        effect.setEffect(effectEntry.name(), effectEntry.get(0).asInt(), effectEntry.get(1).asInt());
+                    } else {
+                        effect.setEffect(effectEntry.name(), effectEntry.asInt());
+                    }
+                }
+            }
             itemEffects.put(id, effect);
         }
     }
