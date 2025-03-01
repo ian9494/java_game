@@ -5,6 +5,10 @@ public class Effect {
     private int value;
     private int duration;
 
+    public Effect() {
+        // default constructor
+    }
+
     public void setEffect(String type, int value) {
         this.type = type;
         this.value = value;

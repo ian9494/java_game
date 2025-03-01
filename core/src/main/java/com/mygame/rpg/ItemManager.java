@@ -48,22 +48,17 @@ public class ItemManager {
             Effect effect = new Effect();
             JsonValue effectValue = item.get("effect");
             if (effectValue != null) {
-                Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id);
+                // Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id);
                 for (JsonValue effectEntry : effectValue) {
+                    Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id + " with key: " + effectEntry.name());
                     if (effectEntry.isObject()) {
-                        for (JsonValue entry : effectEntry) {
-                            if (entry.has("value")) {
-                                JsonValue value = entry.get("value");
-                                if (value.isArray()) {
-                                    effect.setEffect(entry.name(), value.get(0).asInt(), value.get(1).asInt());
-                                } else {
-                                    effect.setEffect(entry.name(), value.asInt(), entry.getInt("duration", 0));
-                                }
-                            }
-                        }
+                        Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name());
+                        effect.setEffect(effectEntry.name(), effectEntry.getInt("value"));
                     } else if (effectEntry.isArray()) {
+                        Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name() + " with values: " + effectEntry.get(0).asInt() + ", " + effectEntry.get(1).asInt());
                         effect.setEffect(effectEntry.name(), effectEntry.get(0).asInt(), effectEntry.get(1).asInt());
                     } else {
+                        Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name() + " with value: " + effectEntry.asInt());
                         effect.setEffect(effectEntry.name(), effectEntry.asInt());
                     }
                 }

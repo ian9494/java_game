@@ -9,7 +9,7 @@
             "price": 0,
             "effect": {
                 "gold_range":{
-                    "value": [5, 10]
+                    "value": 5
                 }
             },
             "stackable": true,

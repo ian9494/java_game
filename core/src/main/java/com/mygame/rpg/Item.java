@@ -1,6 +1,7 @@
 package com.mygame.rpg;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 
@@ -16,7 +17,7 @@ public class Item {
     private int quantity;
     private boolean stackable;
 
-    private List<Effect> effects;
+    private List<Effect> effects = new ArrayList<>();
 
     private ItemManager itemManager = ItemManager.getInstance();
 
@@ -25,12 +26,14 @@ public class Item {
     public Item(String itemID, int quantity) {
         this.itemID = itemID;
         this.quantity = quantity;
+        this.effects = new ArrayList<>();
     }
 
     public Item(String itemID, String name, int price) {
         this.itemID = itemID;
         this.name = name;
         this.price = price;
+        this.effects = new ArrayList<>();
     }
 
     // Getters and setters
@@ -49,7 +52,8 @@ public class Item {
 
         Effect effect = ItemManager.getInstance().getItemEffect(itemID);
         if (effect != null) {
-            this.effects = Arrays.asList(effect);
+            this.effects = new ArrayList<>();
+            this.effects.add(effect);
         }
     }
 
@@ -101,10 +105,10 @@ public class Item {
 
                     case "gold_range":
                         int minGold = effect.getValue();
-                        int maxGold = effect.getDuration();
-                        int earnedGold = minGold + (int)(Math.random() * (maxGold - minGold));
-                        player.setGold(player.addGold(earnedGold));
-                        Gdx.app.log("Item", "Earned gold: " + earnedGold);
+                        // int maxGold = effect.getDuration();
+                        // int earnedGold = minGold + (int)(Math.random() * (maxGold - minGold));
+                        player.setGold(player.addGold(minGold));
+                        Gdx.app.log("Item", "Earned gold: " + minGold);
                         break;
 
                     default:

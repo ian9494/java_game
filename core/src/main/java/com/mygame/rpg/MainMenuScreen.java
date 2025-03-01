@@ -176,9 +176,9 @@ public class MainMenuScreen implements Screen {
 
                         for (GatherableObject object : gatherableObjects) {
                             cumulativeEncounterRate += object.getEncounterRate();
-                            Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
+                            // Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
                             if (roll < cumulativeEncounterRate) {
-                                Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
+                                // Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
 
                                 StringBuilder resultText = new StringBuilder("You found: ");
                                 boolean foundItem = false;

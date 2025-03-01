@@ -38,9 +38,6 @@ public class BattleScreen implements Screen {
     private TextButton levelUpOkButton;
     private boolean isLevelUpVisible = false;
 
-    // Removed the constructor to ensure all final fields are initialized
-
-
     private void createButtons() {
         // 攻擊按鈕
         attackButton = new TextButton("Attack", skin);
@@ -220,13 +217,15 @@ stage.addActor(useItemButton);
                 showRewards = true;
 
                 int expGained = battle.getEnemy().getExpReward();
+                int goldGained = battle.getEnemy().getGoldReward();
                 DropItem itemRewards = battle.getItemReward();
 
                 attackButton.setVisible(false);
                 defendButton.setVisible(false);
 
                 StringBuilder rewardText = new StringBuilder("Battle ended\n" +
-                                                             "Gained exp: " + expGained);
+                                                             "Gained exp: " + expGained + "\n" +
+                                                             "Gained gold: " + goldGained);
                 if (itemRewards != null) {
                     rewardText.append("\nGet item: ").append(itemRewards.getName());
                 } else {
