@@ -1,0 +1,14 @@
+[Player - Status] Updating stats for Hero...
+[Player - Status] expToNextLV: 20
+[Main Menu-buttons] Moved to Verdant Plains
+[Main Menu-buttons] Moved to Desolate Highlands
+[Main Menu-buttons] Moved to Verdant Plains
+[Main Menu-buttons] Moved to Foggy Forest
+[Main Menu-buttons] Moved to Oak Town
+[Main Menu-buttons] Moved to Unforgettable Desert
+[Main Menu-buttons] Moved to Dust Fortress
+[Main Menu-buttons] Moved to Unforgettable Desert
+[Main Menu-buttons] Moved to Dust Fortress
+[Main Menu-buttons] Moved to 
+[Player - Status] Updating stats for Hero...
+[Player - Status] expToNextLV: 20

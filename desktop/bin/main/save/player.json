@@ -1,0 +1,62 @@
+{
+name: Hero
+LV: 2
+exp: 30
+expToNextLV: 80
+hp: 84
+maxHp: 120
+mp: 60
+maxMp: 60
+Atk: 13
+Def: 7
+Spd: 20
+actionBar: 160
+readyToAct: true
+gold: 15
+inventory: {
+	class: java.util.HashMap
+	201: {
+		itemID: 201
+		name: Plank
+		type: material
+		description: No description available.
+		quantity: 5
+		effects: [
+			{}
+		]
+	}
+	102: {
+		itemID: 102
+		name: Low HP Potion
+		type: consumable
+		description: No description available.
+		quantity: 1
+		effects: [
+			{
+				type: hp_restore
+				value: 50
+			}
+		]
+	}
+	204: {
+		itemID: 204
+		name: Plant Fiber
+		type: material
+		description: No description available.
+		quantity: 2
+		effects: [
+			{}
+		]
+	}
+	207: {
+		itemID: 207
+		name: Cotton
+		type: material
+		description: No description available.
+		quantity: 4
+		effects: [
+			{}
+		]
+	}
+}
+}

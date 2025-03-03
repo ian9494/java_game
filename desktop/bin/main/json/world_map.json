@@ -1,0 +1,96 @@
+{
+  "locations": [
+    {
+    "id": 1,
+    "name": "Balst Village",
+    "chinese_name": "伊始之村",
+    "description": "初心者們的旅途開始之地",
+    "iconPath": "balst_village_icon.png",
+    "is_town": true,
+    "connections": [2]
+    },
+    {
+    "id": 2,
+    "name": "Verdant Plains",
+    "chinese_name": "蒼翠平原",
+    "description": "翠綠的大草原，總能看到一些新手冒險家在草原上練習使用武器",
+    "iconPath": "verdant_plains_icon.png",
+    "is_town": false,
+    "weathers": ["Sunny", "Rainy", "Cloudy", "Foggy"],
+    "daytime": ["daytime", "Night","Midnight"],
+    "connections": [1, 3, 5]
+    },
+    {
+    "id": 3,
+    "name": "Desolate Highlands",
+    "chinese_name": "荒蕪高地",
+    "description": "一片荒涼的高地，到處都是飢荒的獸人",
+    "iconPath": "desolate_highlands_icon.png",
+    "is_town": false,
+    "connections": [2]
+    },
+    {
+    "id": 4,
+    "name": "Oak Town",
+    "chinese_name": "橡木鎮",
+    "description": "在迷霧森林邊緣的一處小鎮，用原木蓋起的小房子看起來格外和藹可親",
+    "iconPath": "oak_town_icon.png",
+    "is_town": true,
+    "connections": [5, 7]
+    },
+    {
+    "id": 5,
+    "name": "Foggy Forest",
+    "chinese_name": "迷霧森林",
+    "description": "迷霧瀰漫的詭異森林，在裡面探索的每一步都得小心翼翼",
+    "iconPath": "foggy_forest_icon.png",
+    "is_town": false,
+    "connections": [2, 4, 6]
+    },
+    {
+    "id": 6,
+    "name": "Howling Rift",
+    "chinese_name": "淒風裂谷",
+    "description": "",
+    "iconPath": "howling_rift_icon.png",
+    "is_town": false,
+    "connections": [5, 9]
+    },
+    {
+    "id": 7,
+    "name": "Unforgettable Desert",
+    "chinese_name": "遺忘沙漠",
+    "description": "",
+    "iconPath": "unforgettable_desert_icon.png",
+    "is_town": false,
+    "connections": [4, 8]
+    },
+    {
+    "id": 8,
+    "name": "Dust Fortress",
+    "chinese_name": "岩漠要塞",
+    "description": "矗立於沙漠中央的要塞，隱蔽在沙漠之中",
+    "iconPath": "dust_fortress_icon.png",
+    "is_town": false,
+    "connections": [7, 12]
+    },
+    {
+    "id": 9,
+    "name": "Glacier Peaks",
+    "chinese_name": "冰川高峰",
+    "description": "",
+    "iconPath": "glacier_peaks_icon.png",
+    "is_town": false,
+    "connections": [6, 10, 13]
+    },
+    {
+    "id": 10,
+    "name": "Frostpine Village",
+    "chinese_name": "雪淞鎮",
+    "description": "冰峰山腳下的小村落，這裡冷到不在火爐旁邊根本沒辦法睡覺",
+    "iconPath": "frostpine_village_icon.png",
+    "is_town": true,
+    "connections": [9]
+    }
+  ]
+}

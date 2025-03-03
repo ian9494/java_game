@@ -84,7 +84,10 @@ public class Item {
                 }
                 switch (effect.getType()) {
                     case "hp_restore":
-                        player.setHp(player.getHp() + effect.getValue());
+                        int flatHeal = effect.getValue();
+                        int percentHeal = (int) (player.getMaxHp() * effect.getDuration() / 100.0);
+                        int totalHeal = flatHeal + percentHeal;
+                        player.setHp(player.getHp() + totalHeal);
                         break;
 
                     case "mp_restore":

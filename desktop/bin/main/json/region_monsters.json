@@ -1,0 +1,37 @@
+{
+    "regions" :[
+        {
+            "region_ID": 2,
+            "monsters": [
+                {
+                    "monster_ID": 201,
+                    "name": "Goblin_thief",
+                    "chinese_name": "哥布林盜賊",
+                    "description": "一種矮小的怪物，經常在草原上出沒",
+                    "iconPath": "Goblin_thief.png",
+                    "encounter_rate": 10,
+                    "attributes": {
+                        "Lv": [1, 5],
+                        "hp":  {"base" : 15,  "growth": 3},
+                        "atk": {"base" : 5,  "growth": 3},
+                        "def": 5,
+                        "spd": 30,
+                        "exp": 10,
+                        "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "name": "coin pouch",
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                }
+
+            ]
+        }
+    ]
+}
+
+

@@ -17,6 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygame.rpg.RPGGame;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import java.util.Map;
+
 public class BattleScreen implements Screen {
     private final SpriteBatch batch;
     private final BitmapFont font;
@@ -37,6 +44,10 @@ public class BattleScreen implements Screen {
     private Label levelUpLabel;
     private TextButton levelUpOkButton;
     private boolean isLevelUpVisible = false;
+
+    private Window itemWindow;
+    private ScrollPane itemScroll;
+    private VerticalGroup itemList;
 
     private void createButtons() {
         // 攻擊按鈕
@@ -76,10 +87,20 @@ public class BattleScreen implements Screen {
         useItemButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                battle.getPlayer().useItem("102"); // 測試使用 低階HP藥水
+                showItemMenu();
             }
         });
-stage.addActor(useItemButton);
+        stage.addActor(useItemButton);
+
+        // 初始化物品選單
+        itemList = new VerticalGroup();
+        itemScroll = new ScrollPane(itemList, skin);
+        itemWindow = new Window("Select Items", skin);
+        itemWindow.setSize(300, 400);
+        itemWindow.setPosition(750, 100);
+        itemWindow.setVisible(false);
+        itemWindow.add(itemScroll);
+        stage.addActor(itemWindow);
 
 
         // 添加按鈕到舞台
@@ -138,6 +159,52 @@ stage.addActor(useItemButton);
         });
 
         stage.addActor(levelUpOkButton);
+    }
+
+    private void showItemMenu() {
+        itemList.clear();
+        Map<String, Item> inventory = battle.getPlayer().getInventory();
+
+        boolean hasUsableItem = false;
+
+        for (Map.Entry<String, Item> entry : inventory.entrySet()) {
+            Item item = entry.getValue();
+
+            if (!"consumable".equals(item.getType()) || item.getQuantity() <= 0) {
+                continue;
+            }
+
+            hasUsableItem = true;
+            TextButton itemButton = new TextButton(item.getName() + " x" + item.getQuantity(), skin);
+            itemButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    useItemInBattle(item);
+                    itemWindow.setVisible(false);
+                }
+            });
+            itemList.addActor(itemButton);
+        }
+        if (!hasUsableItem) {
+            itemList.addActor(new Label("No usable item", skin));
+        }
+
+        TextButton closeButton = new TextButton("Close", skin);
+            closeButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    itemWindow.setVisible(false);
+                }
+            });
+        itemList.addActor(closeButton); 
+
+        itemWindow.setVisible(true);
+    }
+
+    private void useItemInBattle(Item item) {
+        battle.getPlayer().useItem(item.getItemID());
+        Gdx.app.log("BattleScreen", "use item: " + item.getName());
+
     }
 
     public void showLevelUpMessage(String message) {

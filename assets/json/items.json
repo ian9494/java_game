@@ -21,10 +21,11 @@
             "chinese_name": "低階HP藥水",
             "rarity": "uncommon",
             "type": "consumable",
-            "price": 50,
+            "price": 30,
             "effect": {
                 "hp_restore": {
-                    "value": 20
+                    "value": 50,
+                    "duration": 0
                 }
             },
             "stackable": true,
