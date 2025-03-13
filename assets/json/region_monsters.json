@@ -15,9 +15,140 @@
                         "hp":  {"base" : 15,  "growth": 3},
                         "atk": {"base" : 5,  "growth": 3},
                         "def": 5,
+                        "res": 0,
                         "spd": 30,
                         "exp": 10,
                         "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "name": "coin pouch",
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 202,
+                    "name": "Goblin_archer",
+                    "chinese_name": "哥布林射手",
+                    "description": "一種矮小的怪物，會拿弓在遠處射擊",
+                    "iconPath": "Goblin_archer.png",
+                    "encounter_rate": 10,
+                    "attributes": {
+                        "Lv": [1, 5],
+                        "hp":  {"base" : 12,  "growth": 3},
+                        "atk": {"base" : 7,  "growth": 3},
+                        "def": 0,
+                        "res": 5,
+                        "spd": 20,
+                        "exp": 10,
+                        "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "name": "coin pouch",
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 203,
+                    "name": "Goblin_Assassin",
+                    "chinese_name": "哥布林刺客",
+                    "description": "一種矮小的怪物，會拿劍在近距離攻擊",
+                    "iconPath": "Goblin_Assassin.png",
+                    "encounter_rate": 5,
+                    "attributes": {
+                        "Lv": [8, 10],
+                        "hp":  {"base" : 30,  "growth": 5},
+                        "atk": {"base" : 10,  "growth": 5},
+                        "def": 15,
+                        "res": 0,
+                        "spd": 40,
+                        "exp": 20,
+                        "gold": 10,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "name": "coin pouch",
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 204,
+                    "name": "Goblin_Elite",
+                    "chinese_name": "精銳哥布林",
+                    "description": "一種矮小的怪物，戰鬥力較強",
+                    "iconPath": "Goblin_Elite.png",
+                    "encounter_rate": 5,
+                    "attributes": {
+                        "Lv": [8, 10],
+                        "hp":  {"base" : 60,  "growth": 5},
+                        "atk": {"base" : 4,  "growth": 4},
+                        "def": 15,
+                        "res": 0,
+                        "spd": 20,
+                        "exp": 20,
+                        "gold": 10,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "name": "coin pouch",
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 205,
+                    "name": "wolf",
+                    "chinese_name": "惡狼",
+                    "description": "一種狼，經常在草原上出沒",
+                    "iconPath": "wolf.png",
+                    "encounter_rate": 6,
+                    "attributes": {
+                        "Lv": [1, 5],
+                        "hp":  {"base" : 9,  "growth": 3},
+                        "atk": {"base" : 3,  "growth": 3},
+                        "def": 0,
+                        "res": 20,
+                        "spd": 35,
+                        "exp": 10,
+                        "gold": 4,
+                        "drop_items": [
+                            {
+                                "item_ID": 101,
+                                "name": "coin pouch",
+                                "drop_count": [1, 1],
+                                "drop_rate": 20
+                            }
+                        ]
+                    }
+                },
+                {
+                    "monster_ID": 206,
+                    "name": "worg",
+                    "chinese_name": "座狼",
+                    "description": "一種狼，戰鬥力較強",
+                    "iconPath": "wolf_leader.png",
+                    "encounter_rate": 3,
+                    "attributes": {
+                        "Lv": [5, 10],
+                        "hp":  {"base" : 20,  "growth": 4},
+                        "atk": {"base" : 5,  "growth": 4},
+                        "def": 0,
+                        "res": 20,
+                        "spd": 40,
+                        "exp": 20,
+                        "gold": 10,
                         "drop_items": [
                             {
                                 "item_ID": 101,

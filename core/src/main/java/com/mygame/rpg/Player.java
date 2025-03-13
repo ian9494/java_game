@@ -107,6 +107,23 @@ public class Player extends Character {
         }
     }
 
+    // 死亡懲罰
+    public void applyDeathPenalty() {
+        int lostGold = gold / 5; // 例如損失 20% 金錢
+        gold -= lostGold;
+        if (gold < 0) {
+            gold = 0;
+        }
+        Gdx.app.log("Player - Death penalty", "Lost " + lostGold + " gold");
+
+        int lostExp = exp / 5; // 例如損失 20% 經驗
+        exp -= lostExp;
+        if (exp < 0) {
+            exp = 0;
+        }
+        Gdx.app.log("Player - Death penalty", "Lost " + lostExp + " exp");
+    }
+
     // 恢復 HP 與 MP
     public void restoreHPMP(int percentage) {
         hp = Math.min(hp + maxHp * percentage / 100, maxHp);
@@ -147,6 +164,18 @@ public class Player extends Character {
         }
     }
 
+    public void respawn() {
+        this.hp = this.maxHp; // 將 HP 重置為最大值
+        // 其他需要重置的狀態
+    }
+
+    public void returnToTown() {
+        // 傳送玩家到城鎮的邏輯
+        Gdx.app.log("player", "returning to town");
+        // 設定為城鎮ID
+        // TODO 尋找最近的城鎮ID
+        this.LocationID = 1;
+    }
 
     // 移動到新地點
     public void setLocationID(int locationID) {

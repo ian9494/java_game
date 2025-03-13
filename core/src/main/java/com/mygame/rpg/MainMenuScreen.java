@@ -231,8 +231,7 @@ public class MainMenuScreen implements Screen {
 
                                 BattleScreen battleScreen = new BattleScreen(game, new Battle(player, monster));
 
-                                game.setBattleScreen(battleScreen);
-                                game.setScreen(battleScreen);
+                                game.startBattle(battleScreen);
                                 return;
                             }
                         }

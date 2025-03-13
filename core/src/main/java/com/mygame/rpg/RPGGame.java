@@ -9,25 +9,39 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class RPGGame extends Game {
+    private static Game instance;
     private SpriteBatch batch;
     private Player player;
     private Monster enemy;
+    private GameState state;
 
     private BattleScreen battleScreen;
 
+    public static RPGGame getInstance() {return (RPGGame) instance;}
     public Player getPlayer() {return player;}
     public Monster getEnemy() {return enemy;}
 
-    public void setBattleScreen(BattleScreen battleScreen) {
-        this.battleScreen = battleScreen;
+    public void setState(GameState newState) {
+        state = newState;
+        Gdx.app.log("Game-State", "Game state changed to " + state);
     }
 
-    public BattleScreen getBattleScreen() {
-        return battleScreen;
+    public void startBattle(BattleScreen battleScreen) {
+        this.battleScreen = battleScreen;
+        setScreen(battleScreen);
+    }
+
+    public void endBattle() {
+        setScreen(new MainMenuScreen(this));
+    }
+
+    public void playerDeath() {
+        setScreen(new GameOverScreen(this, player));
     }
 
     @Override
     public void create() {
+        instance = this;
         batch = new SpriteBatch();
         // Gdx.app.setApplicationLogger(new FileLogger("game_log.txt")); // 設置日誌文件
 

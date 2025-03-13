@@ -61,11 +61,11 @@ public class BattleScreen implements Screen {
                 battle.doAttack();
 
                 // 打印行動序列
-                Gdx.app.log("BattleLog", "=== Current Action Sequence ===");
-                for (String log : battle.getBattleLogs()) {
-                    Gdx.app.log("BattleLog", log);
-                }
-                Gdx.app.log("BattleLog", "==============================\n");
+                // Gdx.app.log("BattleLog", "=== Current Action Sequence ===");
+                // for (String log : battle.getBattleLogs()) {
+                //     Gdx.app.log("BattleLog", log);
+                // }
+                // Gdx.app.log("BattleLog", "==============================\n");
             }
         });
 
@@ -196,7 +196,7 @@ public class BattleScreen implements Screen {
                     itemWindow.setVisible(false);
                 }
             });
-        itemList.addActor(closeButton); 
+        itemList.addActor(closeButton);
 
         itemWindow.setVisible(true);
     }

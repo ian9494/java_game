@@ -121,7 +121,7 @@ public class Battle {
     // 判斷戰鬥是否結束
     public boolean isBattleOver() {
         if (!enemy.isAlive()) {
-            if (!battleOver) {
+            if (!battleOver && player.isAlive()) {
                 int expGained = enemy.getExpReward();
                 int goldGained = enemy.getGoldReward();
                 player.addGold(goldGained);
@@ -130,17 +130,35 @@ public class Battle {
                 Gdx.app.log("battle - isBattleOver", "getting drops " + itemReward.getItemID());
 
                 if (itemReward != null) { // 確保有掉落物品
-                player.addItem(itemReward.getItemID(), itemReward.getRandomDropCount()); // 獲得掉落物品
+                    player.addItem(itemReward.getItemID(), itemReward.getRandomDropCount()); // 獲得掉落物品
                 }
 
                 battleResult = player.getName() + " defeated " + enemy.getName() + "! Gained " + expGained + " EXP.";
                 battleOver = true;
-
+            }
+            return true;
+        } else if (!player.isAlive()) {
+            if (!battleOver) {
+                battleResult = player.getName() + " was defeated by " + enemy.getName() + ".";
+                battleOver = true;
+                // 呼叫重生玩家的方法
+                respawnPlayer();
             }
             return true;
         }
-        return !player.isAlive();
+        return false;
     }
+
+    // 重生玩家並返回城鎮
+    private void respawnPlayer() {
+        Gdx.app.log("battle", "respawning player and returning to town");
+        player.respawn(); // 重置玩家的狀態
+        // 這裡假設有一個方法可以將玩家傳送到城鎮
+        player.returnToTown();
+        RPGGame.getInstance().playerDeath();; // 結束戰鬥
+
+    }
+
 
     // get battle result
     public String getBattleResult() {
@@ -198,18 +216,6 @@ public class Battle {
     // get all battle logs
     public List<String> getBattleLogs() {
         return new ArrayList<>(battleLogs); // 回傳所有行動日誌
-    }
-
-    // get action bar states
-    public String getActionBarStates() {
-        StringBuilder states = new StringBuilder("Action Bar States:\n");
-        for (Character character : actionQueue) {
-            states.append(character.getName())
-                  .append(" | Speed: ").append(character.getSpd())
-                  .append(" | ActionBar: ").append(character.getActionBar())
-                  .append("\n");
-        }
-        return states.toString();
     }
 
     public String getBattleState() {
