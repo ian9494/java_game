@@ -48,17 +48,16 @@ public class ItemManager {
             Effect effect = new Effect();
             JsonValue effectValue = item.get("effect");
             if (effectValue != null) {
-                // Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id);
                 for (JsonValue effectEntry : effectValue) {
-                    Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id + " with key: " + effectEntry.name());
+                    // Gdx.app.log("ItemManager-loadItems", "Loading effect for item " + id + " with key: " + effectEntry.name());
                     if (effectEntry.isObject()) {
-                        Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name());
+                        // Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name());
                         effect.setEffect(effectEntry.name(), effectEntry.getInt("value"));
                     } else if (effectEntry.isArray()) {
-                        Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name() + " with values: " + effectEntry.get(0).asInt() + ", " + effectEntry.get(1).asInt());
+                        // Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name() + " with values: " + effectEntry.get(0).asInt() + ", " + effectEntry.get(1).asInt());
                         effect.setEffect(effectEntry.name(), effectEntry.get(0).asInt(), effectEntry.get(1).asInt());
                     } else {
-                        Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name() + " with value: " + effectEntry.asInt());
+                        // Gdx.app.log("ItemManager-loadItems", "Setting effect for " + effectEntry.name() + " with value: " + effectEntry.asInt());
                         effect.setEffect(effectEntry.name(), effectEntry.asInt());
                     }
                 }

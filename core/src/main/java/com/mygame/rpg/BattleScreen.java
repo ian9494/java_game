@@ -34,8 +34,9 @@ public class BattleScreen implements Screen {
     private Skin skin;
 
     private TextButton attackButton;
-    private TextButton defendButton;
+    private TextButton useSkillButton;
     private TextButton useItemButton;
+    private TextButton confirmButton;
 
     private Label rewardLabel;
     private TextButton continueButton;
@@ -59,31 +60,41 @@ public class BattleScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 // 執行攻擊邏輯
                 battle.doAttack();
-
-                // 打印行動序列
-                // Gdx.app.log("BattleLog", "=== Current Action Sequence ===");
-                // for (String log : battle.getBattleLogs()) {
-                //     Gdx.app.log("BattleLog", log);
-                // }
-                // Gdx.app.log("BattleLog", "==============================\n");
             }
         });
 
-        // 防禦按鈕
-        defendButton = new TextButton("Defend", skin);
-        defendButton.setSize(150, 50);
-        defendButton.setPosition(220, 50);
-        defendButton.addListener(new ClickListener() {
+        // 技能按鈕
+        useSkillButton = new TextButton("Use Skill", skin);
+        useSkillButton.setSize(150, 50);
+        useSkillButton.setPosition(250, 50);
+        useSkillButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // 執行防禦邏輯
-                battle.doDefend();
+                // 執行技能邏輯
+                // battle.doSkill();
             }
         });
 
+        // 確認按鈕
+        confirmButton = new TextButton("Confirm", skin);
+        confirmButton.setSize(150, 50);
+        confirmButton.setPosition(400, 50);
+        confirmButton.setVisible(false);
+        confirmButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                battle.onPlayerConfirm();
+                confirmButton.setVisible(false);
+                // attackButton.setVisible(true);
+                // useItemButton.setVisible(true);
+                Gdx.app.log("battleScreen", "show attack button");
+            }
+        });
+
+        // 使用物品按鈕
         useItemButton = new TextButton("Use Item", skin);
         useItemButton.setSize(150, 50);
-        useItemButton.setPosition(400, 50);
+        useItemButton.setPosition(450, 50);
         useItemButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -105,7 +116,7 @@ public class BattleScreen implements Screen {
 
         // 添加按鈕到舞台
         stage.addActor(attackButton);
-        stage.addActor(defendButton);
+        stage.addActor(confirmButton);
     }
 
     private void createRewardUI() {
@@ -250,6 +261,16 @@ public class BattleScreen implements Screen {
             battle.updateActionBar();
         }
 
+        if (battle.isWaitingForPlayerConfirmation()){
+            confirmButton.setVisible(true);
+            attackButton.setVisible(false);
+            useItemButton.setVisible(false);
+        } else {
+            confirmButton.setVisible(false);
+            attackButton.setVisible(true);
+            useItemButton.setVisible(true);
+        }
+
         // 更新相機
         camera.update();
 
@@ -268,7 +289,6 @@ public class BattleScreen implements Screen {
             continueButton.setVisible(false);
 
             attackButton.setVisible(false);
-            defendButton.setVisible(false);
 
             batch.end();
             stage.act(delta);
@@ -280,7 +300,7 @@ public class BattleScreen implements Screen {
         if (battle.isBattleOver() && !isLevelUpVisible) {
 
             if (!showRewards) {
-                Gdx.app.log("battleScreen", "showRewards");
+                Gdx.app.log("battleScreen", "showing rewards");
                 showRewards = true;
 
                 int expGained = battle.getEnemy().getExpReward();
@@ -288,7 +308,6 @@ public class BattleScreen implements Screen {
                 DropItem itemRewards = battle.getItemReward();
 
                 attackButton.setVisible(false);
-                defendButton.setVisible(false);
 
                 StringBuilder rewardText = new StringBuilder("Battle ended\n" +
                                                              "Gained exp: " + expGained + "\n" +

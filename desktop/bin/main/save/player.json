@@ -1,26 +1,39 @@
 {
 name: Hero
 LV: 2
-exp: 24
+exp: 44
 expToNextLV: 80
-hp: 120
+hp: 36
 maxHp: 120
 mp: 60
 maxMp: 60
 Atk: 13
 Def: 7
 Spd: 20
-actionBar: 100
-readyToAct: true
-gold: 12
+LocationID: 2
+actionBar: 20
+gold: 15
 inventory: {
 	class: java.util.HashMap
+	101: {
+		itemID: 101
+		name: Coin Pouch
+		type: consumable
+		description: No description available.
+		quantity: 1
+		effects: [
+			{
+				type: gold_range
+				value: 5
+			}
+		]
+	}
 	201: {
 		itemID: 201
 		name: Plank
 		type: material
 		description: No description available.
-		quantity: 5
+		quantity: 6
 		effects: [
 			{}
 		]
@@ -43,7 +56,7 @@ inventory: {
 		name: Stone
 		type: material
 		description: No description available.
-		quantity: 4
+		quantity: 10
 		effects: [
 			{}
 		]
@@ -53,7 +66,7 @@ inventory: {
 		name: Plant Fiber
 		type: material
 		description: No description available.
-		quantity: 3
+		quantity: 7
 		effects: [
 			{}
 		]
@@ -63,7 +76,7 @@ inventory: {
 		name: Cotton
 		type: material
 		description: No description available.
-		quantity: 6
+		quantity: 7
 		effects: [
 			{}
 		]
@@ -73,7 +86,7 @@ inventory: {
 		name: Coal
 		type: material
 		description: No description available.
-		quantity: 2
+		quantity: 6
 		effects: [
 			{}
 		]

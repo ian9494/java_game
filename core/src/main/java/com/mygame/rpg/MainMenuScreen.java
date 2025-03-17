@@ -159,7 +159,7 @@ public class MainMenuScreen implements Screen {
                     // 隨機遇敵或採集
                     Random random = new Random();
                     int eventType = random.nextInt(2); // 0: 採集, 1: 遭遇敵人
-                    Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
+                    // Gdx.app.log("Main_menu-explore", "Event type: " + eventType);
 
                     // 採集物品
                     if (eventType == 0) {
@@ -176,9 +176,7 @@ public class MainMenuScreen implements Screen {
 
                         for (GatherableObject object : gatherableObjects) {
                             cumulativeEncounterRate += object.getEncounterRate();
-                            // Gdx.app.log("Main_menu-explore", "Roll: " + roll + " cumu " + cumulativeEncounterRate);
                             if (roll < cumulativeEncounterRate) {
-                                // Gdx.app.log("Main_menu-explore", "You found a " + object.getObjectName());
 
                                 StringBuilder resultText = new StringBuilder("You found: ");
                                 boolean foundItem = false;
@@ -192,7 +190,6 @@ public class MainMenuScreen implements Screen {
                                         resultText.append(addingItemName);
                                         resultText.append(" ×"+ dropCount + " ");
                                         foundItem = true;
-                                        // Gdx.app.log("Main_menu-explore", "You got " + dropCount + " " + dropItem.getItemID());
                                     }
                                 }
 

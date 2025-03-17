@@ -16,6 +16,8 @@ public class Battle {
     // private boolean isBattleOver;
     private boolean battleOver;
     private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
+    private boolean waitingForPlayerConfirmation; // 新增布林值來標記是否等待玩家確認
+
 
     private String battleResult;
     private DropItem itemReward;
@@ -47,21 +49,23 @@ public class Battle {
 
     // 執行戰鬥
     private void processTurn(Character character) {
-        if (character == player) {
-            // 玩家行動
-            int damage = calculateDamage(player, enemy);
-            enemy.takeDamage(damage);
-
-            Gdx.app.log("BattleLog", player.getName() + " attacks " + enemy.getName() + " for " + damage + " damage.");
-            Gdx.app.log("BattleLog", enemy.getName() + " remaining HP: " + enemy.getHp());
-
-        } else if (character == enemy) {
+        if (character == enemy) {
             // 敵人行動
             int damage = calculateDamage(enemy, player);
             player.takeDamage(damage);
-            Gdx.app.log("BattleLog", "waitingForPlayerAction: " + waitingForPlayerAction + "\n");
+
+            waitingForPlayerConfirmation = true; // 等待玩家操作
+
+            Gdx.app.log("BattleLog", "waitingForPlayerConfirm: " + waitingForPlayerAction + "\n");
             Gdx.app.log("BattleLog", enemy.getName() + " attacks " + player.getName() + " for " + damage + " damage.");
-            Gdx.app.log("BattleLog", player.getName() + " remaining HP: " + player.getHp());
+            Gdx.app.log("BattleLog", player.getName() + " remaining HP: " + player.getHp() + "\n\n");
+
+            if (!actionQueue.contains(enemy)){
+                enemy.resetActionBar();
+                enemy.setReadyToAct(false);
+                actionQueue.add(enemy);
+            }
+
         }
 
         // 檢查戰鬥是否結束
@@ -72,33 +76,45 @@ public class Battle {
         }
     }
 
+    public void onPlayerConfirm() {
+        Gdx.app.log("Battle", "Player confirmed. Resuming action bar update.");
+        if (waitingForPlayerConfirmation) {
+            waitingForPlayerConfirmation = false; // 更新狀態
+            updateActionBar(); // 繼續更新行動條
+        }
+    }
+
     // update action bar
     public void updateActionBar() {
-        if (waitingForPlayerAction) {
+        if (waitingForPlayerAction || waitingForPlayerConfirmation) {
+            // Gdx.app.log("battleLog", "Pausing action bar update waiting for player action");
             return; // 如果正在等待玩家操作，則不更新行動條
         }
 
-        List<Character> readyToAct = new ArrayList<>();
-
         for (Character character : actionQueue) {
+            for (Character c : actionQueue) {
+                Gdx.app.log("BattleLog - updateActionBar", c.getName() + " action bar: " + c.getActionBar());
+            }
+            Gdx.app.log("BattleLog - updateActionBar", "\n");
             character.incrementActionBar(character.getSpd());
 
             if (character.getActionBar() >= actionThreshold) {
-                character.setReadyToAct(true); // 設置角色為準備行動狀態
-                readyToAct.add(character);
                 Gdx.app.log("BattleLog - updateActionBar", "Character " + character.getName() + " is ready to act.");
-            }
-        }
+                character.setReadyToAct(true); // 設置角色為準備行動狀態
+                actionQueue.remove(character);
 
-        for (Character character : readyToAct) {
-            actionQueue.remove(character);
-            if (character == player) {
-                waitingForPlayerAction = true; // 如果是玩家，設置等待玩家操作
-            } else {
-                processTurn(character); // 自動執行敵人的行動
-                character.resetActionBar();
-                character.setReadyToAct(false); // 重置行動狀態
-                actionQueue.add(character);
+                if (character == player) {
+                    waitingForPlayerAction = true; // 如果是玩家，設置等待玩家操作
+                    Gdx.app.log("BattleLog - updateActionBar", "should wait for player action");
+                } else {
+                    processTurn(character); // 自動執行敵人的行動
+                    character.resetActionBar();
+                    character.setReadyToAct(false); // 重置行動狀態
+                    if (!actionQueue.contains(character)) {
+                        actionQueue.add(character);
+                    }
+                }
+                break;
             }
         }
     }
@@ -127,7 +143,7 @@ public class Battle {
                 player.addGold(goldGained);
                 player.gainExp(expGained);
                 itemReward = enemy.getRandomDrop();
-                Gdx.app.log("battle - isBattleOver", "getting drops " + itemReward.getItemID());
+                // Gdx.app.log("battle - isBattleOver", "getting drops " + itemReward.getItemID());
 
                 if (itemReward != null) { // 確保有掉落物品
                     player.addItem(itemReward.getItemID(), itemReward.getRandomDropCount()); // 獲得掉落物品
@@ -159,6 +175,9 @@ public class Battle {
 
     }
 
+    public boolean isWaitingForPlayerConfirmation() {
+        return waitingForPlayerConfirmation;
+    }
 
     // get battle result
     public String getBattleResult() {
@@ -183,15 +202,11 @@ public class Battle {
         String action = player.getName() + " attacks " + enemy.getName() + " for " + damage + " damage.";
         battleLogs.add(action);
         enemy.takeDamage(damage);
-        actionQueue.add(player);
-        waitingForPlayerAction = false; // 玩家操作完成，繼續更新行動條
-    }
 
-    // player do defend commend
-    public void doDefend() {
-        String action = player.getName() + " defends, reducing damage.";
-        battleLogs.add(action);
-        // 添加防禦邏輯
+        player.resetActionBar();
+        player.setReadyToAct(false);
+
+        actionQueue.add(player);
         waitingForPlayerAction = false; // 玩家操作完成，繼續更新行動條
     }
 

@@ -50,7 +50,6 @@ public class Character {
 
     // detect if character is alive
     public boolean isAlive() {
-        // Gdx.app.log("TAG", String.valueOf(this.hp));
         return this.hp > 0;
     }
 

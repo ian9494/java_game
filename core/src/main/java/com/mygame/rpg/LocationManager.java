@@ -88,7 +88,7 @@ public class LocationManager {
             }
 
             gatherablesByLocation.put(regionID, gatherableList);
-            Gdx.app.log("LocationManager", "Loaded gatherables for region " + regionID);
+            // Gdx.app.log("LocationManager", "Loaded gatherables for region " + regionID);
         }
     }
 
@@ -106,7 +106,7 @@ public class LocationManager {
             for (JsonValue monsterJson : regionJson.get("monsters")) {
                 String monsterID = monsterJson.getString("monster_ID");
                 String name = monsterJson.has("name") ? monsterJson.getString("name") : "Unknown";
-                Gdx.app.log("LocationManager", "Loaded monster " + name);
+                // Gdx.app.log("LocationManager", "Loaded monster " + name);
                 String chineseName = monsterJson.getString("chinese_name");
                 String description = monsterJson.getString("description");
                 String iconPath = monsterJson.getString("iconPath");
@@ -146,7 +146,7 @@ public class LocationManager {
             }
 
             monstersByLocation.put(regionID, monsterList);
-            Gdx.app.log("LocationManager", "Loaded monsters for region " + regionID);
+            // Gdx.app.log("LocationManager", "Loaded monsters for region " + regionID);
         }
     }
 

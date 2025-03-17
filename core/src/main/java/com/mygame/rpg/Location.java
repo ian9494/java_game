@@ -54,14 +54,13 @@ public class Location {
 
     public void printPossibleMonsters() {
         if (possibleMonsters == null) {
-            // Gdx.app.log("location", "possibleMonsters is null");
         }
         else if (possibleMonsters.isEmpty()) {
             Gdx.app.log("location", "possibleMonsters is empty");
         }
         else {
             for (String monster : possibleMonsters) {
-                Gdx.app.log("location", monster);
+                // Gdx.app.log("location", monster);
             }
         }
     }
