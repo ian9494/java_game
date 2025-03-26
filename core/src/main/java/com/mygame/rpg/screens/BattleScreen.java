@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,8 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.mygame.rpg.RPGGame;
-
+import com.mygame.rpg.battle.Battle;
+import com.mygame.rpg.battle.DropItem;
+import com.mygame.rpg.core.RPGGame;
+import com.mygame.rpg.item.Item;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -174,7 +176,7 @@ public class BattleScreen implements Screen {
 
     private void showItemMenu() {
         itemList.clear();
-        Map<String, Item> inventory = battle.getPlayer().getInventory();
+        Map<String, Item> inventory = battle.getPlayer().getItemInventory();
 
         boolean hasUsableItem = false;
 

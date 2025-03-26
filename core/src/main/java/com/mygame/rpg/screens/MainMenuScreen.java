@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -15,6 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygame.rpg.battle.Battle;
+import com.mygame.rpg.battle.DropItem;
+import com.mygame.rpg.character.Monster;
+import com.mygame.rpg.character.Player;
+import com.mygame.rpg.core.RPGGame;
+import com.mygame.rpg.location.GatherableObject;
+import com.mygame.rpg.location.Location;
+import com.mygame.rpg.location.LocationManager;
 import com.badlogic.gdx.Gdx;
 
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.battle;
 
 import java.util.Random;
 

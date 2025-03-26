@@ -1,9 +1,11 @@
-package com.mygame.rpg;
+package com.mygame.rpg.item;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
+import com.mygame.rpg.battle.Effect;
+import com.mygame.rpg.character.Player;
 
 public class Item {
     private String itemID;

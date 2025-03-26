@@ -2,8 +2,8 @@ package com.mygame.rpg.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mygame.rpg.BattleScreen;
-import com.mygame.rpg.RPGGame;
+import com.mygame.rpg.core.RPGGame;
+import com.mygame.rpg.screens.BattleScreen;
 
 /** Launches the desktop (LWJGL3) application. */
 public class desktopLauncher {

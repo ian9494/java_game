@@ -1,0 +1,20 @@
+[
+    {
+      "skillID": "slash",
+      "name": "Slash",
+      "type": "melee",
+      "power": 15
+    },
+    {
+      "skillID": "fireball",
+      "name": "Fireball",
+      "type": "magic",
+      "power": 25
+    },
+    {
+      "skillID": "heal",
+      "name": "Heal",
+      "type": "support",
+      "power": 0
+    }
+  ]

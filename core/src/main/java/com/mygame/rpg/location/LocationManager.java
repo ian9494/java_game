@@ -1,9 +1,12 @@
-package com.mygame.rpg;
+package com.mygame.rpg.location;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mygame.rpg.battle.DropItem;
+import com.mygame.rpg.character.Monster;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

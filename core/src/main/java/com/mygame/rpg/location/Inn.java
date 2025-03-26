@@ -1,4 +1,6 @@
-package com.mygame.rpg;
+package com.mygame.rpg.location;
+
+import com.mygame.rpg.character.Player;
 
 public class Inn {
     private int basicRoomCost = 10;

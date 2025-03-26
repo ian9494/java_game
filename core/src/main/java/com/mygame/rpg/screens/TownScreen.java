@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,6 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygame.rpg.character.Player;
+import com.mygame.rpg.core.RPGGame;
+import com.mygame.rpg.location.Inn;
+import com.mygame.rpg.location.townShop;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.List;

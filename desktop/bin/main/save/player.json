@@ -1,9 +1,9 @@
 {
 name: Hero
 LV: 2
-exp: 44
+exp: 36
 expToNextLV: 80
-hp: 36
+hp: 70
 maxHp: 120
 mp: 60
 maxMp: 60
@@ -11,16 +11,16 @@ Atk: 13
 Def: 7
 Spd: 20
 LocationID: 2
-actionBar: 20
-gold: 15
-inventory: {
+gold: 19
+equippedSkills: null
+itemInventory: {
 	class: java.util.HashMap
 	101: {
 		itemID: 101
 		name: Coin Pouch
 		type: consumable
 		description: No description available.
-		quantity: 1
+		quantity: 3
 		effects: [
 			{
 				type: gold_range
@@ -33,22 +33,9 @@ inventory: {
 		name: Plank
 		type: material
 		description: No description available.
-		quantity: 6
+		quantity: 7
 		effects: [
 			{}
-		]
-	}
-	102: {
-		itemID: 102
-		name: Low HP Potion
-		type: consumable
-		description: No description available.
-		quantity: 1
-		effects: [
-			{
-				type: hp_restore
-				value: 50
-			}
 		]
 	}
 	202: {
@@ -56,7 +43,16 @@ inventory: {
 		name: Stone
 		type: material
 		description: No description available.
-		quantity: 10
+		quantity: 16
+		effects: [
+			{}
+		]
+	}
+	301: {
+		itemID: 301
+		type: Consumable
+		description: No description available.
+		quantity: 1
 		effects: [
 			{}
 		]
@@ -66,7 +62,7 @@ inventory: {
 		name: Plant Fiber
 		type: material
 		description: No description available.
-		quantity: 7
+		quantity: 5
 		effects: [
 			{}
 		]
@@ -86,9 +82,32 @@ inventory: {
 		name: Coal
 		type: material
 		description: No description available.
-		quantity: 6
+		quantity: 5
 		effects: [
 			{}
+		]
+	}
+	209: {
+		itemID: 209
+		name: Copper Ore
+		type: material
+		description: No description available.
+		quantity: 4
+		effects: [
+			{}
+		]
+	}
+}
+equipmentInventory: {
+	class: java.util.HashMap
+	301: {
+		equipmentID: 301
+		name: Wooden Sword
+		description: A simple wooden sword.
+		attackBonus: 5
+		slot: WEAPON
+		allowedSkillTypes: [
+			melee
 		]
 	}
 }

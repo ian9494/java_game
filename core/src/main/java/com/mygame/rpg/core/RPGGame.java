@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -6,6 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygame.rpg.character.Monster;
+import com.mygame.rpg.character.Player;
+import com.mygame.rpg.item.EquipmentDatabase;
+import com.mygame.rpg.item.Skill;
+import com.mygame.rpg.item.SkillDatabase;
+import com.mygame.rpg.screens.BattleScreen;
+import com.mygame.rpg.screens.GameOverScreen;
+import com.mygame.rpg.screens.MainMenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class RPGGame extends Game {
@@ -47,6 +55,8 @@ public class RPGGame extends Game {
 
         // 初始化角色
         player = Player.loadFromFile("save/player.json");
+        EquipmentDatabase.loadFromJson("json/data/equipment.json");
+        SkillDatabase.loadFromJson("json/data/skills.json");
 
         // 設置 BattleScreen 為當前屏幕
         setScreen(new MainMenuScreen(this));

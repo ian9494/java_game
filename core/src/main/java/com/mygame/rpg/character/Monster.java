@@ -1,9 +1,10 @@
-package com.mygame.rpg;
+package com.mygame.rpg.character;
 
 import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.utils.Null;
+import com.mygame.rpg.battle.DropItem;
 
 public class Monster extends Character {
     private String monsterID;
@@ -42,7 +43,12 @@ public class Monster extends Character {
             return null;
         }
         Random rand = new Random();
-        return itemDrops.get(rand.nextInt(itemDrops.size()));
+        for (DropItem item : itemDrops) {
+            if (rand.nextInt(100) < item.getDropRate()) {
+                return itemDrops.get(rand.nextInt(itemDrops.size()));
+            }
+        }
+        return null;
     }
 }
 

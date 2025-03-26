@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.character;
 
 // 移除未使用的 Gdx import
 // import com.badlogic.gdx.Gdx;

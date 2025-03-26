@@ -1,8 +1,14 @@
-package com.mygame.rpg;
+package com.mygame.rpg.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.mygame.rpg.item.EquipSlot;
+import com.mygame.rpg.item.Equipment;
+import com.mygame.rpg.item.EquipmentDatabase;
+import com.mygame.rpg.item.Item;
+import com.mygame.rpg.item.Skill;
+import com.mygame.rpg.item.SkillDatabase;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,14 +20,20 @@ public class Player extends Character {
     private int expToNextLV;
     private int gold;
 
-    private Map<String, Item> inventory;
+    private Map<EquipSlot, Equipment> equippedItems = new HashMap<>();
+    private List<Skill> equippedSkills;
+
+    private Map<String, Item> itemInventory;
+    private Map<String, Equipment> equipmentInventory;
 
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
     public int getGold() { return gold; }
+    public List<Skill> getEquippedSkills() { return equippedSkills; }
+
     public int addGold(int amount) { return gold += amount; }
     public void setGold(int gold) { this.gold = gold; }
-    public Map<String, Item> getInventory() { return inventory; }
+    public Map<String, Item> getItemInventory() { return itemInventory; }
 
     // 必須有無參數建構子，否則會無法建立物件
     public Player() {
@@ -29,7 +41,9 @@ public class Player extends Character {
         this.exp = 0;
         this.expToNextLV = 100;
         this.LocationID = 1;
-        this.inventory = new HashMap<>();
+        this.itemInventory = new HashMap<>();
+        this.equipmentInventory = new HashMap<>();
+        this.equippedSkills = new ArrayList<>();
     }
 
     public Player(String name) {
@@ -37,7 +51,7 @@ public class Player extends Character {
         this.exp = 0;
         this.LocationID = 1; // 初始位置為 1
         updateStats(); // 依據等級計算屬性
-        this.inventory = new HashMap<>();
+        this.itemInventory = new HashMap<>();
     }
 
     // 根據等級計算數值
@@ -62,14 +76,50 @@ public class Player extends Character {
         }
     }
 
+    public void equippedItem(EquipSlot slot, Equipment item) {
+        equippedItems.put(slot, item);
+        updateAvailableSkills();
+    }
+
+
+    public void updateAvailableSkills() {
+        equippedSkills.clear();
+        List<String> allowedTypes = new ArrayList<>();
+
+        for (Equipment equipment : equippedItems.values()) {
+            allowedTypes.addAll(equipment.getAllowedSkillTypes());
+        }
+
+        for (Skill skill : SkillDatabase.getAllSkills()) {
+            if (allowedTypes.contains(skill.getType())) {
+                equippedSkills.add(skill);
+            }
+        }
+    }
+
+    public List<String> getAllInventoryIDs() {
+        List<String> IDs = new ArrayList<>();
+        IDs.addAll(itemInventory.keySet());
+        IDs.addAll(equipmentInventory.keySet());
+        return IDs;
+    }
+
     // 獲得物品
     public String addItem(String itemID, int amount) {
         Item addingItem = new Item(itemID, amount);
         addingItem.setItemInfo();
-        if (inventory.containsKey(itemID)) {
-            inventory.get(itemID).addQuantity(amount);
+        // 如果是裝備，加入裝備庫
+        if (itemID.startsWith("3") || itemID.startsWith("4") || itemID.startsWith("5") || itemID.startsWith("6") || itemID.startsWith("7")) {
+            Equipment equipment = EquipmentDatabase.getEquipmentByID(itemID);
+            equipmentInventory.put(itemID, equipment);
+        }
+
+        // 如果已經有該物品，增加數量
+        if (itemInventory.containsKey(itemID)) {
+            itemInventory.get(itemID).addQuantity(amount);
+        // 否則新增物品
         } else {
-            inventory.put(itemID, addingItem);
+            itemInventory.put(itemID, addingItem);
         }
         Gdx.app.log("Player-inventory", name + " gets x" + amount + " " + addingItem.getName());
         return addingItem.getName();
@@ -77,11 +127,11 @@ public class Player extends Character {
 
     // 移除物品
     public void removeItem(String itemID, int amount) {
-        if (inventory.containsKey(itemID)) {
-            Item item = inventory.get(itemID);
+        if (itemInventory.containsKey(itemID)) {
+            Item item = itemInventory.get(itemID);
             item.removeQuantity(amount);
             if (item.getQuantity() == 0) {
-                inventory.remove(itemID);
+                itemInventory.remove(itemID);
             }
             Gdx.app.log("Player-inventory", "removed " + item.getName() + " x" + amount);
         }
@@ -132,12 +182,12 @@ public class Player extends Character {
 
     // 使用道具
     public void useItem(String itemID) {
-        if (inventory.containsKey(itemID)) {
-            Item item = inventory.get(itemID);
+        if (itemInventory.containsKey(itemID)) {
+            Item item = itemInventory.get(itemID);
             item.useItem(this); // 讓道具的效果作用在玩家身上
             item.removeQuantity(1); // 消耗 1 個道具
             if (item.getQuantity() == 0) {
-                inventory.remove(itemID);
+                itemInventory.remove(itemID);
             }
             Gdx.app.log("Player-inventory", "used " + item.getName());
         } else {

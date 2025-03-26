@@ -1,0 +1,92 @@
+[
+  {
+    "equipmentID": "301",
+    "name": "Wooden Sword",
+    "description": "A simple wooden sword.",
+    "attackBonus": 5,
+    "defenseBonus": 0,
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["melee"]
+  },
+  {
+    "equipmentID": "302",
+    "name": "Wooden GreatSword",
+    "description": "A simple wooden greatsword.",
+    "attackBonus": 10,
+    "defenseBonus": 0,
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["melee"]
+  },
+  {
+    "equipmentID": "303",
+    "name": "Wooden Staff",
+    "description": "A simple wooden staff.",
+    "attackBonus": 8,
+    "defenseBonus": 0,
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["magic"]
+  },
+  {
+    "equipmentID": "304",
+    "name": "Wooden Rod",
+    "description": "A simple wooden rod.",
+    "attackBonus": 3,
+    "defenseBonus": 0,
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["support"]
+  },
+  {
+    "equipmentID": "305",
+    "name": "Short Bow",
+    "description": "A simple short bow.",
+    "attackBonus": 6,
+    "defenseBonus": 0,
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["ranged"]
+  },
+  {
+    "equipmentID": "306",
+    "name": "Crossbow",
+    "description": "A simple crossbow.",
+    "attackBonus": 12,
+    "defenseBonus": 0,
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["ranged"]
+  },
+  {
+    "equipmentID": "401",
+    "name": "Leather Helmet",
+    "description": "A simple leather helmet.",
+    "attackBonus": 0,
+    "defenseBonus": 5,
+    "slot": "HEAD",
+    "allowedSkillTypes": ["defensive", "physical"]
+  },
+  {
+    "equipmentID": "501",
+    "name": "Leather Armor",
+    "description": "A set of leather armor.",
+    "attackBonus": 0,
+    "defenseBonus": 10,
+    "slot": "BODY",
+    "allowedSkillTypes": ["defensive"]
+  },
+  {
+    "equipmentID": "601",
+    "name": "Leather Boots",
+    "description": "A pair of leather boots.",
+    "attackBonus": 0,
+    "defenseBonus": 7,
+    "slot": "LEGS",
+    "allowedSkillTypes": ["defensive"]
+  },
+  {
+    "equipmentID": "701",
+    "name": "old ring",
+    "description": "A simple ring.",
+    "attackBonus": 0,
+    "defenseBonus": 2,
+    "slot": "ACCESSORY",
+    "allowedSkillTypes": ["defensive"]
+  }
+]

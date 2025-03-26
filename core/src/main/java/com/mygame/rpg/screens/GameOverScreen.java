@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygame.rpg.Player;
+import com.mygame.rpg.character.Player;
+import com.mygame.rpg.core.RPGGame;
 
 public class GameOverScreen implements Screen {
     private final RPGGame game;

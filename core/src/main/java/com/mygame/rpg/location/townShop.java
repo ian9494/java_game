@@ -1,8 +1,11 @@
-package com.mygame.rpg;
+package com.mygame.rpg.location;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mygame.rpg.character.Player;
+import com.mygame.rpg.item.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +48,7 @@ public class townShop {
 
     // sell item to shop
     public void sellItem(Player player, int itemIndex, int quantity) {
-        Item item = player.getInventory().get(itemIndex);
+        Item item = player.getItemInventory().get(itemIndex);
         player.setGold(player.getGold() + item.getPrice());
         player.removeItem(item.getItemID(), quantity);
         System.out.println("You sold " + item.getName() + " for " + item.getPrice() + " gold.");

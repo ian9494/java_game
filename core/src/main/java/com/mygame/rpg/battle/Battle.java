@@ -1,10 +1,14 @@
-package com.mygame.rpg;
+package com.mygame.rpg.battle;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
 import com.badlogic.gdx.Gdx;
+import com.mygame.rpg.character.Character;
+import com.mygame.rpg.character.Monster;
+import com.mygame.rpg.character.Player;
+import com.mygame.rpg.core.RPGGame;
 
 public class Battle {
     // objects

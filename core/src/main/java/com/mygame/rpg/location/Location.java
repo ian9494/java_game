@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.location;
 
 import com.badlogic.gdx.Gdx;
 import java.util.List;

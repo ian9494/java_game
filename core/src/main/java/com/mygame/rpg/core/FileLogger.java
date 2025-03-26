@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.core;
 
 import com.badlogic.gdx.ApplicationLogger;
 import java.io.*;

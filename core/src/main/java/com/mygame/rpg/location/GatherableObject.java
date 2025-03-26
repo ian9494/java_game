@@ -1,7 +1,9 @@
-package com.mygame.rpg;
+package com.mygame.rpg.location;
 
 import java.util.List;
 import java.util.Random;
+
+import com.mygame.rpg.battle.DropItem;
 
 public class GatherableObject {
     private int encounterRate;

@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.core;
 
 public enum GameState {
     MAIN_MENU,

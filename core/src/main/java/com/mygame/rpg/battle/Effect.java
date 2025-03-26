@@ -1,4 +1,4 @@
-package com.mygame.rpg;
+package com.mygame.rpg.battle;
 
 public class Effect {
     private String type;
