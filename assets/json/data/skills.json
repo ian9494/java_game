@@ -1,20 +1,29 @@
-[
-    {
-      "skillID": "slash",
-      "name": "Slash",
-      "type": "melee",
-      "power": 15
-    },
-    {
-      "skillID": "fireball",
-      "name": "Fireball",
-      "type": "magic",
-      "power": 25
-    },
-    {
-      "skillID": "heal",
-      "name": "Heal",
-      "type": "support",
-      "power": 0
-    }
+{"one-handed-sword":[
+      {"id": 1, "stage": "1", "branch": "1", "name": "Slash", "type": "active", "desc": "穩定的橫斬攻擊，無附加效果，冷卻短，威力中等"},
+      {"id": 2, "stage": "1", "branch": "2", "name": "Quick Thrust", "type": "active", "desc": "迅速突進並造成中等穿刺傷害，提升一段時間攻速"},
+
+      {"id": 3, "stage": "2", "branch": "2-1", "name": "Double Slash", "type": "active", "desc": "快速進行兩次連斬，總傷略高，冷卻中等"},
+      {"id": 4, "stage": "2", "branch": "2-1", "name": "Precision Mastery", "type": "passive", "desc": "所有單手劍主動技能命中率提升 +15%，暴擊率 +5%"},
+
+      {"id": 5, "stage": "2", "branch": "2-2", "name": "幻影閃", "type": "active", "desc": "向前方瞬間位移並斬擊敵人，可用於閃避與攻擊"},
+      {"id": 6, "stage": "2", "branch": "2-2", "name": "身法專精", "type": "passive", "desc": "攻擊速度 +10%，翻滾冷卻時間 -1 秒"},
+
+      {"id": 7, "stage": "3", "branch": "3-1-1", "name": "三連斬", "type": "active", "desc": "三次快速橫斬，每下命中可略提升傷害"},
+      {"id": 8, "stage": "3", "branch": "3-1-1", "name": "攻擊姿態", "type": "passive", "desc": "攻擊時減少所受傷害 10%，但防禦降低 5%"},
+
+      {"id": 9, "stage": "3", "branch": "3-1-2", "name": "刀鋒結界", "type": "active", "desc": "進入反擊狀態，短時間內可格檔攻擊並自動反擊"},
+      {"id": 10, "stage": "3", "branch": "3-1-2", "name": "劍之專注", "type": "passive", "desc": "若成功命中 3 次不被打斷，下次攻擊傷害提升 50%"},
+
+      {"id": 11, "stage": "3", "branch": "3-1-3", "name": "銳眼斬", "type": "active", "desc": "對弱點造成額外傷害，暴擊機率提升，冷卻稍長"},
+      {"id": 12, "stage": "3", "branch": "3-1-3", "name": "貫穿之眼", "type": "passive", "desc": "攻擊時有機率無視 30% 防禦力（機率 20%）"},
+
+      {"id": 13, "stage": "3", "branch": "3-2-1", "name": "飛燕斬", "type": "active", "desc": "向空中躍起再落下攻擊，可躲避地面攻擊"},
+      {"id": 14, "stage": "3", "branch": "3-2-1", "name": "流風身法", "type": "passive", "desc": "每次翻滾後獲得短暫加速與閃避提升"},
+
+      {"id": 15, "stage": "3", "branch": "3-2-2", "name": "幻劍連舞", "type": "active", "desc": "對單一目標進行 5 連擊，每次命中機率附帶出血"},
+      {"id": 16, "stage": "3", "branch": "3-2-2", "name": "極速劍舞", "type": "passive", "desc": "每次攻擊命中時有機率刷新 1 秒冷卻時間"},
+
+      {"id": 17, "stage": "3", "branch": "3-2-3", "name": "回旋擊", "type": "active", "desc": "閃避後立即反擊，額外造成擊退"},
+      {"id": 18, "stage": "3", "branch": "3-2-3", "name": "無影步", "type": "passive", "desc": "閃避後下次攻擊必中並無法被格擋"}
   ]
+}

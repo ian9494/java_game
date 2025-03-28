@@ -51,6 +51,12 @@ public class Player extends Character {
         this.exp = 0;
         this.LocationID = 1; // 初始位置為 1
         updateStats(); // 依據等級計算屬性
+        if (equipmentInventory == null) {
+            equipmentInventory = new HashMap<>();
+        }
+        if (itemInventory == null) {
+            itemInventory = new HashMap<>();
+        }
         this.itemInventory = new HashMap<>();
     }
 
@@ -106,23 +112,34 @@ public class Player extends Character {
 
     // 獲得物品
     public String addItem(String itemID, int amount) {
-        Item addingItem = new Item(itemID, amount);
-        addingItem.setItemInfo();
         // 如果是裝備，加入裝備庫
         if (itemID.startsWith("3") || itemID.startsWith("4") || itemID.startsWith("5") || itemID.startsWith("6") || itemID.startsWith("7")) {
             Equipment equipment = EquipmentDatabase.getEquipmentByID(itemID);
+            Gdx.app.log("Player - Inventory", "Adding equipment: " + equipment.getName());
             equipmentInventory.put(itemID, equipment);
+            Gdx.app.log("Player - Inventory", "Added equipment: " + equipment.getName());
+            return equipment.getName();
         }
 
-        // 如果已經有該物品，增加數量
-        if (itemInventory.containsKey(itemID)) {
-            itemInventory.get(itemID).addQuantity(amount);
-        // 否則新增物品
-        } else {
-            itemInventory.put(itemID, addingItem);
-        }
-        Gdx.app.log("Player-inventory", name + " gets x" + amount + " " + addingItem.getName());
-        return addingItem.getName();
+        // 如果是道具，加入道具庫
+        else if (itemID.startsWith("1") || itemID.startsWith("2")) {
+            Gdx.app.log("Player - Inventory", "Adding item: " + itemID);
+            Item addingItem = new Item(itemID, amount);
+            addingItem.setItemInfo();
+            Gdx.app.log("Player - Inventory", "Adding item: " + addingItem.getName());
+            // 如果已經有該物品，增加數量
+            if (itemInventory.containsKey(itemID)) {
+                itemInventory.get(itemID).addQuantity(amount);
+            // 否則新增物品
+            } else {
+                itemInventory.put(itemID, addingItem);
+            }
+            Gdx.app.log("Player-inventory", name + " gets x" + amount + " " + addingItem.getName());
+            return addingItem.getName();
+            }
+        // 如果物品ID不符合，則返回錯誤訊息
+        Gdx.app.log("Player - Inventory", "Invalid item ID: " + itemID);
+        return "Invalid item ID";
     }
 
     // 移除物品
