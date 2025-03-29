@@ -24,7 +24,7 @@ public class Battle {
 
 
     private String battleResult;
-    private DropItem itemReward;
+    private List<DropItem> itemReward;
 
     // 行動隊列
     private final PriorityQueue<Character> actionQueue;
@@ -96,20 +96,20 @@ public class Battle {
         }
 
         for (Character character : actionQueue) {
-            for (Character c : actionQueue) {
-                Gdx.app.log("BattleLog - updateActionBar", c.getName() + " action bar: " + c.getActionBar());
-            }
-            Gdx.app.log("BattleLog - updateActionBar", "\n");
+            // for (Character c : actionQueue) {
+            //     Gdx.app.log("BattleLog - updateActionBar", c.getName() + " action bar: " + c.getActionBar());
+            // }
+            // Gdx.app.log("BattleLog - updateActionBar", "\n");
             character.incrementActionBar(character.getSpd());
 
             if (character.getActionBar() >= actionThreshold) {
-                Gdx.app.log("BattleLog - updateActionBar", "Character " + character.getName() + " is ready to act.");
+                // Gdx.app.log("BattleLog - updateActionBar", "Character " + character.getName() + " is ready to act.");
                 character.setReadyToAct(true); // 設置角色為準備行動狀態
                 actionQueue.remove(character);
 
                 if (character == player) {
                     waitingForPlayerAction = true; // 如果是玩家，設置等待玩家操作
-                    Gdx.app.log("BattleLog - updateActionBar", "should wait for player action");
+                    // Gdx.app.log("BattleLog - updateActionBar", "should wait for player action");
                 } else {
                     processTurn(character); // 自動執行敵人的行動
                     character.resetActionBar();
@@ -146,11 +146,13 @@ public class Battle {
                 int goldGained = enemy.getGoldReward();
                 player.addGold(goldGained);
                 player.gainExp(expGained);
-                itemReward = enemy.getRandomDrop();
-                // Gdx.app.log("battle - isBattleOver", "getting drops " + itemReward.getItemID());
 
-                if (itemReward != null) { // 確保有掉落物品
-                    player.addItem(itemReward.getItemID(), itemReward.getRandomDropCount()); // 獲得掉落物品
+                itemReward = enemy.getRandomDrop();
+                for (DropItem item : itemReward) {
+                    Gdx.app.log("battle - isBattleOver", "getting drops " + item.getItemID() + " " + item.getName() + " " + item.getDropRate());
+                    if (item != null) {
+                        player.addItem(item.getItemID(), item.getRandomDropCount()); // 獲得掉落物品
+                    }
                 }
 
                 battleResult = player.getName() + " defeated " + enemy.getName() + "! Gained " + expGained + " EXP.";
@@ -189,7 +191,7 @@ public class Battle {
     }
 
     // get item reward
-    public DropItem getItemReward() {
+    public List<DropItem> getItemReward() {
         return itemReward;
     }
 

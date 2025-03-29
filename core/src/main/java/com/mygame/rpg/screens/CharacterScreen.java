@@ -125,6 +125,10 @@ public class CharacterScreen implements Screen {
             }
     }
 
+    private void createEquipmentUI() {
+        Label weaponLabel = new Label("Weapon: " + player.getEquippedItems().get(EquipSlot.WEAPON).getName(), skin);
+    }
+
 
     @Override
     public void render(float delta) {

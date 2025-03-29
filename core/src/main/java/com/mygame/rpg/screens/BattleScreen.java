@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import java.util.Map;
+import java.util.List;
 
 public class BattleScreen implements Screen {
     private final SpriteBatch batch;
@@ -307,7 +308,7 @@ public class BattleScreen implements Screen {
 
                 int expGained = battle.getEnemy().getExpReward();
                 int goldGained = battle.getEnemy().getGoldReward();
-                DropItem itemRewards = battle.getItemReward();
+                List<DropItem> itemRewards = battle.getItemReward();
 
                 attackButton.setVisible(false);
 
@@ -315,7 +316,9 @@ public class BattleScreen implements Screen {
                                                              "Gained exp: " + expGained + "\n" +
                                                              "Gained gold: " + goldGained);
                 if (itemRewards != null) {
-                    rewardText.append("\nGet item: ").append(itemRewards.getName());
+                    for (DropItem item : itemRewards) {
+                        rewardText.append("\n").append(item.getName()).append(" x").append(item.getRandomDropCount());
+                    }
                 } else {
                     rewardText.append("\nNo item found");
                 }
