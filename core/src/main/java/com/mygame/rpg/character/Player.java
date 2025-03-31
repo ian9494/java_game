@@ -82,12 +82,53 @@ public class Player extends Character {
         }
     }
 
-    public void equippedItem(EquipSlot slot, Equipment item) {
-        equippedItems.put(slot, item);
-        updateAvailableSkills();
+    // 獲得裝備物品
+    public List<Equipment> getEquippedItem(EquipSlot slot) {
+        List<Equipment> result = new ArrayList<>();
+        for (Equipment eq : equipmentInventory.values()) {
+            if (eq.getSlot() == slot) {
+                result.add(eq);
+            }
+        }
+        return result;
     }
 
+    // 裝備物品
+    public void equipItem(EquipSlot slot, Equipment item) {
+        if (!equipmentInventory.containsKey(item.getEquipmentID())) {
+            Gdx.app.log("Player - Inventory", "Item not found in inventory: " + item.getName());
+            return;
+        }
 
+        // 如果該欄位已經有裝備，先卸下
+        if (equippedItems.containsKey(slot)) {
+            unequipItem(slot);
+        }
+
+        // 從裝備背包中移除 → 裝上該欄位
+        equipmentInventory.remove(item.getEquipmentID());
+        equippedItems.put(slot, item);
+        updateAvailableSkills();
+        Gdx.app.log("Player - Inventory", "Equipped " + item.getName() + " in " + slot);
+    }
+
+    // 卸下裝備
+    public void unequipItem(EquipSlot slot) {
+        if (equippedItems.containsKey(slot)) {
+            Equipment item = equippedItems.remove(slot);
+            equipmentInventory.put(item.getEquipmentID(), item);
+            Gdx.app.log("Player - Inventory", "Unequipped " + item.getName() + " from " + slot);
+        } else {
+            Gdx.app.log("Player - Inventory", "No item equipped in " + slot);
+        }
+    }
+
+    // 獲得裝備物品
+    public Equipment getEquipmentBySlot(EquipSlot slot) {
+        return equippedItems.get(slot);
+    }
+
+    // 更新可用技能
     public void updateAvailableSkills() {
         equippedSkills.clear();
         List<String> allowedTypes = new ArrayList<>();
@@ -103,6 +144,7 @@ public class Player extends Character {
         }
     }
 
+    // 獲得所有物品ID 包含裝備與道具
     public List<String> getAllInventoryIDs() {
         List<String> IDs = new ArrayList<>();
         IDs.addAll(itemInventory.keySet());
@@ -212,6 +254,7 @@ public class Player extends Character {
         }
     }
 
+    // 添加臨時增益效果
     public void addTemporaryBuff(String type, int value, int duration) {
         switch (type) {
             case "atk":
@@ -231,11 +274,14 @@ public class Player extends Character {
         }
     }
 
+    // 重置玩家狀態
+    // 例如死亡後重生
     public void respawn() {
         this.hp = this.maxHp; // 將 HP 重置為最大值
         // 其他需要重置的狀態
     }
 
+    // 傳送回城鎮
     public void returnToTown() {
         // 傳送玩家到城鎮的邏輯
         Gdx.app.log("player", "returning to town");

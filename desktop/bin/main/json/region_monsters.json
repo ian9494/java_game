@@ -24,7 +24,7 @@
                                 "item_ID": 101,
                                 "name": "coin pouch",
                                 "drop_count": [1, 1],
-                                "drop_rate": 20
+                                "drop_rate": 100
                             },
                             {
                                 "item_ID": 301,

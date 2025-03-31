@@ -18,9 +18,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygame.rpg.character.Player;
 import com.mygame.rpg.core.RPGGame;
+import com.mygame.rpg.item.EquipSlot;
+import com.mygame.rpg.item.Equipment;
 import com.mygame.rpg.item.Item;
 
 import java.util.Map;
+
+import org.w3c.dom.Text;
 
 public class CharacterScreen implements Screen {
     private final RPGGame game;
@@ -82,6 +86,7 @@ public class CharacterScreen implements Screen {
 
         createButtons();
         createInventoryUI();
+        createEquipmentUI();
     }
 
     private void createButtons() {
@@ -126,9 +131,60 @@ public class CharacterScreen implements Screen {
     }
 
     private void createEquipmentUI() {
-        Label weaponLabel = new Label("Weapon: " + player.getEquippedItems().get(EquipSlot.WEAPON).getName(), skin);
+        Label weaponLabel = new Label("Weapon: " + getEquipName(EquipSlot.WEAPON), skin);
+        Label headLabel = new Label("Head: " + getEquipName(EquipSlot.HEAD), skin);
+        Label bodyLabel = new Label("Body: " + getEquipName(EquipSlot.BODY), skin);
+        Label legsLabel = new Label("Legs: " + getEquipName(EquipSlot.LEGS), skin);
+        Label accessoryLabel = new Label("Accessory: " + getEquipName(EquipSlot.ACCESSORY), skin);
+
+        TextButton editButton = new TextButton("Edit Equipment", skin);
+        editButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // 這裡可以添加編輯裝備的邏輯
+                Gdx.app.log("CharacterScreen", "Editing Equipment");
+                game.setScreen(new EquipmentEditScreen(game, player));
+            }
+        });
+        editButton.setPosition(100, 50);
+        editButton.setSize(200, 50);
+        stage.addActor(editButton);
+        weaponLabel.setPosition(50, 500);
+        headLabel.setPosition(50, 470);
+        bodyLabel.setPosition(50, 440);
+        legsLabel.setPosition(50, 410);
+        accessoryLabel.setPosition(50, 380);
+        stage.addActor(weaponLabel);
+        stage.addActor(headLabel);
+        stage.addActor(bodyLabel);
+        stage.addActor(legsLabel);
+        stage.addActor(accessoryLabel);
+        // 設定標籤的字體樣式
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        weaponLabel.setStyle(labelStyle);
+        headLabel.setStyle(labelStyle);
+        bodyLabel.setStyle(labelStyle);
+        legsLabel.setStyle(labelStyle);
+        accessoryLabel.setStyle(labelStyle);
+        // 設定標籤的顏色
+        weaponLabel.setColor(Color.WHITE);
+        headLabel.setColor(Color.WHITE);
+        bodyLabel.setColor(Color.WHITE);
+        legsLabel.setColor(Color.WHITE);
+        accessoryLabel.setColor(Color.WHITE);
+        // 設定標籤的大小
+        weaponLabel.setFontScale(1.2f);
+        headLabel.setFontScale(1.2f);
+        bodyLabel.setFontScale(1.2f);
+        legsLabel.setFontScale(1.2f);
+        accessoryLabel.setFontScale(1.2f);
     }
 
+    private String getEquipName(EquipSlot slot) {
+        Equipment eq = player.getEquipmentBySlot(slot);
+        return eq != null ? eq.getName() : "None";
+    }
 
     @Override
     public void render(float delta) {

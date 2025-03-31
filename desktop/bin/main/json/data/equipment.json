@@ -5,8 +5,8 @@
     "description": "A simple wooden sword.",
     "attackBonus": 5,
     "defenseBonus": 0,
-    "slot": "WEAPON",
-    "allowedSkillTypes": ["melee"]
+    "slot": "WEAPON"
+    
   },
   {
     "equipmentID": "302",
