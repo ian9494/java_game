@@ -1,4 +1,3 @@
-.temp/2a9d7f76/gdx64.dll
 fonts/NotoSansTC-Regular.ttf
 fonts/Roboto-Regular.ttf
 game_log.txt
