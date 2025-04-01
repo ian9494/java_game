@@ -104,6 +104,7 @@ public class CharacterScreen implements Screen {
         stage.addActor(backButton);
     }
 
+    // 創建背包UI
     private void createInventoryUI() {
         int y = 500;
         for (Map.Entry<String, Item> entry : player.getItemInventory().entrySet()) {
@@ -130,6 +131,7 @@ public class CharacterScreen implements Screen {
             }
     }
 
+    // 創建裝備UI
     private void createEquipmentUI() {
         Label weaponLabel = new Label("Weapon: " + getEquipName(EquipSlot.WEAPON), skin);
         Label headLabel = new Label("Head: " + getEquipName(EquipSlot.HEAD), skin);
@@ -146,19 +148,18 @@ public class CharacterScreen implements Screen {
                 game.setScreen(new EquipmentEditScreen(game, player));
             }
         });
-        editButton.setPosition(100, 50);
+        editButton.setPosition(75, 50);
         editButton.setSize(200, 50);
         stage.addActor(editButton);
-        weaponLabel.setPosition(50, 500);
-        headLabel.setPosition(50, 470);
-        bodyLabel.setPosition(50, 440);
-        legsLabel.setPosition(50, 410);
-        accessoryLabel.setPosition(50, 380);
-        stage.addActor(weaponLabel);
-        stage.addActor(headLabel);
-        stage.addActor(bodyLabel);
-        stage.addActor(legsLabel);
-        stage.addActor(accessoryLabel);
+
+        // 設定標籤的位置
+        int equipmentLabelHeight = 700;
+        weaponLabel.setPosition(450, equipmentLabelHeight);
+        headLabel.setPosition(450, equipmentLabelHeight - 50);
+        bodyLabel.setPosition(450, equipmentLabelHeight - 100);
+        legsLabel.setPosition(450, equipmentLabelHeight - 150);
+        accessoryLabel.setPosition(450, equipmentLabelHeight - 200);
+
         // 設定標籤的字體樣式
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
@@ -174,11 +175,17 @@ public class CharacterScreen implements Screen {
         legsLabel.setColor(Color.WHITE);
         accessoryLabel.setColor(Color.WHITE);
         // 設定標籤的大小
-        weaponLabel.setFontScale(1.2f);
-        headLabel.setFontScale(1.2f);
-        bodyLabel.setFontScale(1.2f);
-        legsLabel.setFontScale(1.2f);
-        accessoryLabel.setFontScale(1.2f);
+        weaponLabel.setFontScale(2f);
+        headLabel.setFontScale(2f);
+        bodyLabel.setFontScale(2f);
+        legsLabel.setFontScale(2f);
+        accessoryLabel.setFontScale(2f);
+
+        stage.addActor(weaponLabel);
+        stage.addActor(headLabel);
+        stage.addActor(bodyLabel);
+        stage.addActor(legsLabel);
+        stage.addActor(accessoryLabel);
     }
 
     private String getEquipName(EquipSlot slot) {
