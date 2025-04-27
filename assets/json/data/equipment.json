@@ -5,8 +5,8 @@
     "description": "A simple wooden sword.",
     "attackBonus": 5,
     "defenseBonus": 0,
-    "slot": "WEAPON"
-    
+    "slot": "WEAPON",
+    "allowedSkillTypes": ["one-handed-sword"]
   },
   {
     "equipmentID": "302",
@@ -15,7 +15,7 @@
     "attackBonus": 10,
     "defenseBonus": 0,
     "slot": "WEAPON",
-    "allowedSkillTypes": ["melee"]
+    "allowedSkillTypes": ["greatsword"]
   },
   {
     "equipmentID": "303",
@@ -24,7 +24,7 @@
     "attackBonus": 8,
     "defenseBonus": 0,
     "slot": "WEAPON",
-    "allowedSkillTypes": ["magic"]
+    "allowedSkillTypes": ["long-staff"]
   },
   {
     "equipmentID": "304",
@@ -33,7 +33,7 @@
     "attackBonus": 3,
     "defenseBonus": 0,
     "slot": "WEAPON",
-    "allowedSkillTypes": ["support"]
+    "allowedSkillTypes": ["short-staff"]
   },
   {
     "equipmentID": "305",
@@ -42,16 +42,16 @@
     "attackBonus": 6,
     "defenseBonus": 0,
     "slot": "WEAPON",
-    "allowedSkillTypes": ["ranged"]
+    "allowedSkillTypes": ["short-bow"]
   },
   {
     "equipmentID": "306",
-    "name": "Crossbow",
-    "description": "A simple crossbow.",
+    "name": "Dagger",
+    "description": "A simple dagger.",
     "attackBonus": 12,
     "defenseBonus": 0,
     "slot": "WEAPON",
-    "allowedSkillTypes": ["ranged"]
+    "allowedSkillTypes": ["dagger"]
   },
   {
     "equipmentID": "401",
@@ -60,7 +60,7 @@
     "attackBonus": 0,
     "defenseBonus": 5,
     "slot": "HEAD",
-    "allowedSkillTypes": ["defensive", "physical"]
+    "allowedSkillTypes": []
   },
   {
     "equipmentID": "501",
@@ -69,7 +69,7 @@
     "attackBonus": 0,
     "defenseBonus": 10,
     "slot": "BODY",
-    "allowedSkillTypes": ["defensive"]
+    "allowedSkillTypes": []
   },
   {
     "equipmentID": "601",
@@ -78,7 +78,7 @@
     "attackBonus": 0,
     "defenseBonus": 7,
     "slot": "LEGS",
-    "allowedSkillTypes": ["defensive"]
+    "allowedSkillTypes": []
   },
   {
     "equipmentID": "701",
@@ -87,6 +87,6 @@
     "attackBonus": 0,
     "defenseBonus": 2,
     "slot": "ACCESSORY",
-    "allowedSkillTypes": ["defensive"]
+    "allowedSkillTypes": []
   }
 ]

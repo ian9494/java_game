@@ -4,7 +4,7 @@ fonts/Roboto-Regular.ttf
 game_log.txt
 json/data/equipment.json
 json/data/skills-Zh.json
-json/data/skills.json
+json/data/skills/one-handed-sword.json.json
 json/gatherable.json
 json/items.json
 json/region_monsters.json

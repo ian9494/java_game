@@ -1,22 +1,39 @@
 package com.mygame.rpg.item;
 
+import com.mygame.rpg.item.SkillEffect;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Skill {
     private String skillID;
     private String name;
     private String type; // "sword_skill", "magic", "physical"
-    private int power;
+    private int empCost; // 消耗的能量值
+    private int cooldown; // 冷卻時間
+    private double damageMultiplier; // 傷害倍率
+    private String description; // 技能描述
+    private List<SkillEffect> effects; // 技能效果列表
+    private String stage; // 技能樹階段
 
     //getter and setter
     public String getSkillID() { return skillID; }
     public String getName() { return name; }
     public String getType() { return type; }
-    public int getPower() { return power; }
+    public int getEmpCost() { return empCost; }
+    public int getCooldown() { return cooldown; }
+    public double getDamageMultiplier() { return damageMultiplier; }
+    public String getDescription() { return description; }
+    public List<SkillEffect> getEffects() { return effects; }
+    public String getStage() { return stage; }
 
     public Skill(String skillID, String name, String type, int power) {
         this.skillID = skillID;
         this.name = name;
         this.type = type;
-        this.power = power;
+        this.empCost = power;
+        this.description = "This is a skill description.";
+        this.effects = new ArrayList<>();
+        this.stage = ""; // default stage
     }
 
     public Skill() {}
