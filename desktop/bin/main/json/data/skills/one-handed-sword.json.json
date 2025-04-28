@@ -298,6 +298,104 @@
         "name": "Kinetic Extension",
         "description": "After hitting with a skill, next normal attack deals double damage."
       }
+    },
+    {
+      "stage": "3-2-2",
+      "label": "Stage 3-2-2: Bleed Burst",
+      "parentSkills": ["5", "6"],
+      "activeSkills": [
+        {
+          "skillID": "15",
+          "name": "Phantom Blade Dance",
+          "description": "4-hit attack. Each hit has 30% chance to inflict Bleed.",
+          "empCost": 28,
+          "cooldown": 4,
+          "damageMultiplier": 1.3,
+          "effects": [
+            {
+              "type": "MULTI_HIT",
+              "hitMultipliers": [1.0, 1.0, 1.0, 1.0]
+            },
+            {
+              "type": "APPLY_STATUS",
+              "status": "bleed",
+              "chance": 30,
+              "stacks": 1,
+              "duration": 3,
+              "target": "enemy"
+            }
+          ]
+        },
+        {
+          "skillID": "16",
+          "name": "Execution Slash",
+          "description": "Deals heavy damage based on Bleed stacks (+80% damage per stack).",
+          "empCost": 30,
+          "cooldown": 4,
+          "damageMultiplier": 2.0,
+          "effects": [
+            {
+              "type": "BLEED_EXPLODE",
+              "damagePerStackMultiplier": 0.8,
+              "target": "enemy"
+            }
+          ]
+        }
+      ],
+      "passiveSkill": {
+        "name": "Power Penetration",
+        "description": "Deal +15% damage to bleeding targets."
+      }
+    },
+    {
+      "stage": "3-2-3",
+      "label": "Stage 3-2-3: Piercing Disruption",
+      "parentSkills": ["6"],
+      "activeSkills": [
+        {
+          "skillID": "17",
+          "name": "Formation Break",
+          "description": "Strong stab that freezes enemy action bar accumulation for 3 rounds and applies Defense Down.",
+          "empCost": 24,
+          "cooldown": 3,
+          "damageMultiplier": 1.4,
+          "effects": [
+            {
+              "type": "FREEZE_BAR_ACCUMULATION",
+              "duration": 3,
+              "target": "enemy"
+            },
+            {
+              "type": "APPLY_STATUS",
+              "status": "DEFENSE_DOWN",
+              "amount": -20,
+              "chance": 100,
+              "duration": 2,
+              "target": "enemy"
+            }
+          ]
+        },
+        {
+          "skillID": "18",
+          "name": "Weakpoint Execution",
+          "description": "Deals 150% damage to broken-defense targets, otherwise 100%.",
+          "empCost": 26,
+          "cooldown": 3,
+          "damageMultiplier": 1.0,
+          "effects": [
+            {
+              "type": "BONUS_DAMAGE_IF_STATUS",
+              "status": "defense_down",
+              "bonusMultiplier": 1.5,
+              "target": "enemy"
+            }
+          ]
+        }
+      ],
+      "passiveSkill": {
+        "name": "Weakspot Detection",
+        "description": "Gain +25% crit rate against defense-broken targets."
+      }
     }
   ]
 }

@@ -10,7 +10,6 @@ maxMp: 60
 Atk: 13
 Def: 7
 Spd: 20
-LocationID: 2
 actionBar: 20
 gold: 38
 equippedSkills: null

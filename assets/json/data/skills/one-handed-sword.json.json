@@ -355,7 +355,7 @@
         {
           "skillID": "17",
           "name": "Formation Break",
-          "description": "Strong stab that freezes enemy action bar accumulation for 3 rounds.",
+          "description": "Strong stab that freezes enemy action bar accumulation for 3 rounds and applies Defense Down.",
           "empCost": 24,
           "cooldown": 3,
           "damageMultiplier": 1.4,
@@ -363,6 +363,14 @@
             {
               "type": "FREEZE_BAR_ACCUMULATION",
               "duration": 3,
+              "target": "enemy"
+            },
+            {
+              "type": "APPLY_STATUS",
+              "status": "DEFENSE_DOWN",
+              "amount": -20,
+              "chance": 100,
+              "duration": 2,
               "target": "enemy"
             }
           ]
