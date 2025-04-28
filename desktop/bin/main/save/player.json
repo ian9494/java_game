@@ -11,23 +11,10 @@ Atk: 13
 Def: 7
 Spd: 20
 actionBar: 20
-gold: 38
+gold: 43
 equippedSkills: null
 itemInventory: {
 	class: java.util.HashMap
-	101: {
-		itemID: 101
-		name: Coin Pouch
-		type: consumable
-		description: No description available.
-		quantity: 1
-		effects: [
-			{
-				type: gold_range
-				value: 5
-			}
-		]
-	}
 	201: {
 		itemID: 201
 		name: Plank

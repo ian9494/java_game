@@ -21,8 +21,12 @@ import com.mygame.rpg.core.RPGGame;
 import com.mygame.rpg.item.EquipSlot;
 import com.mygame.rpg.item.Equipment;
 import com.mygame.rpg.item.Item;
+import com.mygame.rpg.item.Skill;
+import com.mygame.rpg.item.SkillDatabase;
 
 import java.util.Map;
+import java.util.List;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import org.w3c.dom.Text;
 
@@ -33,8 +37,8 @@ public class CharacterScreen implements Screen {
     private final BitmapFont font;
     private final BitmapFont largeFont;
     private final OrthographicCamera camera;
-    private final Stage stage;
-    private final Skin skin;
+    private Stage stage;
+    private Skin skin;
 
     public CharacterScreen(RPGGame game, Player player) {
         this.game = game;
@@ -89,6 +93,7 @@ public class CharacterScreen implements Screen {
         createEquipmentUI();
     }
 
+    // 創建互動按鈕
     private void createButtons() {
         // 返回主選單按鈕
         TextButton backButton = new TextButton("Back", skin, "default");
@@ -188,6 +193,27 @@ public class CharacterScreen implements Screen {
         stage.addActor(accessoryLabel);
     }
 
+    // 創建技能瀏覽UI
+    private void createSkillUI() {
+        Table skillsTable = new Table();
+        skillsTable.top().left();
+        skillsTable.setPosition(1100, 300);
+        skillsTable.setFillParent(false);
+
+        List<Skill> skills = SkillDatabase.getSkillByCategory("one-handed-sword");
+
+        for (Skill skill : skills) {
+            Label skillLabel = new Label(
+            "- " + skill.getName() + " (EMP: " + skill.getEmpCost() + ")",
+            skin);
+            skillsTable.add(skillLabel).left().row();
+        }
+        skillsTable.pack();
+        stage.addActor(skillsTable);
+    }
+
+
+    // 獲取裝備名稱
     private String getEquipName(EquipSlot slot) {
         Equipment eq = player.getEquipmentBySlot(slot);
         return eq != null ? eq.getName() : "None";
@@ -196,6 +222,9 @@ public class CharacterScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+
+        stage.act(delta);
+        stage.draw();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -227,8 +256,7 @@ public class CharacterScreen implements Screen {
         }
 
         batch.end();
-        stage.act(delta);
-        stage.draw();
+
     }
 
     @Override
@@ -236,8 +264,20 @@ public class CharacterScreen implements Screen {
         stage.getViewport().update(width, height, true);
     }
 
+
     @Override
-    public void show() {}
+    public void show() {
+        // stage = new Stage(new ScreenViewport());
+        // Gdx.input.setInputProcessor(stage);
+
+        // skin = new Skin(Gdx.files.internal("uiskin.json"));
+
+        // Table rootTable = new Table();
+        // rootTable.setFillParent(true);
+        // stage.addActor(rootTable);
+
+        createSkillUI();
+    }
 
     @Override
     public void hide() {}

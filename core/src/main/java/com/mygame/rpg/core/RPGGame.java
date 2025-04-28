@@ -11,6 +11,7 @@ import com.mygame.rpg.character.Player;
 import com.mygame.rpg.item.EquipmentDatabase;
 import com.mygame.rpg.item.Skill;
 import com.mygame.rpg.item.SkillDatabase;
+import com.mygame.rpg.item.SkillTreeData;
 import com.mygame.rpg.screens.BattleScreen;
 import com.mygame.rpg.screens.GameOverScreen;
 import com.mygame.rpg.screens.MainMenuScreen;
@@ -56,7 +57,16 @@ public class RPGGame extends Game {
         // 初始化角色
         player = Player.loadFromFile("save/player.json");
         EquipmentDatabase.loadFromJson("json/data/equipment.json");
-        SkillDatabase.loadFromJson("json/data/skills.json");
+
+        SkillDatabase.loadAllSkillTrees("json/data/skills");
+        // 測試讀取
+        SkillTreeData tree = SkillDatabase.getSkillTree("one-handed-sword");
+        if (tree != null) {
+            Gdx.app.log("Test", "Loaded one-handed-sword skill tree with " + tree.getStages().size() + " stages.");
+        } else {
+            Gdx.app.log("Skill", "Failed to load one-handed-sword skill tree.");
+        }
+
 
         // 設置 BattleScreen 為當前屏幕
         setScreen(new MainMenuScreen(this));

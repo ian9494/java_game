@@ -137,11 +137,11 @@ public class Player extends Character {
             allowedTypes.addAll(equipment.getAllowedSkillTypes());
         }
 
-        for (Skill skill : SkillDatabase.getAllSkills()) {
-            if (allowedTypes.contains(skill.getType())) {
-                equippedSkills.add(skill);
-            }
-        }
+        // for (Skill skill : SkillDatabase.getAllSkills()) {
+        //     if (allowedTypes.contains(skill.getType())) {
+        //         equippedSkills.add(skill);
+        //     }
+        // }
     }
 
     // 獲得所有物品ID 包含裝備與道具
