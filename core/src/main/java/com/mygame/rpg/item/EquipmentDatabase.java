@@ -1,6 +1,10 @@
 package com.mygame.rpg.item;
 
+import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
 import java.io.Reader;
@@ -12,14 +16,35 @@ public class EquipmentDatabase {
     public static void loadFromJson(String filePath) {
         try (Reader reader = new FileReader(filePath)) {
             Gson gson = new Gson();
-            List<Equipment> equipmentList = gson.fromJson(reader, new TypeToken<List<Equipment>>(){}.getType());
+            JsonArray array = gson.fromJson(reader, JsonArray.class);
 
             equipmentMap.clear();
-            for (Equipment eq : equipmentList) {
-                equipmentMap.put(eq.getEquipmentID(), eq);
+            for (JsonElement element : array) {
+                JsonObject obj = element.getAsJsonObject();
+                String slot = obj.get("slot").getAsString();
+
+                if (slot.equalsIgnoreCase("WEAPON")) {
+                    // 是武器：用 Weapon 類別解析
+                    Weapon weapon = gson.fromJson(obj, Weapon.class);
+                    equipmentMap.put(weapon.getEquipmentID(), weapon);
+                } else {
+                    // 是其他裝備：用 Equipment 類解析
+                    Equipment eq = gson.fromJson(obj, Equipment.class);
+                    equipmentMap.put(eq.getEquipmentID(), eq);
+                }
+            }
+            Gdx.app.log("EquipmentDatabase", "Loaded " + equipmentMap.size() + " equipment items.");
+
+            // Debug: 印出所有裝備的名稱和 ID
+            Equipment testEq = equipmentMap.get("301"); // 請用實際存在的武器 ID
+            if (testEq instanceof Weapon) {
+                Weapon weapon = (Weapon) testEq;
+                System.out.println("[Debug] Weapon loaded: " + weapon.getName());
+                System.out.println("[Debug] Current stage: " + weapon.getCurrentStage());
+            } else {
+                System.out.println("[Debug] Equipment is NOT a weapon.");
             }
 
-            System.out.println("[EquipmentDatabase] Loaded " + equipmentMap.size() + " equipment(s).");
         } catch (Exception e) {
             System.err.println("[EquipmentDatabase] Failed to load: " + e.getMessage());
         }

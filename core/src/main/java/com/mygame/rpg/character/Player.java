@@ -22,7 +22,6 @@ public class Player extends Character {
     private int gold;
 
     private Map<EquipSlot, Equipment> equippedItems = new HashMap<>();
-    private List<Skill> equippedSkills;
 
     private Map<String, Item> itemInventory;
     private Map<String, Equipment> equipmentInventory;
@@ -30,7 +29,6 @@ public class Player extends Character {
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
     public int getGold() { return gold; }
-    public List<Skill> getEquippedSkills() { return equippedSkills; }
 
     public int addGold(int amount) { return gold += amount; }
     public void setGold(int gold) { this.gold = gold; }
@@ -44,7 +42,6 @@ public class Player extends Character {
         this.LocationID = 1;
         this.itemInventory = new HashMap<>();
         this.equipmentInventory = new HashMap<>();
-        this.equippedSkills = new ArrayList<>();
     }
 
     public Player(String name) {
@@ -131,7 +128,6 @@ public class Player extends Character {
 
     // 更新可用技能
     public void updateAvailableSkills() {
-        equippedSkills.clear();
         List<String> allowedTypes = new ArrayList<>();
 
         for (Equipment equipment : equippedItems.values()) {
@@ -301,6 +297,8 @@ public class Player extends Character {
     // 存檔到json
     public void saveToFile(String fileName) {
         Json json = new Json();
+        json.setOutputType(Json.OutputType.JSON); // 設定輸出格式為 JSON
+        json.setElementType(ArrayList.class, Equipment.class); // 若儲存裝備清單
         String playerData = json.prettyPrint(this); // 轉成可讀 JSON 格式
 
         FileHandle file = Gdx.files.local(fileName);
