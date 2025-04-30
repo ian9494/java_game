@@ -29,6 +29,14 @@ public class EquipmentDatabase {
         return equipmentMap.get(id);
     }
 
+    public static Weapon getWeaponByID(String id) {
+        Equipment equipment = equipmentMap.get(id);
+        if (equipment instanceof Weapon) {
+            return (Weapon) equipment;
+        }
+        return null;
+    }
+
     public static List<Equipment> getAllEquipment() {
         return new ArrayList<>(equipmentMap.values());
     }
