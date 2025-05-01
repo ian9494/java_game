@@ -22,11 +22,12 @@ public class Player extends Character {
     private int expToNextLV;
     private int gold;
 
-    private Map<EquipSlot, Equipment> equippedItems = new HashMap<>();
-    private Weapon equippedWeapon;
+    private Map<EquipSlot, Equipment> equippedItems = new HashMap<>(); // 裝備的物品
+    private Weapon equippedWeapon; // 裝備的武器
 
-    private Map<String, Item> itemInventory;
-    private Map<String, Equipment> equipmentInventory;
+    private Map<String, Item> itemInventory; // 道具背包
+    private Map<String, Equipment> equipmentInventory; // 裝備背包
+    private Map<String, Weapon> weaponInventory; // 武器背包
 
     public int getExpToNextLV() { return expToNextLV; }
     public int getExp() { return exp; }
@@ -95,11 +96,21 @@ public class Player extends Character {
 
     // 裝備武器
     public void equipWeapon(Weapon weapon) {
-        if (equippedWeapon != null) {
-            unequipItem(EquipSlot.WEAPON);
+        if (!weaponInventory.containsKey(weapon.getEquipmentID())) {
+            Gdx.app.log("Player - Inventory", "Weapon not found in inventory: " + weapon.getName());
+            return;
         }
+
+        // 如果已經有裝備，先卸下
+        if (equippedWeapon != null) {
+            unEquipWeapon();
+        }
+
+        // 從武器背包中移除 → 裝上武器
+        weaponInventory.remove(weapon.getEquipmentID());
         equippedWeapon = weapon;
-        Gdx.app.log("Player - Inventory", "Equipped weapon: " + weapon.getName());
+        updateAvailableSkills();
+        Gdx.app.log("Player - Inventory", "Equipped " + weapon.getName() + " as weapon");
     }
 
     // 裝備物品
@@ -108,15 +119,10 @@ public class Player extends Character {
             Gdx.app.log("Player - Inventory", "Item not found in inventory: " + item.getName());
             return;
         }
-        // 如果是武器，使用專門的裝備方法
-        if (item instanceof Weapon) {
-            equipWeapon((Weapon) item);
-            return;
-        }
 
         // 如果該欄位已經有裝備，先卸下
         if (equippedItems.containsKey(slot)) {
-            unequipItem(slot);
+            unEquipItem(slot);
         }
 
         // 從裝備背包中移除 → 裝上該欄位
@@ -126,8 +132,21 @@ public class Player extends Character {
         Gdx.app.log("Player - Inventory", "Equipped " + item.getName() + " in " + slot);
     }
 
+    // 卸下武器
+    public void unEquipWeapon() {
+        if (equippedWeapon != null) {
+            // 將武器從裝備欄中移除
+            Weapon wp = equippedWeapon;
+            equippedWeapon = null;
+            weaponInventory.put(wp.getEquipmentID(), wp);
+            Gdx.app.log("Player - Inventory", "Unequipped " + wp.getName() + " from weapon slot");
+        } else {
+            Gdx.app.log("Player - Inventory", "No weapon equipped");
+        }
+    }
+
     // 卸下裝備
-    public void unequipItem(EquipSlot slot) {
+    public void unEquipItem(EquipSlot slot) {
         if (equippedItems.containsKey(slot)) {
             Equipment item = equippedItems.remove(slot);
             equipmentInventory.put(item.getEquipmentID(), item);
@@ -156,6 +175,7 @@ public class Player extends Character {
         List<String> IDs = new ArrayList<>();
         IDs.addAll(itemInventory.keySet());
         IDs.addAll(equipmentInventory.keySet());
+        IDs.addAll(weaponInventory.keySet());
         return IDs;
     }
 
@@ -164,7 +184,7 @@ public class Player extends Character {
         // 如果是武器，用 Weapon 物件
         if (itemID.startsWith("3")) {
             Weapon weapon = EquipmentDatabase.getWeaponByID(itemID);
-            equippedWeapon = weapon;
+            weaponInventory.put(itemID, weapon);
             Gdx.app.log("Player - Inventory", "Added weapon: " + weapon.getName());
             return weapon.getName();
         }
@@ -312,8 +332,6 @@ public class Player extends Character {
     // 存檔到json
     public void saveToFile(String fileName) {
         Json json = new Json();
-        json.setOutputType(JsonWriter.OutputType.json); // 設定輸出格式為 JSON
-        json.addClassTag("Weapon", Weapon.class);
 
         String playerData = json.prettyPrint(this); // 轉成可讀 JSON 格式
         FileHandle file = Gdx.files.local(fileName);
@@ -330,7 +348,6 @@ public class Player extends Character {
         }
 
         Json json = new Json();
-        json.addClassTag("Weapon", Weapon.class);
         return json.fromJson(Player.class, file.readString());
     }
 }

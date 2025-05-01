@@ -1,91 +1,64 @@
 {
-name: Hero
-LV: 2
-exp: 46
-expToNextLV: 80
-hp: 54
-maxHp: 120
-mp: 60
-maxMp: 60
-Atk: 13
-Def: 7
-Spd: 20
-actionBar: 20
-gold: 43
-equippedSkills: null
-itemInventory: {
-	class: java.util.HashMap
-	201: {
-		itemID: 201
-		name: Plank
-		type: material
-		description: No description available.
-		quantity: 7
-		effects: [
-			{}
+"name": "Hero",
+"exp": 10,
+"expToNextLV": 20,
+"hp": 37,
+"maxHp": 100,
+"mp": 50,
+"maxMp": 50,
+"Atk": 10,
+"Def": 5,
+"Spd": 20,
+"LocationID": 2,
+"actionBar": 60,
+"gold": 4,
+"equippedItems": {
+	"class": "java.util.HashMap",
+	"WEAPON": {
+		"class": "Weapon",
+		"equipmentID": "301",
+		"name": "Wooden Sword",
+		"description": "A simple wooden sword.",
+		"attackBonus": 5,
+		"slot": "WEAPON",
+		"allowedSkillTypes": [
+			"one-handed-sword"
 		]
 	}
-	202: {
-		itemID: 202
-		name: Stone
-		type: material
-		description: No description available.
-		quantity: 19
-		effects: [
+},
+"itemInventory": {
+	"class": "java.util.HashMap",
+	"101": {
+		"itemID": "101",
+		"name": "Coin Pouch",
+		"type": "consumable",
+		"description": "No description available.",
+		"quantity": 1,
+		"effects": [
+			{
+				"type": "gold_range",
+				"value": 5
+			}
+		]
+	},
+	"202": {
+		"itemID": "202",
+		"name": "Stone",
+		"type": "material",
+		"description": "No description available.",
+		"quantity": 4,
+		"effects": [
 			{}
 		]
-	}
-	204: {
-		itemID: 204
-		name: Plant Fiber
-		type: material
-		description: No description available.
-		quantity: 7
-		effects: [
+	},
+	"209": {
+		"itemID": "209",
+		"name": "Copper Ore",
+		"type": "material",
+		"description": "No description available.",
+		"quantity": 2,
+		"effects": [
 			{}
-		]
-	}
-	207: {
-		itemID: 207
-		name: Cotton
-		type: material
-		description: No description available.
-		quantity: 7
-		effects: [
-			{}
-		]
-	}
-	208: {
-		itemID: 208
-		name: Coal
-		type: material
-		description: No description available.
-		quantity: 6
-		effects: [
-			{}
-		]
-	}
-	209: {
-		itemID: 209
-		name: Copper Ore
-		type: material
-		description: No description available.
-		quantity: 5
-		effects: [
-			{}
-		]
-	}
-}
-equipmentInventory: {
-	class: java.util.HashMap
-	301: {
-		equipmentID: 301
-		name: Wooden Sword
-		description: A simple wooden sword.
-		attackBonus: 5
-		slot: WEAPON
-		allowedSkillTypes: [
-			one-handed-sword
 		]
 	}
 }
