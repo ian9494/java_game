@@ -3,6 +3,7 @@ package com.mygame.rpg.character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.mygame.rpg.item.EquipSlot;
 import com.mygame.rpg.item.Equipment;
 import com.mygame.rpg.item.EquipmentDatabase;
@@ -22,6 +23,7 @@ public class Player extends Character {
     private int gold;
 
     private Map<EquipSlot, Equipment> equippedItems = new HashMap<>();
+    private Weapon equippedWeapon;
 
     private Map<String, Item> itemInventory;
     private Map<String, Equipment> equipmentInventory;
@@ -91,10 +93,24 @@ public class Player extends Character {
         return result;
     }
 
+    // 裝備武器
+    public void equipWeapon(Weapon weapon) {
+        if (equippedWeapon != null) {
+            unequipItem(EquipSlot.WEAPON);
+        }
+        equippedWeapon = weapon;
+        Gdx.app.log("Player - Inventory", "Equipped weapon: " + weapon.getName());
+    }
+
     // 裝備物品
     public void equipItem(EquipSlot slot, Equipment item) {
         if (!equipmentInventory.containsKey(item.getEquipmentID())) {
             Gdx.app.log("Player - Inventory", "Item not found in inventory: " + item.getName());
+            return;
+        }
+        // 如果是武器，使用專門的裝備方法
+        if (item instanceof Weapon) {
+            equipWeapon((Weapon) item);
             return;
         }
 
@@ -148,8 +164,7 @@ public class Player extends Character {
         // 如果是武器，用 Weapon 物件
         if (itemID.startsWith("3")) {
             Weapon weapon = EquipmentDatabase.getWeaponByID(itemID);
-            Gdx.app.log("Player - Inventory", "Adding weapon: " + weapon.getName());
-            equipmentInventory.put(itemID, weapon);
+            equippedWeapon = weapon;
             Gdx.app.log("Player - Inventory", "Added weapon: " + weapon.getName());
             return weapon.getName();
         }
@@ -297,10 +312,10 @@ public class Player extends Character {
     // 存檔到json
     public void saveToFile(String fileName) {
         Json json = new Json();
-        json.setOutputType(Json.OutputType.JSON); // 設定輸出格式為 JSON
-        json.setElementType(ArrayList.class, Equipment.class); // 若儲存裝備清單
-        String playerData = json.prettyPrint(this); // 轉成可讀 JSON 格式
+        json.setOutputType(JsonWriter.OutputType.json); // 設定輸出格式為 JSON
+        json.addClassTag("Weapon", Weapon.class);
 
+        String playerData = json.prettyPrint(this); // 轉成可讀 JSON 格式
         FileHandle file = Gdx.files.local(fileName);
         file.writeString(playerData, false);
         Gdx.app.log("Player - Save file", "file saved: " + fileName);
@@ -315,6 +330,7 @@ public class Player extends Character {
         }
 
         Json json = new Json();
+        json.addClassTag("Weapon", Weapon.class);
         return json.fromJson(Player.class, file.readString());
     }
 }
