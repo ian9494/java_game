@@ -2,7 +2,7 @@
 "name": "Hero",
 "exp": 10,
 "expToNextLV": 20,
-"hp": 37,
+"hp": 85,
 "maxHp": 100,
 "mp": 50,
 "maxMp": 50,
@@ -10,22 +10,7 @@
 "Def": 5,
 "Spd": 20,
 "LocationID": 2,
-"actionBar": 60,
 "gold": 4,
-"equippedItems": {
-	"class": "java.util.HashMap",
-	"WEAPON": {
-		"class": "Weapon",
-		"equipmentID": "301",
-		"name": "Wooden Sword",
-		"description": "A simple wooden sword.",
-		"attackBonus": 5,
-		"slot": "WEAPON",
-		"allowedSkillTypes": [
-			"one-handed-sword"
-		]
-	}
-},
 "itemInventory": {
 	"class": "java.util.HashMap",
 	"101": {
@@ -41,25 +26,49 @@
 			}
 		]
 	},
-	"202": {
-		"itemID": "202",
-		"name": "Stone",
+	"201": {
+		"itemID": "201",
+		"name": "Plank",
 		"type": "material",
 		"description": "No description available.",
-		"quantity": 4,
+		"quantity": 1,
 		"effects": [
 			{}
 		]
 	},
-	"209": {
-		"itemID": "209",
-		"name": "Copper Ore",
+	"204": {
+		"itemID": "204",
+		"name": "Plant Fiber",
+		"type": "material",
+		"description": "No description available.",
+		"quantity": 1,
+		"effects": [
+			{}
+		]
+	},
+	"207": {
+		"itemID": "207",
+		"name": "Cotton",
 		"type": "material",
 		"description": "No description available.",
 		"quantity": 2,
 		"effects": [
 			{}
 		]
+	}
+},
+"weaponInventory": {
+	"class": "java.util.HashMap",
+	"301": {
+		"equipmentID": "301",
+		"name": "Wooden Sword",
+		"description": "A simple wooden sword.",
+		"attackBonus": 5,
+		"slot": "WEAPON",
+		"allowedSkillTypes": [
+			"one-handed-sword"
+		],
+		"currentStage": "4"
 	}
 }
 }

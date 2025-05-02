@@ -149,7 +149,7 @@ public class Battle {
 
                 itemReward = enemy.getRandomDrop();
                 for (DropItem item : itemReward) {
-                    Gdx.app.log("battle - isBattleOver", "getting drops " + item.getItemID() + " " + item.getName() + " " + item.getDropRate());
+                    Gdx.app.log("battle - isBattleOver", "getting drops " + item.getItemID() + " " + item.getName());
                     if (item != null) {
                         player.addItem(item.getItemID(), item.getRandomDropCount()); // 獲得掉落物品
                     }

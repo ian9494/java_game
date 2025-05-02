@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ietf.jgss.GSSContext;
+
 public class Player extends Character {
     private int exp;
     private int expToNextLV;
@@ -45,6 +47,7 @@ public class Player extends Character {
         this.LocationID = 1;
         this.itemInventory = new HashMap<>();
         this.equipmentInventory = new HashMap<>();
+        this.weaponInventory = new HashMap<>();
     }
 
     public Player(String name) {
@@ -52,9 +55,8 @@ public class Player extends Character {
         this.exp = 0;
         this.LocationID = 1; // 初始位置為 1
         updateStats(); // 依據等級計算屬性
-        if (equipmentInventory == null) {
-            equipmentInventory = new HashMap<>();
-        }
+        if (equipmentInventory == null) {equipmentInventory = new HashMap<>(); }
+        if (weaponInventory == null) {weaponInventory = new HashMap<>(); }
         if (itemInventory == null) {
             itemInventory = new HashMap<>();
         }
@@ -184,6 +186,9 @@ public class Player extends Character {
         // 如果是武器，用 Weapon 物件
         if (itemID.startsWith("3")) {
             Weapon weapon = EquipmentDatabase.getWeaponByID(itemID);
+            weapon.setCurrentStage("4");
+            // weapon.setSkillMastery(Map.of("SLASH", 10));
+            Gdx.app.log("Player - Inventory", "weapon status:" + weapon.getCurrentStage());
             weaponInventory.put(itemID, weapon);
             Gdx.app.log("Player - Inventory", "Added weapon: " + weapon.getName());
             return weapon.getName();
@@ -332,14 +337,22 @@ public class Player extends Character {
     // 存檔到json
     public void saveToFile(String fileName) {
         Json json = new Json();
+        json.setOutputType(JsonWriter.OutputType.json);
+        json.setTypeName("class");
 
-        String playerData = json.prettyPrint(this); // 轉成可讀 JSON 格式
+        json.addClassTag("Weapon", Weapon.class);
+
+        // ✅ 告訴 Json「Map 內的 value 是 Weapon」
+        json.setElementType(Player.class, "weaponInventory", Weapon.class);
+
+        String playerData = json.prettyPrint(this);
         FileHandle file = Gdx.files.local(fileName);
         file.writeString(playerData, false);
         Gdx.app.log("Player - Save file", "file saved: " + fileName);
     }
 
-    // 從json載入
+
+    // 載入 json
     public static Player loadFromFile(String fileName) {
         FileHandle file = Gdx.files.local(fileName);
         if (!file.exists()) {
@@ -348,6 +361,10 @@ public class Player extends Character {
         }
 
         Json json = new Json();
+        json.setTypeName("class");
+        json.addClassTag("Weapon", Weapon.class);
+        json.setElementType(Player.class, "weaponInventory", Weapon.class);
+
         return json.fromJson(Player.class, file.readString());
     }
 }

@@ -11,7 +11,7 @@
                     "iconPath": "Goblin_thief.png",
                     "encounter_rate": 100,
                     "attributes": {
-                        "Lv": [1, 5],
+                        "Lv": [1, 1],
                         "hp":  {"base" : 15,  "growth": 3},
                         "atk": {"base" : 5,  "growth": 3},
                         "def": 5,

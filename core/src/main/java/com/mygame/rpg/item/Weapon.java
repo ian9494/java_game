@@ -23,12 +23,23 @@ public class Weapon extends Equipment {
     public int getSkillMastery(int skillID) {
         return skillMastery.getOrDefault(skillID, 0);
     }
+
+    public Map<Integer, Integer> getSkillMastery() {
+        return skillMastery;
+    }
+
+    public void setSkillMastery(Map<Integer, Integer> skillMastery) {
+        this.skillMastery = skillMastery;
+    }
+
     public String getCurrentStage() {
         return currentStage;
     }
     public void setCurrentStage(String currentStage) {
         this.currentStage = currentStage;
     }
+
+
 
 
 
