@@ -163,12 +163,25 @@ public class Player extends Character {
         return equippedItems.get(slot);
     }
 
+    // 獲得裝備的武器
+    public Weapon getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
     // 更新可用技能
     public void updateAvailableSkills() {
         List<String> allowedTypes = new ArrayList<>();
 
         for (Equipment equipment : equippedItems.values()) {
             allowedTypes.addAll(equipment.getAllowedSkillTypes());
+        }
+    }
+
+    // 所有技能冷卻一次
+    public void tickCooldown() {
+        List<Skill> skills = equippedWeapon.getAvailableSkillIds();
+        for (Skill skill : skills) {
+            skill.tickCooldown();
         }
     }
 
@@ -186,7 +199,7 @@ public class Player extends Character {
         // 如果是武器，用 Weapon 物件
         if (itemID.startsWith("3")) {
             Weapon weapon = EquipmentDatabase.getWeaponByID(itemID);
-            weapon.setCurrentStage("4");
+            weapon.setCurrentStage(List.of(1)); // 設定初始階段
             // weapon.setSkillMastery(Map.of("SLASH", 10));
             Gdx.app.log("Player - Inventory", "weapon status:" + weapon.getCurrentStage());
             weaponInventory.put(itemID, weapon);

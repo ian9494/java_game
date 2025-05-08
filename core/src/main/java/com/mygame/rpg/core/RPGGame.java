@@ -54,11 +54,12 @@ public class RPGGame extends Game {
         batch = new SpriteBatch();
         // Gdx.app.setApplicationLogger(new FileLogger("game_log.txt")); // 設置日誌文件
 
-        // 初始化角色
+        // 初始化資料讀取
         player = Player.loadFromFile("save/player.json");
         EquipmentDatabase.loadFromJson("json/data/equipment.json");
 
         SkillDatabase.loadAllSkillTrees("json/data/skills");
+
         // 測試讀取
         SkillTreeData tree = SkillDatabase.getSkillTree("one-handed-sword");
         if (tree != null) {

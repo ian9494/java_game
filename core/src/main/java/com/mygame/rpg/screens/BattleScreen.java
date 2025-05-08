@@ -1,5 +1,7 @@
 package com.mygame.rpg.screens;
 
+import com.mygame.rpg.item.Skill;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygame.rpg.battle.Battle;
 import com.mygame.rpg.battle.DropItem;
+import com.mygame.rpg.character.Player;
 import com.mygame.rpg.core.RPGGame;
 import com.mygame.rpg.item.Item;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -53,6 +56,10 @@ public class BattleScreen implements Screen {
     private ScrollPane itemScroll;
     private VerticalGroup itemList;
 
+    private Window skillWindow;
+    private ScrollPane skillScroll;
+    private VerticalGroup skillList;
+
     private void createButtons() {
         // 攻擊按鈕
         attackButton = new TextButton("Attack", skin);
@@ -73,8 +80,8 @@ public class BattleScreen implements Screen {
         useSkillButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // 執行技能邏輯
-                // battle.doSkill();
+                // 使用技能
+                showSkillMenu();
             }
         });
 
@@ -215,12 +222,56 @@ public class BattleScreen implements Screen {
         itemWindow.setVisible(true);
     }
 
+    private void showSkillMenu() {
+        skillList.clear();
+        Player player = battle.getPlayer();
+
+        // 確保玩家有裝備武器
+        if (player.getEquippedWeapon() == null) {
+            skillList.addActor(new Label("No weapon equipped", skin));
+            return;
+        }
+
+        // 確保玩家裝備武器有技能
+        if (player.getEquippedWeapon().getAvailableSkillIds().isEmpty()) {
+            skillList.addActor(new Label("No available skills", skin));
+        }
+
+        List<Skill> skills = player.getEquippedWeapon().getAvailableSkillIds();
+
+        for (Skill skill : skills) {
+            TextButton skillButton = new TextButton(skill.getName(), skin);
+            skillButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // 使用技能
+                    battle.useSkill(skill);
+                    skillWindow.setVisible(false);
+                }
+            });
+            skillList.addActor(skillButton);
+        }
+
+        TextButton closeButton = new TextButton("Close", skin);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                skillWindow.setVisible(false);
+            }
+        });
+        skillList.addActor(closeButton);
+
+        skillWindow.setVisible(true);
+    }
+
+    // 使用物品
     private void useItemInBattle(Item item) {
         battle.getPlayer().useItem(item.getItemID());
         Gdx.app.log("BattleScreen", "use item: " + item.getName());
 
     }
 
+    // 顯示升級訊息
     public void showLevelUpMessage(String message) {
         levelUpLabel.setText(message);
         levelUpLabel.setVisible(true);

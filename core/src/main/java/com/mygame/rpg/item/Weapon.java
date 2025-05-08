@@ -25,10 +25,12 @@ public class Weapon extends Equipment {
         this.skillMastery = new HashMap<>();
     }
 
+    // 提升技能熟練度
     public void increaseSkillMastery(String skillID, int amount) {
         skillMastery.put(skillID, skillMastery.getOrDefault(skillID, 0) + amount);
     }
 
+    // 獲取當前武器的技能樹
     public List<Skill> getAvailableSkillIds() {
         List<Skill> availableSkills = new ArrayList<>();
 
@@ -44,6 +46,26 @@ public class Weapon extends Equipment {
             }
         }
         return availableSkills;
+    }
+
+    // 判斷是否可以解鎖某個階段
+    public boolean canUnlockStage(List<Integer> targetStage) {
+        SkillTreeData skillTree = SkillDatabase.getSkillTree(weaponType);
+
+        // 找到目標 stage
+        for (SkillStage stage : skillTree.getStages()) {
+            if (stage.getStage().equals(targetStage)) {
+                // 逐一檢查parent skill
+                for (String parentSkillID : stage.getParentSkills()) {
+                    int mastery = skillMastery.getOrDefault(parentSkillID, 0);
+                    if (mastery < 100) {
+                        return false; // 如果有任何 parent skill mastery < 100，則無法解鎖
+                    }
+                }
+                return true; // 所有 parent skill mastery >= 100，則可以解鎖
+            }
+        }
+        return false;
     }
 
     public int getSkillMastery(int skillID) {return skillMastery.getOrDefault(skillID, 0); }

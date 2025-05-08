@@ -9,11 +9,14 @@ import com.mygame.rpg.character.Character;
 import com.mygame.rpg.character.Monster;
 import com.mygame.rpg.character.Player;
 import com.mygame.rpg.core.RPGGame;
+import com.mygame.rpg.item.Skill;
 
 public class Battle {
     // objects
     private Player player;
     private Monster enemy;
+
+    private int empPool; // 能量池
 
     // battle state
     // private boolean playerTurn;
@@ -52,7 +55,7 @@ public class Battle {
     }
 
     // 執行戰鬥
-    private void processTurn(Character character) {
+    private void processEnemyTurn(Character character) {
         if (character == enemy) {
             // 敵人行動
             int damage = calculateDamage(enemy, player);
@@ -69,7 +72,6 @@ public class Battle {
                 enemy.setReadyToAct(false);
                 actionQueue.add(enemy);
             }
-
         }
 
         // 檢查戰鬥是否結束
@@ -80,6 +82,7 @@ public class Battle {
         }
     }
 
+    // 玩家確認行動
     public void onPlayerConfirm() {
         Gdx.app.log("Battle", "Player confirmed. Resuming action bar update.");
         if (waitingForPlayerConfirmation) {
@@ -109,9 +112,9 @@ public class Battle {
 
                 if (character == player) {
                     waitingForPlayerAction = true; // 如果是玩家，設置等待玩家操作
-                    // Gdx.app.log("BattleLog - updateActionBar", "should wait for player action");
+                    player.tickCooldown(); // 輪到玩家行動時，更新技能冷卻時間
                 } else {
-                    processTurn(character); // 自動執行敵人的行動
+                    processEnemyTurn(character); // 自動執行敵人的行動
                     character.resetActionBar();
                     character.setReadyToAct(false); // 重置行動狀態
                     if (!actionQueue.contains(character)) {
@@ -137,6 +140,8 @@ public class Battle {
     // get player and enemy
     public Player getPlayer() {return player;}
     public Monster getEnemy() {return enemy;}
+    public int getEmpPool() {return empPool;}
+    public void setEmpPool(int empPool) {this.empPool = empPool;}
 
     // 判斷戰鬥是否結束
     public boolean isBattleOver() {
@@ -185,12 +190,12 @@ public class Battle {
         return waitingForPlayerConfirmation;
     }
 
-    // get battle result
+    // 獲得戰鬥結果
     public String getBattleResult() {
         return battleResult;
     }
 
-    // get item reward
+    // 獲得掉落物品
     public List<DropItem> getItemReward() {
         return itemReward;
     }
@@ -201,7 +206,45 @@ public class Battle {
         return Math.max(1, damage); // make attack do at least 1 damage
     }
 
-    // player do attack commend
+    // 玩家使用技能
+    public void useSkill(Skill skill) {
+        Gdx.app.log("battle:useSkill", "using skill " + skill.getName());
+
+        // 先判斷empPool是否足夠
+        if (empPool < skill.getEmpCost()) {
+            Gdx.app.log("battle:useSkill", "Not enough mana to cast skill.");
+            return;
+        }
+        empPool -= skill.getEmpCost(); // 扣除能量值
+
+        // 檢查是否在冷卻中 TODO getCoolDown
+        if (skill.getCooldown() > 0) {
+            Gdx.app.log("battle:useSkill", "Skill is on cooldown.");
+            return;
+        }
+
+        // 技能效果 TODO
+        Gdx.app.log("battle:useSkill", "Using skill: " + skill.getName());
+        int damage = (int) (calculateDamage(player, enemy) * skill.getDamageMultiplier());
+        enemy.takeDamage(damage);
+
+
+        skill.triggerCooldown(); // 觸發技能冷卻 TODO triggerCooldown
+
+        /* 戰鬥邏輯
+
+
+
+        戰鬥邏輯 */
+
+        player.resetActionBar();
+        player.setReadyToAct(false);
+
+        actionQueue.add(player);
+        waitingForPlayerAction = false; // 玩家操作完成，繼續更新行動條
+    }
+
+    // 玩家進行普通攻擊 (不一定會留下來)
     public void doAttack() {
         Gdx.app.log("battle:doAttack", "do an attack");
         int damage = calculateDamage(player, enemy);
@@ -216,7 +259,7 @@ public class Battle {
         waitingForPlayerAction = false; // 玩家操作完成，繼續更新行動條
     }
 
-    // show battle logs
+    // 顯示戰鬥日誌 (Debug)
     public String getNextLog(){
         if (currentLogIndex < battleLogs.size()) {
             return battleLogs.get(currentLogIndex++);
@@ -224,21 +267,22 @@ public class Battle {
         return null; //如果沒有log
     }
 
-    // log action
+    // 顯示戰鬥日誌 (Debug)
     public void logAction(String log) {
         battleLogs.add(log);
     }
 
-    // get last log
+    // 獲取最後一條戰鬥日誌 (Debug)
     public String getLastLog() {
         return battleLogs.isEmpty() ? "" : battleLogs.get(battleLogs.size() - 1);
     }
 
-    // get all battle logs
+    // 獲取所有戰鬥日誌 (Debug)
     public List<String> getBattleLogs() {
         return new ArrayList<>(battleLogs); // 回傳所有行動日誌
     }
 
+    // 獲取戰鬥狀態，用於畫面顯示
     public String getBattleState() {
         StringBuilder state = new StringBuilder();
         state.append("Player: ").append(player.getName()).append(" HP: ").append(player.getHp()).append("\n");
