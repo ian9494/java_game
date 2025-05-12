@@ -14,6 +14,7 @@ import com.mygame.rpg.item.Weapon;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,6 +180,10 @@ public class Player extends Character {
 
     // 所有技能冷卻一次
     public void tickCooldown() {
+        if (equippedWeapon == null) {
+            Gdx.app.log("Player - Inventory", "No weapon equipped");
+            return;
+        }
         List<Skill> skills = equippedWeapon.getAvailableSkillIds();
         for (Skill skill : skills) {
             skill.tickCooldown();
@@ -199,7 +204,7 @@ public class Player extends Character {
         // 如果是武器，用 Weapon 物件
         if (itemID.startsWith("3")) {
             Weapon weapon = EquipmentDatabase.getWeaponByID(itemID);
-            weapon.setCurrentStage(List.of(1)); // 設定初始階段
+            weapon.setCurrentStage(new ArrayList<>(Arrays.asList(1))); // 設定當前階段
             // weapon.setSkillMastery(Map.of("SLASH", 10));
             Gdx.app.log("Player - Inventory", "weapon status:" + weapon.getCurrentStage());
             weaponInventory.put(itemID, weapon);

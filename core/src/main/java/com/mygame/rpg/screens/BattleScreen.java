@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -27,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import java.util.Map;
 import java.util.List;
 
@@ -51,6 +53,8 @@ public class BattleScreen implements Screen {
     private Label levelUpLabel;
     private TextButton levelUpOkButton;
     private boolean isLevelUpVisible = false;
+
+    private Label empLabel;
 
     private Window itemWindow;
     private ScrollPane itemScroll;
@@ -222,6 +226,7 @@ public class BattleScreen implements Screen {
         itemWindow.setVisible(true);
     }
 
+    // 顯示技能選單
     private void showSkillMenu() {
         skillList.clear();
         Player player = battle.getPlayer();
@@ -264,6 +269,18 @@ public class BattleScreen implements Screen {
         skillWindow.setVisible(true);
     }
 
+    // 顯示環境魔力狀態
+    private void showEmpStatus() {
+        empLabel = new Label("EMP : 10", skin);
+        empLabel.setAlignment(Align.right);
+        Table topBar = new Table();
+        topBar.top().right();
+        topBar.setFillParent(true);
+        topBar.add(empLabel).pad(10);
+        stage.addActor(topBar);
+    }
+
+
     // 使用物品
     private void useItemInBattle(Item item) {
         battle.getPlayer().useItem(item.getItemID());
@@ -304,6 +321,7 @@ public class BattleScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         createButtons();
+        showEmpStatus();
     }
 
     public void render(float delta) {
@@ -333,6 +351,7 @@ public class BattleScreen implements Screen {
 
         // 繪製戰鬥狀態
         font.draw(batch, battle.getBattleState(), 50, 550); // 顯示場上資訊
+        empLabel.setText("EMP: " + battle.getEmp().getEmpPool() + "/" + battle.getEmp().getMaxEmpPool());
         font.draw(batch, "Last Action: " + battle.getLastLog(), 50, 400);
 
         createRewardUI();
