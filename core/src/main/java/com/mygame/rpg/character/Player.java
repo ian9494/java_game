@@ -87,7 +87,7 @@ public class Player extends Character {
     }
 
     // 獲得裝備物品
-    public List<Equipment> getEquippedItem(EquipSlot slot) {
+    public List<Equipment> getEquipmentItem(EquipSlot slot) {
         List<Equipment> result = new ArrayList<>();
         for (Equipment eq : equipmentInventory.values()) {
             if (eq.getSlot() == slot) {
@@ -95,6 +95,11 @@ public class Player extends Character {
             }
         }
         return result;
+    }
+
+    // 獲得武器
+    public List<Weapon> getWeapons() {
+        return new ArrayList<>(weaponInventory.values());
     }
 
     // 裝備武器
@@ -368,7 +373,6 @@ public class Player extends Character {
         file.writeString(playerData, false);
         Gdx.app.log("Player - Save file", "file saved: " + fileName);
     }
-
 
     // 載入 json
     public static Player loadFromFile(String fileName) {

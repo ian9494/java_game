@@ -11,11 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mygame.rpg.character.Player;
 import com.mygame.rpg.item.EquipSlot;
 import com.mygame.rpg.item.Equipment;
+import com.mygame.rpg.item.Weapon;
 import com.mygame.rpg.core.RPGGame;
 import com.mygame.rpg.screens.CharacterScreen;
 
@@ -76,7 +79,14 @@ public class EquipmentEditScreen implements Screen {
     private void updateEquipmentList() {
         equipmentTable.clear();
         EquipSlot selectedSlot = slotSelector.getSelected();
-        List<Equipment> available = player.getEquippedItem(selectedSlot);
+
+        List<? extends Equipment> available;
+
+        if (selectedSlot == EquipSlot.WEAPON) {
+            available = new ArrayList<>(player.getWeapons());
+        } else {
+            available = player.getEquipmentItem(selectedSlot);
+        }
 
         if (available.isEmpty()) {
             equipmentTable.add(new Label("No equipment available.", skin)).left().row();
