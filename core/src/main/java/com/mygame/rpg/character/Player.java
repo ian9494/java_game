@@ -123,21 +123,40 @@ public class Player extends Character {
 
     // 裝備物品
     public void equipItem(EquipSlot slot, Equipment item) {
-        if (!equipmentInventory.containsKey(item.getEquipmentID())) {
-            Gdx.app.log("Player - Inventory", "Item not found in inventory: " + item.getName());
-            return;
+        boolean found = false;
+
+        // 如果是武器，檢查是否在武器背包中
+        if (slot == EquipSlot.WEAPON && item instanceof Weapon) {
+            if (!weaponInventory.containsKey(item.getEquipmentID())) {
+                Gdx.app.log("Player - Inventory", "Weapon not found in inventory: " + item.getName());
+                return;
+            }
+            weaponInventory.remove(item.getEquipmentID());
+            found = true;
+        // 如果是裝備，檢查是否在裝備背包中
+        } else {
+            if (!equipmentInventory.containsKey(item.getEquipmentID())) {
+                Gdx.app.log("Player - Inventory", "Item not found in inventory: " + item.getName());
+                return;
+            }
+            equipmentInventory.remove(item.getEquipmentID());
+            found = true;
         }
 
         // 如果該欄位已經有裝備，先卸下
+        if (found) {
         if (equippedItems.containsKey(slot)) {
-            unEquipItem(slot);
+            if (equippedItems.get(slot) instanceof Weapon) {
+                unEquipWeapon();
+            } else {
+                unEquipItem(slot);
+            }
         }
 
-        // 從裝備背包中移除 → 裝上該欄位
-        equipmentInventory.remove(item.getEquipmentID());
         equippedItems.put(slot, item);
         updateAvailableSkills();
         Gdx.app.log("Player - Inventory", "Equipped " + item.getName() + " in " + slot);
+        }
     }
 
     // 卸下武器
