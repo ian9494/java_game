@@ -16,7 +16,7 @@ public class Battle {
     private Player player;
     private Monster enemy;
 
-    private int empPool; // 能量池
+    private EmpSource emp = new EmpSource(); // 能量池
 
     // battle state
     // private boolean playerTurn;
@@ -24,7 +24,6 @@ public class Battle {
     private boolean battleOver;
     private boolean waitingForPlayerAction; // 新增布林值來標記是否等待玩家操作
     private boolean waitingForPlayerConfirmation; // 新增布林值來標記是否等待玩家確認
-
 
     private String battleResult;
     private List<DropItem> itemReward;
@@ -36,6 +35,8 @@ public class Battle {
     // 戰鬥進行記錄
     private final List<String> battleLogs;
     private int currentLogIndex = 0;
+
+
 
     public Battle(Player player, Monster enemy) {
         Gdx.app.log("battle", "enter battle");
@@ -94,19 +95,16 @@ public class Battle {
     // update action bar
     public void updateActionBar() {
         if (waitingForPlayerAction || waitingForPlayerConfirmation) {
-            // Gdx.app.log("battleLog", "Pausing action bar update waiting for player action");
             return; // 如果正在等待玩家操作，則不更新行動條
         }
 
+        emp.incrementEmpBar(); // 更新能量條
+
+        // 更新場上物件行動條 (玩家和敵人)
         for (Character character : actionQueue) {
-            // for (Character c : actionQueue) {
-            //     Gdx.app.log("BattleLog - updateActionBar", c.getName() + " action bar: " + c.getActionBar());
-            // }
-            // Gdx.app.log("BattleLog - updateActionBar", "\n");
             character.incrementActionBar(character.getSpd());
 
             if (character.getActionBar() >= actionThreshold) {
-                // Gdx.app.log("BattleLog - updateActionBar", "Character " + character.getName() + " is ready to act.");
                 character.setReadyToAct(true); // 設置角色為準備行動狀態
                 actionQueue.remove(character);
 
@@ -140,8 +138,7 @@ public class Battle {
     // get player and enemy
     public Player getPlayer() {return player;}
     public Monster getEnemy() {return enemy;}
-    public int getEmpPool() {return empPool;}
-    public void setEmpPool(int empPool) {this.empPool = empPool;}
+    public EmpSource getEmp() {return emp;}
 
     // 判斷戰鬥是否結束
     public boolean isBattleOver() {
@@ -211,11 +208,11 @@ public class Battle {
         Gdx.app.log("battle:useSkill", "using skill " + skill.getName());
 
         // 先判斷empPool是否足夠
-        if (empPool < skill.getEmpCost()) {
+        if (emp.getEmpPool() < skill.getEmpCost()) {
             Gdx.app.log("battle:useSkill", "Not enough mana to cast skill.");
             return;
         }
-        empPool -= skill.getEmpCost(); // 扣除能量值
+        emp.setEmpPool(emp.getEmpPool() - skill.getEmpCost()); // 扣除消耗的能量值
 
         // 檢查是否在冷卻中 TODO getCoolDown
         if (skill.getCooldown() > 0) {

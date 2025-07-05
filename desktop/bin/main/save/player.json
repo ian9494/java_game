@@ -2,7 +2,7 @@
 "name": "Hero",
 "exp": 10,
 "expToNextLV": 20,
-"hp": 85,
+"hp": 82,
 "maxHp": 100,
 "mp": 50,
 "maxMp": 50,
@@ -10,6 +10,7 @@
 "Def": 5,
 "Spd": 20,
 "LocationID": 2,
+"actionBar": 80,
 "gold": 4,
 "itemInventory": {
 	"class": "java.util.HashMap",
@@ -31,7 +32,17 @@
 		"name": "Plank",
 		"type": "material",
 		"description": "No description available.",
-		"quantity": 1,
+		"quantity": 4,
+		"effects": [
+			{}
+		]
+	},
+	"202": {
+		"itemID": "202",
+		"name": "Stone",
+		"type": "material",
+		"description": "No description available.",
+		"quantity": 4,
 		"effects": [
 			{}
 		]
@@ -41,7 +52,7 @@
 		"name": "Plant Fiber",
 		"type": "material",
 		"description": "No description available.",
-		"quantity": 1,
+		"quantity": 6,
 		"effects": [
 			{}
 		]
@@ -49,6 +60,26 @@
 	"207": {
 		"itemID": "207",
 		"name": "Cotton",
+		"type": "material",
+		"description": "No description available.",
+		"quantity": 3,
+		"effects": [
+			{}
+		]
+	},
+	"208": {
+		"itemID": "208",
+		"name": "Coal",
+		"type": "material",
+		"description": "No description available.",
+		"quantity": 4,
+		"effects": [
+			{}
+		]
+	},
+	"209": {
+		"itemID": "209",
+		"name": "Copper Ore",
 		"type": "material",
 		"description": "No description available.",
 		"quantity": 2,
@@ -68,7 +99,7 @@
 		"allowedSkillTypes": [
 			"one-handed-sword"
 		],
-		"currentStage": "4"
+		"currentStage": [ 1 ]
 	}
 }
 }

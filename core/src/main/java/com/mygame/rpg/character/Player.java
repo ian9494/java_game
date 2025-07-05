@@ -205,7 +205,7 @@ public class Player extends Character {
         // 如果是武器，用 Weapon 物件
         if (itemID.startsWith("3")) {
             Weapon weapon = EquipmentDatabase.getWeaponByID(itemID);
-            weapon.setCurrentStage(Arrays.asList(1)); // 設定初始階段
+            weapon.setCurrentStage(new ArrayList<>(Arrays.asList(1))); // 設定當前階段
             // weapon.setSkillMastery(Map.of("SLASH", 10));
             Gdx.app.log("Player - Inventory", "weapon status:" + weapon.getCurrentStage());
             weaponInventory.put(itemID, weapon);
