@@ -33,12 +33,14 @@ public class MainMenuScreen implements Screen {
     private final Player player;
     private final LocationManager locationManager;
 
-    private final int uiButtonPos = 1250;
+    private final int uiButtonPos = 1250; // UI按鈕的X座標基準位置
 
     private final BitmapFont font;
     private final BitmapFont largeFont;
+
     private final Label.LabelStyle labelStyle;
     private final Label.LabelStyle largeLabelStyle;
+
     private final OrthographicCamera camera;
 
     private Stage stage; // 用於管理按鈕的舞台
@@ -54,6 +56,7 @@ public class MainMenuScreen implements Screen {
 
     private boolean isGatherResultVisible = false;
 
+    // 初始化main menu畫面
     public MainMenuScreen(RPGGame game) {
         this.game = game;
         this.player = game.getPlayer();

@@ -18,11 +18,10 @@ import com.mygame.rpg.screens.MainMenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class RPGGame extends Game {
-    private static Game instance;
-    private SpriteBatch batch;
-    private Player player;
-    private Monster enemy;
-    private GameState state;
+    private static Game instance; // 用於獲取當前遊戲實例
+    private SpriteBatch batch; // 用於渲染精靈的批處理器
+    private Player player; // 玩家角色
+    private Monster enemy; // 目前的敵人
 
     private BattleScreen battleScreen;
 
@@ -30,25 +29,25 @@ public class RPGGame extends Game {
     public Player getPlayer() {return player;}
     public Monster getEnemy() {return enemy;}
 
-    public void setState(GameState newState) {
-        state = newState;
-        Gdx.app.log("Game-State", "Game state changed to " + state);
-    }
-
+    // 設置戰鬥場景
     public void startBattle(BattleScreen battleScreen) {
         this.battleScreen = battleScreen;
         setScreen(battleScreen);
     }
 
+    // 結束戰鬥 (回到主菜單)
     public void endBattle() {
         setScreen(new MainMenuScreen(this));
     }
 
+    // 玩家死亡 (顯示 GameOver 畫面)
     public void playerDeath() {
         setScreen(new GameOverScreen(this, player));
     }
 
     @Override
+    // 設置遊戲的初始狀態 在執行初始時調用
+    // 這裡可以進行一些初始化操作，比如加載資源、設置初始狀態等
     public void create() {
         instance = this;
         batch = new SpriteBatch();
@@ -80,6 +79,7 @@ public class RPGGame extends Game {
     }
 
     @Override
+    // 在遊戲關閉時釋放資源 以及保存遊戲狀態
     public void dispose() {
         player.saveToFile("save/player.json"); // 關閉遊戲時自動存檔
         batch.dispose();
